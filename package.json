@@ -5,14 +5,22 @@
     "start": "next start"
   },
   "dependencies": {
+    "@hookform/resolvers": "latest",
     "lucide-react": "latest",
     "next": "latest",
     "react": "latest",
-    "react-dom": "latest"
+    "react-dom": "latest",
+    "react-hook-form": "latest",
+    "sonner": "latest",
+    "zod": "latest"
   },
   "devDependencies": {
-    "tailwindcss": "latest",
+    "@types/node": "latest",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
+    "autoprefixer": "latest",
     "postcss": "latest",
-    "autoprefixer": "latest"
+    "tailwindcss": "latest",
+    "typescript": "latest"
   }
 }
