@@ -87,7 +87,7 @@ const TooltipLabel = ({ children, tooltip, className = "" }: { children: React.R
     {children}
     {tooltip && (
       <Tooltip>
-        <TooltipTrigger type="button" className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#CFA911] text-[9px] font-bold text-white hover:bg-[#b5930e] transition-colors">?</TooltipTrigger>
+        <TooltipTrigger className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#CFA911] text-[9px] font-bold text-white hover:bg-[#b5930e] transition-colors">?</TooltipTrigger>
         <TooltipContent><p className="text-xs max-w-[200px] font-normal normal-case">{tooltip}</p></TooltipContent>
       </Tooltip>
     )}
