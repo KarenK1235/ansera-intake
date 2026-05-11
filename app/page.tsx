@@ -188,7 +188,7 @@ const Index = () => {
     try {
       const params = new URLSearchParams(window.location.search);
       const snapshotId = params.get("snapshot");
-      const stateSnapshot = location.state?.snapshotData;
+      const stateSnapshot = null;
       
       if (stateSnapshot) {
         form.reset(stateSnapshot);
@@ -211,7 +211,7 @@ const Index = () => {
         form.reset(JSON.parse(saved));
       }
     } catch (e) {}
-  }, [form, location.search, location.state]);
+  }, [form]);
 
   useEffect(() => {
     const subscription = form.watch((value) => {
