@@ -181,7 +181,7 @@ const Index = () => {
     }).catch(() => {});
 
     toast.success("Form submitted successfully!");
-    navigate("/thank-you", { state: { snapshotUrl: submissionUrl, snapshotData: data } });
+
   };
 
   useEffect(() => {
