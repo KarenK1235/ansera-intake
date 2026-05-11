@@ -7,12 +7,13 @@ export function Tooltip({ children }: { children?: React.ReactNode }) {
 export function TooltipTrigger({
   className = "",
   children,
+  type = "button",
   ...props
-}: React.HTMLAttributes<HTMLSpanElement>) {
+}: React.ButtonHTMLAttributes<HTMLButtonElement>) {
   return (
-    <span className={className} {...props}>
+    <button type={type} className={className} {...props}>
       {children}
-    </span>
+    </button>
   );
 }
 
