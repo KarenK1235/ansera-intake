@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useLocation } from "react-router-dom";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
@@ -95,8 +95,7 @@ const TooltipLabel = ({ children, tooltip, className = "" }: { children: React.R
 );
 
 const Index = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [isReadOnly, setIsReadOnly] = useState(false);
 
