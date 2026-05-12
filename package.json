@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "latest",
+    "@radix-ui/react-toast": "latest",
     "@radix-ui/react-tooltip": "latest",
     "@tanstack/react-query": "latest",
     "@vitejs/plugin-react": "latest",
