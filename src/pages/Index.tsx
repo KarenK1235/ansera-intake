@@ -260,7 +260,7 @@ const Index = () => {
         {/* Header */}
         <header className="flex items-center justify-between border-b-4 border-[#C8102E] px-8 py-3 bg-white">
           <div className="flex items-center gap-4">
-            <img src="https://vibe.filesafe.space/1778392325118817481/attachments/3bd1338d-c721-4458-a57a-7da838dbf84e.jpg" alt="Otto Growth Labs" className="h-16 object-contain" />
+           <img src="/otto-growth-logo.png" alt="Otto Growth Labs" className="h-16 object-contain" />
             <div className="flex flex-col justify-center">
               <h1 className="text-sm font-bold tracking-wider text-gray-900 leading-tight">OTTO GROWTH LABS</h1>
               <p className="text-xs text-[#C8102E] font-semibold leading-tight">Ansera™ AI Phone Agent</p>
