@@ -339,12 +339,12 @@ const Index = () => {
               </div>
               <div className="space-y-1">
                 <TooltipLabel tooltip="Main business number.">* PRIMARY PHONE</TooltipLabel>
-                <Input {...form.register("primaryPhone")} placeholder="775.429.7900" className={inputClasses} />
+                <Input {...form.register("primaryPhone")} placeholder="Primary phone number" className={inputClasses} />
                 {form.formState.errors.primaryPhone && <p className="text-red-500 text-[10px]">{form.formState.errors.primaryPhone.message}</p>}
               </div>
               <div className="space-y-1">
                 <TooltipLabel tooltip="Alternate number.">SECONDARY PHONE</TooltipLabel>
-                <Input {...form.register("secondaryPhone")} placeholder="775.429.7900" className={inputClasses} />
+                <Input {...form.register("secondaryPhone")} placeholder="Secondary phone number" className={inputClasses} />
               </div>
               <div className="space-y-1">
                 <TooltipLabel tooltip="Core industry.">PRIMARY BUSINESS TYPE</TooltipLabel>
