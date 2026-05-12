@@ -620,7 +620,7 @@ const Index = () => {
           <section>
             <div className="mb-2 flex items-center gap-2 bg-[#333333] px-3 py-1.5 text-white rounded-sm">
               <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold rounded-[2px]">4</span>
-              <h3 className="text-sm font-bold tracking-widest uppercase">Voice Persona & Preferences</h3>
+             <h3 className="text-sm font-bold tracking-widest uppercase">Voice Preferences</h3>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -651,7 +651,16 @@ const Index = () => {
                 </div>
               </div>
 
-              <div className="space-y-3">
+             </section>
+
+{/* Section 5 */}
+<section>
+  <div className="mb-2 flex items-center gap-2 bg-[#333333] px-3 py-1.5 text-white rounded-sm">
+    <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold rounded-[2px]">5</span>
+    <h3 className="text-sm font-bold tracking-widest uppercase">Message Delivery Preferences</h3>
+  </div>
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+    <div className="space-y-3">
                 <div className="space-y-1">
                   <TooltipLabel>WHEN A CALLER NEEDS ASSISTANCE</TooltipLabel>
                   <div className="space-y-2 mt-1 border border-[#e0ded8] p-2.5 rounded-[3px] bg-[#fafafa]">
@@ -685,7 +694,8 @@ const Index = () => {
                 </div>
               </div>
             </div>
-          </section>
+         </div>
+</section>
 
           {/* Section 6 */}
           <section>
