@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "latest",
+    "@tanstack/react-query": "latest",
     "@vitejs/plugin-react": "latest",
     "clsx": "latest",
 "tailwind-merge": "latest",
