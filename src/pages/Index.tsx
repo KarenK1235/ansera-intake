@@ -363,12 +363,12 @@ const Index = () => {
                 </div>
                 <div className="space-y-1">
                   {[
-                    { id: "socialFacebook", icon: "https://vibe.filesafe.space/1778392325118817481/attachments/fb.svg", placeholder: "Facebook URL" },
-                    { id: "socialInstagram", icon: "https://vibe.filesafe.space/1778392325118817481/attachments/ig.svg", placeholder: "Instagram URL" },
-                    { id: "socialYoutube", icon: "https://vibe.filesafe.space/1778392325118817481/attachments/yt.svg", placeholder: "YouTube URL" },
-                    { id: "socialLinkedin", icon: "https://vibe.filesafe.space/1778392325118817481/attachments/li.svg", placeholder: "LinkedIn URL" },
-                    { id: "socialOther1", icon: "https://vibe.filesafe.space/1778392325118817481/attachments/link.svg", placeholder: "Other URL" },
-                    { id: "socialOther2", icon: "https://vibe.filesafe.space/1778392325118817481/attachments/link.svg", placeholder: "Other URL" }
+             { id: "socialFacebook", icon: "/facebook.svg", placeholder: "Facebook URL" },
+{ id: "socialInstagram", icon: "/instagram.svg", placeholder: "Instagram URL" },
+{ id: "socialYoutube", icon: "/youtube.svg", placeholder: "YouTube URL" },
+{ id: "socialLinkedin", icon: "/linkedin.svg", placeholder: "LinkedIn URL" },
+{ id: "socialOther1", icon: "/link.svg", placeholder: "Other URL" },
+{ id: "socialOther2", icon: "/link.svg", placeholder: "Other URL" }
                   ].map(s => (
                     <div key={s.id} className="flex items-center gap-2 rounded-[3px] border border-[#ddd] bg-[#fafafa] px-2 py-1 focus-within:bg-[#fff5f7] focus-within:border-[#C8102E] transition-colors">
                       <img src={s.icon} className="h-3.5 w-3.5 shrink-0" alt="" />
