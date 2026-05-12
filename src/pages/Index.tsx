@@ -522,6 +522,10 @@ const Index = () => {
               <h3 className="text-sm font-bold tracking-widest uppercase">Select Your Ansera™ Plan</h3>
             </div>
             
+            <div className="mb-3 border-l-4 border-[#CFA911] bg-[#fff8df] px-3 py-2 text-xs text-gray-700">
+  Review what each plan includes. Many clients upgrade right here — and that’s perfectly fine. Your selections will be reflected in your formal pricing proposal.
+</div>
+            
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3 items-start">
               
               {/* Assist+ Card */}
