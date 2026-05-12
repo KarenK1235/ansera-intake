@@ -667,7 +667,7 @@ const Index = () => {
   </div>
   <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                <div className="space-y-1">
+               <div className="space-y-1 md:order-2">
                   <TooltipLabel>WHEN A CALLER NEEDS ASSISTANCE</TooltipLabel>
                   <div className="space-y-2 mt-1 border border-[#e0ded8] p-2.5 rounded-[3px] bg-[#fafafa]">
                     <RadioGroup value={form.watch("callerNeedsAssistance")} onValueChange={(val) => form.setValue("callerNeedsAssistance", val)}>
@@ -680,7 +680,7 @@ const Index = () => {
                     </RadioGroup>
                   </div>
                 </div>
-                <div className="space-y-1">
+               <div className="space-y-1 md:order-1">
                   <TooltipLabel>MESSAGE DELIVERY PREFERENCE</TooltipLabel>
                   <div className="space-y-2 mt-1">
                     <label className="flex items-center gap-2 text-[11px] text-[#555] cursor-pointer">
