@@ -696,6 +696,13 @@ const Index = () => {
                     {form.watch("deliveryTextEnabled") && (
                       <Input type="text" {...form.register("deliveryText")} placeholder="Phone number for texts" className={`${inputClasses} ml-5 w-[calc(100%-20px)]`} />
                     )}
+                    <label className="flex items-center gap-2 text-[11px] text-[#555] cursor-pointer">
+  <Checkbox {...form.register("deliveryOtherEnabled")} className="border-gray-300 text-[#C8102E]" /> Other
+</label>
+{form.watch("deliveryOtherEnabled") && (
+  <Input type="text" {...form.register("deliveryOther")} placeholder="Describe setup..." className={`${inputClasses} ml-5 w-[calc(100%-20px)]`} />
+)}
+                
                   </div>
                 </div>
               </div>
