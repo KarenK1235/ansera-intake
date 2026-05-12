@@ -607,9 +607,9 @@ const Index = () => {
                     ))}
                   </div>
                   
-                  <div className="mt-2 p-1.5 bg-[#fff5f7] border border-red-100 rounded-[3px] text-[8px] text-[#666] leading-[1.4] mb-2">
-                    Some selections require additional details. We'll send a follow-up form for those.
-                  </div>
+               <div className="rounded-[3px] border border-[#f3c4c9] bg-[#fff5f6] px-3 py-2 text-[11px] leading-[1.45] text-[#555] mb-2">
+  Some selections may require a few extra details. We’ll follow up only if needed.
+</div>
 
                   <Button type="button" variant="outline" onClick={() => form.setValue("selectedPlan", "advanced")} className={`w-full h-8 text-[10px] font-bold tracking-[0.06em] uppercase rounded-[3px] transition-colors border-[#C8102E] ${form.watch("selectedPlan") === "advanced" ? "bg-[#C8102E] text-white hover:bg-[#a00d25] hover:text-white" : "bg-white text-[#C8102E] hover:bg-[#C8102E] hover:text-white"}`}>
                     SELECT ADVANCED
