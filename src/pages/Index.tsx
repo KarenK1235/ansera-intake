@@ -660,55 +660,56 @@ const Index = () => {
 
 {/* Section 5 */}
 <section>
-
   <div className="mb-2 flex items-center gap-2 bg-[#333333] px-3 py-1.5 text-white rounded-sm">
     <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold rounded-[2px]">5</span>
     <h3 className="text-sm font-bold tracking-widest uppercase">Message Delivery Preferences</h3>
- <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-  <div className="space-y-2">
-    <TooltipLabel>MESSAGE DELIVERY PREFERENCE</TooltipLabel>
+  </div>
 
+  <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
     <div className="space-y-2">
-      <div className="flex items-center gap-2 rounded-[3px] border border-gray-200 bg-[#fafafa] px-3 py-2">
-        <Checkbox {...form.register("deliveryEmailEnabled")} className="border-gray-300 text-[#C8102E]" />
-        <span className="w-[70px] text-[12px] text-[#333]">Email</span>
-        <Input type="email" {...form.register("deliveryEmail")} placeholder="Email address" className={`${inputClasses} flex-1`} />
-      </div>
+      <TooltipLabel>MESSAGE DELIVERY PREFERENCE</TooltipLabel>
 
-      <div className="flex items-center gap-2 rounded-[3px] border border-gray-200 bg-[#fafafa] px-3 py-2">
-        <Checkbox {...form.register("deliveryTextEnabled")} className="border-gray-300 text-[#C8102E]" />
-        <span className="w-[70px] text-[12px] text-[#333]">Text / SMS</span>
-        <Input type="text" {...form.register("deliveryText")} placeholder="Phone number" className={`${inputClasses} flex-1`} />
-      </div>
+      <div className="space-y-2">
+        <div className="flex items-center gap-2 rounded-[3px] border border-gray-200 bg-[#fafafa] px-3 py-2">
+          <Checkbox {...form.register("deliveryEmailEnabled")} className="border-gray-300 text-[#C8102E]" />
+          <span className="w-[70px] text-[12px] text-[#333]">Email</span>
+          <Input type="email" {...form.register("deliveryEmail")} placeholder="Email address" className={`${inputClasses} flex-1`} />
+        </div>
 
-      <div className="flex items-center gap-2 rounded-[3px] border border-gray-200 bg-[#fafafa] px-3 py-2">
-        <Checkbox {...form.register("deliveryOtherEnabled")} className="border-gray-300 text-[#C8102E]" />
-        <span className="w-[70px] text-[12px] text-[#333]">Other</span>
-        <Input type="text" {...form.register("deliveryOther")} placeholder="Describe setup..." className={`${inputClasses} flex-1`} />
+        <div className="flex items-center gap-2 rounded-[3px] border border-gray-200 bg-[#fafafa] px-3 py-2">
+          <Checkbox {...form.register("deliveryTextEnabled")} className="border-gray-300 text-[#C8102E]" />
+          <span className="w-[70px] text-[12px] text-[#333]">Text / SMS</span>
+          <Input type="text" {...form.register("deliveryText")} placeholder="Phone number" className={`${inputClasses} flex-1`} />
+        </div>
+
+        <div className="flex items-center gap-2 rounded-[3px] border border-gray-200 bg-[#fafafa] px-3 py-2">
+          <Checkbox {...form.register("deliveryOtherEnabled")} className="border-gray-300 text-[#C8102E]" />
+          <span className="w-[70px] text-[12px] text-[#333]">Other</span>
+          <Input type="text" {...form.register("deliveryOther")} placeholder="Describe setup..." className={`${inputClasses} flex-1`} />
+        </div>
       </div>
     </div>
-  </div>
 
-  <div className="space-y-2">
-    <TooltipLabel>WHEN A CALLER NEEDS ASSISTANCE, ANSERA™ SHOULD:</TooltipLabel>
+    <div className="space-y-2">
+      <TooltipLabel>WHEN A CALLER NEEDS ASSISTANCE, ANSERA™ SHOULD:</TooltipLabel>
 
-    <RadioGroup value={form.watch("callerNeedsAssistance")} onValueChange={(val) => form.setValue("callerNeedsAssistance", val)}>
-      <div className="space-y-2">
-        {[
-          "Always take a message AND offer to forward the call",
-          "Only forward the call if the caller specifically requests it",
-          "Take a message only — calls will not be forwarded"
-        ].map((opt) => (
-          <div key={opt} className="flex items-center gap-2 rounded-[3px] border border-gray-200 bg-[#fafafa] px-3 py-2">
-            <RadioGroupItem value={opt} id={`assist-${opt}`} className="w-3.5 h-3.5 text-[#C8102E] border-gray-300" />
-            <Label htmlFor={`assist-${opt}`} className="text-[12px] text-[#333] cursor-pointer font-normal">{opt}</Label>
-          </div>
-        ))}
-      </div>
-    </RadioGroup>
+      <RadioGroup value={form.watch("callerNeedsAssistance")} onValueChange={(val) => form.setValue("callerNeedsAssistance", val)}>
+        <div className="space-y-2">
+          {[
+            "Always take a message AND offer to forward the call",
+            "Only forward the call if the caller specifically requests it",
+            "Take a message only — calls will not be forwarded"
+          ].map((opt) => (
+            <div key={opt} className="flex items-center gap-2 rounded-[3px] border border-gray-200 bg-[#fafafa] px-3 py-2">
+              <RadioGroupItem value={opt} id={`assist-${opt}`} className="w-3.5 h-3.5 text-[#C8102E] border-gray-300" />
+              <Label htmlFor={`assist-${opt}`} className="text-[12px] text-[#333] cursor-pointer font-normal">{opt}</Label>
+            </div>
+          ))}
+        </div>
+      </RadioGroup>
+    </div>
   </div>
-</div>
-   </section>
+</section>
 
 {/* Section 6 */}
           <section>
