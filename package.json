@@ -10,6 +10,7 @@
     "@radix-ui/react-tooltip": "latest",
     "@tanstack/react-query": "latest",
     "@vitejs/plugin-react": "latest",
+    "class-variance-authority": "latest",
     "clsx": "latest",
 "tailwind-merge": "latest",
     "lucide-react": "latest",
