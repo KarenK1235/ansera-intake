@@ -539,7 +539,7 @@ const Index = () => {
                   <div className="space-y-1 mb-3">
                     {["Available to answer inbound calls 24/7", "Personalized greeting using your business name", "Takes messages", "Collects caller name & phone number", "Confirms information back to caller", "Answers basic FAQs", "Provides business hours & location", "Shares current promotions & offers", "Message delivery via email and/or text"].map((f, i) => (
                       <div key={i} className="flex items-start gap-1.5 py-1 text-[10px] text-[#555] border-b border-[#f5f3ef] leading-[1.4]">
-                        <span className="text-[#C8102E] text-[11px] shrink-0">✓</span>{f}
+                       <span className="text-[#C8102E] text-[14px] font-bold shrink-0">✓</span><span className="text-[13px] font-medium text-[#333]">{f}</span>
                       </div>
                     ))}
                   </div>
@@ -560,7 +560,7 @@ const Index = () => {
                   <div className="space-y-1 mb-3">
                     {["Advanced FAQs", "Set an appointment", "Schedule estimate appointments", "Schedule & callback scheduling", "Booking confirmation texts to caller", "Appointment reminder texts to caller", "Directions, location details & helpful links via text/email", "Can provide current business promotions and offers", "Message delivery via email AND text", "Urgent call forwarding — one person, immediately at end of call", "Post-call SMS notifications", "Language detection — responds in caller's language", "Payment or purchase links via text and/or email"].map((f, i) => (
                       <div key={i} className="flex items-start gap-1.5 py-1 text-[10px] text-[#555] border-b border-[#f5f3ef] leading-[1.4]">
-                        <span className="text-[#C8102E] text-[11px] shrink-0">✓</span>{f}
+                      <span className="text-[#C8102E] text-[14px] font-bold shrink-0">✓</span><span className="text-[13px] font-medium text-[#333]">{f}</span>
                       </div>
                     ))}
                   </div>
