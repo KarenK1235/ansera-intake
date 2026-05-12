@@ -535,7 +535,7 @@ const Index = () => {
                   <div className="text-[8px] font-bold tracking-[0.07em] px-2 py-0.5 rounded-[20px] bg-white/20 text-white">STANDARD</div>
                 </div>
                 <div className="p-3 bg-white">
-                  <div className="text-[10px] text-[#888] mb-2 italic leading-[1.4]">Included with your Assist+ plan:</div>
+                 <div className="text-[12px] text-[#666] mb-3 italic leading-[1.5]">Included with your Assist+ plan:</div>
                   <div className="space-y-1 mb-3">
                     {["Available to answer inbound calls 24/7", "Personalized greeting using your business name", "Takes messages", "Collects caller name & phone number", "Confirms information back to caller", "Answers basic FAQs", "Provides business hours & location", "Shares current promotions & offers", "Message delivery via email and/or text"].map((f, i) => (
                       <div key={i} className="flex items-start gap-1.5 py-1 text-[10px] text-[#555] border-b border-[#f5f3ef] leading-[1.4]">
@@ -556,7 +556,7 @@ const Index = () => {
                   <div className="text-[8px] font-bold tracking-[0.07em] px-2 py-0.5 rounded-[20px] bg-white text-[#C8102E]">MOST POPULAR</div>
                 </div>
                 <div className="p-3 bg-white">
-                  <div className="text-[10px] text-[#888] mb-2 italic leading-[1.4]">Ansera™ Elite includes all Assist+ features, and adds:</div>
+                  <div className="text-[12px] text-[#666] mb-3 italic leading-[1.5]">Ansera™ Elite includes all Assist+ features, and adds:</div>
                   <div className="space-y-1 mb-3">
                     {["Advanced FAQs", "Set an appointment", "Schedule estimate appointments", "Schedule & callback scheduling", "Booking confirmation texts to caller", "Appointment reminder texts to caller", "Directions, location details & helpful links via text/email", "Can provide current business promotions and offers", "Message delivery via email AND text", "Urgent call forwarding — one person, immediately at end of call", "Post-call SMS notifications", "Language detection — responds in caller's language", "Payment or purchase links via text and/or email"].map((f, i) => (
                       <div key={i} className="flex items-start gap-1.5 py-1 text-[10px] text-[#555] border-b border-[#f5f3ef] leading-[1.4]">
@@ -577,8 +577,8 @@ const Index = () => {
                   <div className="text-[8px] font-bold tracking-[0.07em] px-2 py-0.5 rounded-[20px] bg-white/25 text-white">YOUR BUILD</div>
                 </div>
                 <div className="p-3 bg-white">
-                  <div className="text-[10px] text-[#888] mb-1.5 italic leading-[1.4]">Everything in Elite, plus what you choose below:</div>
-                  <div className="text-[9px] text-[#C8102E] font-bold uppercase tracking-[0.05em] mb-2">Check all you'd like to explore:</div>
+                  <div className="text-[12px] text-[#666] mb-3 italic leading-[1.5]">Everything in Elite, plus what you choose below:</div>
+                 <div className="text-[11px] font-bold text-[#C8102E] tracking-[0.12em] mb-3 uppercase">CHECK ALL YOU'D LIKE TO EXPLORE:</div>
                   
                   <div className="space-y-0 mb-2">
                     {[
@@ -589,9 +589,9 @@ const Index = () => {
                       { id: "Forms or documents via text and/or email", desc: "New client forms, waivers, info packets" },
                       { id: "Multilingual support", desc: "Additional language configuration and routing" }
                     ].map((opt, i) => (
-                      <label key={i} className="flex items-start gap-2 py-1.5 border-b border-[#f8f6f2] cursor-pointer hover:bg-gray-50">
+                     <label key={i} className="flex items-start gap-3 rounded-[3px] border border-gray-100 bg-[#fafafa] px-2.5 py-2 cursor-pointer hover:border-[#CFA911] hover:bg-[#fffaf0] transition-colors">
                         <Checkbox 
-                          className="mt-0.5 border-gray-300 text-[#C8102E] focus:ring-[#C8102E]"
+                         className="mt-0.5 h-4 w-4 border-gray-300 text-[#C8102E] focus:ring-[#C8102E]"
                           checked={form.watch("advancedOptions")?.includes(opt.id)}
                           onCheckedChange={(checked) => {
                             const current = form.getValues("advancedOptions") || [];
@@ -600,8 +600,8 @@ const Index = () => {
                           }}
                         />
                         <div className="leading-[1.2]">
-                          <div className="text-[10px] text-[#555]">{opt.id}</div>
-                          {opt.desc && <div className="text-[8px] text-[#aaa] mt-0.5">{opt.desc}</div>}
+                          <div className="text-[12px] font-medium text-[#333] leading-snug">{opt.id}</div>
+                         {opt.desc && <div className="text-[10px] text-[#888] mt-0.5 leading-snug">{opt.desc}</div>}
                         </div>
                       </label>
                     ))}
