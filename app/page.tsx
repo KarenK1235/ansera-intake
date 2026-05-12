@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-
+import { useNavigate, useLocation } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
@@ -42,7 +42,6 @@ const formSchema = z.object({
   commonFrustrations: z.string().optional(),
   ringsBeforePickup: z.string().optional(),
   businessModel: z.string().optional(),
-  urgentCallsSamePerson: z.string().optional(),
   selectedPlan: z.string().optional(),
   advancedOptions: z.array(z.string()).optional(),
   voiceGender: z.string().optional(),
@@ -87,7 +86,7 @@ const TooltipLabel = ({ children, tooltip, className = "" }: { children: React.R
     {children}
     {tooltip && (
       <Tooltip>
-        <TooltipTrigger className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#CFA911] text-[9px] font-bold text-white hover:bg-[#b5930e] transition-colors">?</TooltipTrigger>
+        <TooltipTrigger type="button" className="flex h-3.5 w-3.5 items-center justify-center rounded-full bg-[#CFA911] text-[9px] font-bold text-white hover:bg-[#b5930e] transition-colors">?</TooltipTrigger>
         <TooltipContent><p className="text-xs max-w-[200px] font-normal normal-case">{tooltip}</p></TooltipContent>
       </Tooltip>
     )}
@@ -95,9 +94,11 @@ const TooltipLabel = ({ children, tooltip, className = "" }: { children: React.R
 );
 
 const Index = () => {
-
+  const navigate = useNavigate();
+  const location = useLocation();
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [isReadOnly, setIsReadOnly] = useState(false);
+  const [hasLatest, setHasLatest] = useState(false);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -107,10 +108,35 @@ const Index = () => {
       hipaaRegulated: "",
       discloseAi: "",
       minorsMayCall: "",
-      urgentCallsSamePerson: "",
       callerNeedsAssistance: "",
+      voiceGender: "",
+      ringsBeforePickup: "",
+      businessModel: "",
     }
   });
+
+  useEffect(() => {
+    setHasLatest(!!localStorage.getItem("ansera_snapshot_latest"));
+  }, []);
+
+  const saveForLater = () => {
+    const data = form.getValues();
+    const tempId = `draft_${crypto.randomUUID()}`;
+    localStorage.setItem(`ansera_snapshot_${tempId}`, JSON.stringify(data));
+    const resumeUrl = `${window.location.origin}${window.location.pathname}?snapshot=${tempId}`;
+    navigator.clipboard.writeText(resumeUrl);
+    toast.success("Progress saved! Resume link copied to clipboard.");
+  };
+
+  const quickFill = () => {
+    const latest = localStorage.getItem("ansera_snapshot_latest");
+    if (latest) {
+      form.reset(JSON.parse(latest));
+      toast.success("Loaded your last submission data!");
+    } else {
+      toast.error("No previous submission found on this device.");
+    }
+  };
 
   const onSubmit = async (data: FormValues) => {
     const snapshotId = crypto.randomUUID();
@@ -151,6 +177,8 @@ const Index = () => {
         "contact.voice_persona_name": data.voicePersonaName,
         "contact.languages_needed": data.languagesNeeded,
         "contact.auto_detect_language": data.autoDetectLanguage ? "Yes" : "No",
+        "contact.message_delivery_email": data.deliveryEmailEnabled ? data.deliveryEmail || "Yes" : "No",
+        "contact.message_delivery_text": data.deliveryTextEnabled ? data.deliveryText || "Yes" : "No",
         "contact.caller_needs_assistance": data.callerNeedsAssistance,
         "contact.booking_system": data.bookingSystem,
         "contact.ref_google_business": data.refGoogleBusinessUrl,
@@ -181,14 +209,14 @@ const Index = () => {
     }).catch(() => {});
 
     toast.success("Form submitted successfully!");
-
+    navigate("/thank-you", { state: { snapshotUrl: submissionUrl, snapshotData: data } });
   };
 
   useEffect(() => {
     try {
       const params = new URLSearchParams(window.location.search);
       const snapshotId = params.get("snapshot");
-      const stateSnapshot = null;
+      const stateSnapshot = location.state?.snapshotData;
       
       if (stateSnapshot) {
         form.reset(stateSnapshot);
@@ -206,16 +234,14 @@ const Index = () => {
         }
       }
 
-      const saved = localStorage.getItem("ansera_form_data_v2");
-      if (saved && !isReadOnly) {
-        form.reset(JSON.parse(saved));
-      }
+      // Auto-fill removed to ensure the form starts completely blank
+      // Users can still use the "Quick-Fill" button if they want to restore their data
     } catch (e) {}
-  }, [form]);
+  }, [form, location.search, location.state]);
 
   useEffect(() => {
     const subscription = form.watch((value) => {
-      try { localStorage.setItem("ansera_form_data_v2", JSON.stringify(value)); } catch (e) {}
+      try { localStorage.setItem("ansera_form_data_v4", JSON.stringify(value)); } catch (e) {}
     });
     return () => subscription.unsubscribe();
   }, [form]);
@@ -228,32 +254,39 @@ const Index = () => {
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
+  const inputClasses = "flex h-8 w-full border border-[#ccc] bg-white px-2.5 py-2 text-[11px] text-[#333] outline-none focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E] transition-colors rounded-[3px]";
+
   return (
     <div className="min-h-screen bg-[#EBEBEB] py-4 font-sans text-sm">
-      <div className="mx-auto max-w-5xl bg-white shadow-xl">
+      <div className="mx-auto max-w-5xl bg-white shadow-xl rounded-[4px] overflow-hidden">
         {/* Header */}
-        <header className="flex items-center justify-between border-b-4 border-[#C8102E] px-8 py-3">
+        <header className="flex items-center justify-between border-b-4 border-[#C8102E] px-8 py-3 bg-white">
           <div className="flex items-center gap-4">
             <img src="https://vibe.filesafe.space/1778392325118817481/attachments/3bd1338d-c721-4458-a57a-7da838dbf84e.jpg" alt="Otto Growth Labs" className="h-16 object-contain" />
             <div className="flex flex-col justify-center">
               <h1 className="text-sm font-bold tracking-wider text-gray-900 leading-tight">OTTO GROWTH LABS</h1>
-              <p className="text-xs text-[#C8102E] leading-tight">Ansera™ AI Phone Agent</p>
+              <p className="text-xs text-[#C8102E] font-semibold leading-tight">Ansera™ AI Phone Agent</p>
             </div>
           </div>
           <div className="text-right flex flex-col justify-center items-end">
             <div className="flex gap-2 mb-2 print:hidden">
+              {!isReadOnly && (
+                <Button type="button" variant="outline" size="sm" className="h-7 text-[10px] uppercase tracking-wider border-[#CFA911] text-[#CFA911] hover:bg-[#CFA911] hover:text-white" onClick={saveForLater}>
+                  Save Progress
+                </Button>
+              )}
               <Button type="button" variant="outline" size="sm" className="h-7 text-[10px] uppercase tracking-wider" onClick={() => window.print()}>
                 Print Form
               </Button>
             </div>
-            <p className="text-lg font-bold text-[#C8102E] leading-tight">559.801.1235</p>
-            <p className="text-xs text-gray-600 leading-tight mt-1">Hello@OttoGrowthLabs.com</p>
+            <p className="text-lg font-bold text-[#C8102E] leading-tight">775.429.7900</p>
+            <p className="text-xs text-gray-600 leading-tight mt-1 font-medium">Hello@OttoGrowthLabs.com</p>
           </div>
         </header>
 
-        <div className="bg-[#333333] px-8 py-2 text-center text-white">
-          <h2 className="text-xl font-bold tracking-widest text-[#FFC72C]">ANSERA™ CLIENT INTAKE FORM</h2>
-          <p className="text-xs text-gray-300">Please complete all required fields. Your information helps us prepare the right solution for your business.</p>
+        <div className="bg-[#333333] px-8 py-2.5 text-center text-white border-b border-[#222]">
+          <h2 className="text-xl font-bold tracking-widest text-[#FFC72C] mb-0.5">ANSERA™ CLIENT INTAKE FORM</h2>
+          <p className="text-xs text-gray-300 font-medium">Please complete all required fields. Your information helps us prepare the right solution for your business.</p>
         </div>
 
         {isReadOnly && (
@@ -268,53 +301,68 @@ const Index = () => {
           </div>
         )}
 
-        <form onSubmit={form.handleSubmit(onSubmit)} className={`px-8 py-3 space-y-3 ${isReadOnly ? '[&_input]:pointer-events-none [&_textarea]:pointer-events-none [&_select]:pointer-events-none [&_button]:pointer-events-none [&_label]:pointer-events-none opacity-95' : ''}`}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className={`px-8 py-4 space-y-4 ${isReadOnly ? '[&_input]:pointer-events-none [&_textarea]:pointer-events-none [&_select]:pointer-events-none [&_button]:pointer-events-none [&_label]:pointer-events-none opacity-95' : ''}`}>
           
+          {hasLatest && !isReadOnly && (
+            <div className="bg-[#f8f9fa] border border-[#e9ecef] p-3 flex items-center justify-between rounded">
+              <span className="text-[11px] text-[#6c757d] font-bold uppercase tracking-wider">Returning client?</span>
+              <button type="button" onClick={quickFill} className="text-[#C8102E] text-[11px] font-bold uppercase tracking-wider hover:underline">
+                Load Last Submission (Quick-Fill)
+              </button>
+            </div>
+          )}
+
           {/* Section 1 */}
           <section>
-            <div className="mb-2 flex items-center gap-2 bg-[#333333] px-3 py-1.5 text-white">
-              <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold">1</span>
+            <div className="mb-2 flex items-center gap-2 bg-[#333333] px-3 py-1.5 text-white rounded-sm">
+              <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold rounded-[2px]">1</span>
               <h3 className="text-sm font-bold tracking-widest uppercase">Contact & Business Information</h3>
             </div>
             
-            <div className="grid grid-cols-1 gap-x-4 gap-y-1.5 md:grid-cols-2">
-              <div className="space-y-0.5">
+            <div className="grid grid-cols-1 gap-x-4 gap-y-2 md:grid-cols-2">
+              <div className="space-y-1">
                 <TooltipLabel tooltip="The exact legal or DBA name callers know you by.">* COMPANY NAME</TooltipLabel>
-                <Input {...form.register("companyName")} placeholder="As callers know it" className="h-7 text-xs bg-gray-50 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E]" />
+                <Input {...form.register("companyName")} placeholder="As callers know it" className={inputClasses} />
+                {form.formState.errors.companyName && <p className="text-red-500 text-[10px]">{form.formState.errors.companyName.message}</p>}
               </div>
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 <TooltipLabel tooltip="The primary point of contact for this account.">* CONTACT NAME</TooltipLabel>
-                <Input {...form.register("contactName")} placeholder="Your full name" className="h-7 text-xs bg-gray-50 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E]" />
+                <Input {...form.register("contactName")} placeholder="Your full name" className={inputClasses} />
+                {form.formState.errors.contactName && <p className="text-red-500 text-[10px]">{form.formState.errors.contactName.message}</p>}
               </div>
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 <TooltipLabel tooltip="Where we should send your proposal.">* EMAIL ADDRESS</TooltipLabel>
-                <Input {...form.register("email")} type="email" placeholder="your@email.com" className="h-7 text-xs bg-gray-50 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E]" />
+                <Input {...form.register("email")} type="email" placeholder="your@email.com" className={inputClasses} />
+                {form.formState.errors.email && <p className="text-red-500 text-[10px]">{form.formState.errors.email.message}</p>}
               </div>
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 <TooltipLabel tooltip="Used strictly for order updates.">SECONDARY EMAIL ADDRESS</TooltipLabel>
-                <Input {...form.register("secondaryEmail")} type="email" placeholder="updates@yourbusiness.com" className="h-7 text-xs bg-gray-50 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E]" />
+                <Input {...form.register("secondaryEmail")} type="email" placeholder="updates@yourbusiness.com" className={inputClasses} />
               </div>
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 <TooltipLabel tooltip="Main business number.">* PRIMARY PHONE</TooltipLabel>
-                <Input {...form.register("primaryPhone")} placeholder="775.429.7900" className="h-7 text-xs bg-gray-50 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E]" />
+                <Input {...form.register("primaryPhone")} placeholder="775.429.7900" className={inputClasses} />
+                {form.formState.errors.primaryPhone && <p className="text-red-500 text-[10px]">{form.formState.errors.primaryPhone.message}</p>}
               </div>
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 <TooltipLabel tooltip="Alternate number.">SECONDARY PHONE</TooltipLabel>
-                <Input {...form.register("secondaryPhone")} placeholder="775.429.7900" className="h-7 text-xs bg-gray-50 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E]" />
+                <Input {...form.register("secondaryPhone")} placeholder="775.429.7900" className={inputClasses} />
               </div>
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 <TooltipLabel tooltip="Core industry.">PRIMARY BUSINESS TYPE</TooltipLabel>
-                <Input {...form.register("primaryBusinessType")} placeholder="e.g. Dental Office" className="h-7 text-xs bg-gray-50 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E]" />
+                <Input {...form.register("primaryBusinessType")} placeholder="e.g. Dental Office" className={inputClasses} />
               </div>
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 <TooltipLabel tooltip="Main website URL.">WEBSITE URL</TooltipLabel>
-                <Input {...form.register("websiteUrl")} placeholder="https://www.yourbusiness.com" className="h-7 text-xs bg-gray-50 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E]" />
+                <Input {...form.register("websiteUrl")} type="url" placeholder="https://www.yourbusiness.com" className={inputClasses} />
               </div>
             </div>
 
-            <div className="mt-2 grid grid-cols-1 gap-2.5 md:grid-cols-2">
+            <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
               <div>
-                <div className="mb-1 text-[9px] font-semibold uppercase tracking-wider text-gray-600">Social Media Profiles</div>
+                <div className="mb-1 text-[10px] font-bold uppercase tracking-[0.07em] text-[#555]">
+                  Social Media Profiles <span className="text-[9px] text-[#aaa] normal-case tracking-normal font-normal">(fill in what applies)</span>
+                </div>
                 <div className="space-y-1">
                   {[
                     { id: "socialFacebook", icon: "https://vibe.filesafe.space/1778392325118817481/attachments/fb.svg", placeholder: "Facebook URL" },
@@ -324,27 +372,31 @@ const Index = () => {
                     { id: "socialOther1", icon: "https://vibe.filesafe.space/1778392325118817481/attachments/link.svg", placeholder: "Other URL" },
                     { id: "socialOther2", icon: "https://vibe.filesafe.space/1778392325118817481/attachments/link.svg", placeholder: "Other URL" }
                   ].map(s => (
-                    <div key={s.id} className="flex items-center gap-2 rounded-[3px] border border-gray-200 bg-gray-50 px-2.5 py-1.5 focus-within:bg-[#fff5f7] focus-within:border-[#C8102E] focus-within:ring-1 focus-within:ring-[#C8102E]">
-                      <img src={s.icon} className="h-4 w-4 shrink-0" alt="" />
-                      <input {...form.register(s.id as any)} placeholder={s.placeholder} className="w-full bg-transparent text-[11px] outline-none" />
+                    <div key={s.id} className="flex items-center gap-2 rounded-[3px] border border-[#ddd] bg-[#fafafa] px-2 py-1 focus-within:bg-[#fff5f7] focus-within:border-[#C8102E] transition-colors">
+                      <img src={s.icon} className="h-3.5 w-3.5 shrink-0" alt="" />
+                      <input type="url" {...form.register(s.id as any)} placeholder={s.placeholder} className="w-full bg-transparent text-[11px] outline-none text-[#333]" />
                     </div>
                   ))}
                 </div>
               </div>
+              
               <div>
-                <div className="mb-1 text-[9px] font-semibold uppercase tracking-wider text-gray-600">Hours of Operation</div>
-                <div className="border border-[#E0DED8] rounded overflow-hidden">
+                <div className="mb-1 text-[10px] font-bold uppercase tracking-[0.07em] text-[#555]">Hours of Operation</div>
+                <div className="border border-[#E0DED8] rounded-[3px] overflow-hidden bg-white">
+                  <div className="grid grid-cols-[64px_1fr_1fr_48px] gap-1 px-2 py-1 bg-[#f0efed] border-b border-[#E0DED8] text-[9px] font-bold text-[#777] uppercase tracking-wider">
+                    <div>Day</div><div>Opens</div><div>Closes</div><div className="text-center">Closed</div>
+                  </div>
                   {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day, i) => (
-                    <div key={day} className={`grid grid-cols-[64px_1fr_1fr_48px] items-center gap-1 px-1.5 py-1 ${i !== 6 ? 'border-b border-[#f0efed]' : ''} bg-white`}>
-                      <div className="font-semibold text-[10px] text-gray-700">{day}</div>
-                      <select className="rounded-[2px] border border-gray-200 bg-white px-1 py-0.5 text-[9px] text-gray-800 outline-none focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E]">
+                    <div key={day} className={`grid grid-cols-[64px_1fr_1fr_48px] items-center gap-1 px-2 py-1 ${i !== 6 ? 'border-b border-[#f0efed]' : ''}`}>
+                      <div className="font-semibold text-[10px] text-[#444]">{day}</div>
+                      <select className="rounded-[2px] border border-[#ddd] bg-white px-1 py-0.5 text-[9px] text-[#333] outline-none focus:border-[#C8102E] w-full">
                         <option>--</option><option>8:00 AM</option><option>9:00 AM</option>
                       </select>
-                      <select className="rounded-[2px] border border-gray-200 bg-white px-1 py-0.5 text-[9px] text-gray-800 outline-none focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E]">
+                      <select className="rounded-[2px] border border-[#ddd] bg-white px-1 py-0.5 text-[9px] text-[#333] outline-none focus:border-[#C8102E] w-full">
                         <option>--</option><option>5:00 PM</option><option>6:00 PM</option>
                       </select>
-                      <label className="flex cursor-pointer items-center justify-center gap-1 text-[9px] text-gray-400">
-                        <input type="checkbox" className="h-3 w-3 accent-[#C8102E]" />
+                      <label className="flex cursor-pointer items-center justify-center gap-1 text-[9px] text-[#999] hover:text-[#555]">
+                        <input type="checkbox" className="h-[10px] w-[10px] accent-[#C8102E] cursor-pointer" />
                         Closed
                       </label>
                     </div>
@@ -353,32 +405,46 @@ const Index = () => {
               </div>
             </div>
 
-            <div className="mt-2 grid grid-cols-1 gap-2 md:grid-cols-3">
-              {['hipaaRegulated', 'discloseAi', 'minorsMayCall'].map((f) => (
-                <div key={f} className="rounded-[3px] border border-[#e8e6e0] bg-gray-50 p-1.5">
-                  <div className="mb-1 text-[9px] font-semibold uppercase tracking-wider text-gray-600">{f === 'hipaaRegulated' ? 'HIPAA Regulated?' : f === 'discloseAi' ? 'Disclose AI to Callers?' : 'Minors May Call?'}</div>
-                  <RadioGroup onValueChange={(val) => form.setValue(f as any, val)} value={form.watch(f as any)} className="flex items-center gap-3">
-                    <div className="flex items-center gap-1">
-                      <RadioGroupItem value="yes" id={`${f}-yes`} className="h-3 w-3 text-[#C8102E] border-gray-400" />
-                      <Label htmlFor={`${f}-yes`} className="text-[10px] font-normal text-gray-700 cursor-pointer">Yes</Label>
+            <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-3">
+              {[
+                { id: 'hipaaRegulated', label: 'HIPAA Regulated?' },
+                { id: 'discloseAi', label: 'Disclose AI to Callers?' },
+                { id: 'minorsMayCall', label: 'Minors May Call?' }
+              ].map((f) => (
+                <div key={f.id} className="rounded-[3px] border border-[#e8e6e0] bg-[#fafafa] p-2">
+                  <div className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.06em] text-[#555]">{f.label}</div>
+                  <RadioGroup 
+                    value={form.watch(f.id as any)} 
+                    onValueChange={(val) => form.setValue(f.id as any, val)}
+                    className="flex items-center gap-4"
+                  >
+                    <div className="flex items-center space-x-1.5">
+                      <RadioGroupItem value="Yes" id={`${f.id}-yes`} className="w-3.5 h-3.5 text-[#C8102E] border-gray-300" />
+                      <Label htmlFor={`${f.id}-yes`} className="text-[11px] text-[#444] cursor-pointer font-normal">Yes</Label>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <RadioGroupItem value="no" id={`${f}-no`} className="h-3 w-3 text-[#C8102E] border-gray-400" />
-                      <Label htmlFor={`${f}-no`} className="text-[10px] font-normal text-gray-700 cursor-pointer">No</Label>
+                    <div className="flex items-center space-x-1.5">
+                      <RadioGroupItem value="No" id={`${f.id}-no`} className="w-3.5 h-3.5 text-[#C8102E] border-gray-300" />
+                      <Label htmlFor={`${f.id}-no`} className="text-[11px] text-[#444] cursor-pointer font-normal">No</Label>
                     </div>
                   </RadioGroup>
                 </div>
               ))}
             </div>
+            
+            {form.watch("hipaaRegulated") === "Yes" && (
+              <div className="mt-2 p-2 bg-[#fff5f7] border border-red-200 rounded-[3px] text-[10px] text-[#666] leading-relaxed">
+                ⚕️ AI disclosure to callers is mandatory for HIPAA-regulated businesses and cannot be waived.
+              </div>
+            )}
           </section>
 
           {/* Section 2 */}
           <section>
-            <div className="mb-2 flex items-center gap-2 bg-[#333333] px-3 py-1.5 text-white">
-              <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold">2</span>
+            <div className="mb-2 flex items-center gap-2 bg-[#333333] px-3 py-1.5 text-white rounded-sm">
+              <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold rounded-[2px]">2</span>
               <h3 className="text-sm font-bold tracking-widest uppercase">Call Flow & Priority Situations</h3>
             </div>
-            <div className="grid grid-cols-1 gap-x-4 gap-y-1.5 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-x-4 gap-y-3 md:grid-cols-2">
               {[
                 { id: "topReasons", label: "1. TOP REASONS PEOPLE CALL" },
                 { id: "questionsAskedMost", label: "2. QUESTIONS CALLERS ASK MOST" },
@@ -387,17 +453,19 @@ const Index = () => {
                 { id: "callsNeverAlone", label: "5. CALLS NEVER TO HANDLE ALONE" },
                 { id: "commonFrustrations", label: "6. COMMON CALLER FRUSTRATIONS" }
               ].map((q) => (
-                <div key={q.id} className="space-y-0.5">
+                <div key={q.id} className="space-y-1">
                   <TooltipLabel>{q.label}</TooltipLabel>
-                  <Textarea {...form.register(q.id as any)} className="h-7 min-h-[28px] resize-y text-xs bg-gray-50 py-1 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E]" />
+                  <Textarea {...form.register(q.id as any)} className="min-h-[50px] resize-y text-xs bg-gray-50 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E] transition-colors rounded-[3px]" />
                 </div>
               ))}
             </div>
-            <div className="mt-3 grid grid-cols-1 gap-4 md:grid-cols-3">
-              <div className="space-y-0.5">
+            <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className="space-y-1">
                 <TooltipLabel>RINGS BEFORE PICKUP</TooltipLabel>
-                <Select onValueChange={(val) => form.setValue("ringsBeforePickup", val)} value={form.watch("ringsBeforePickup")}>
-                  <SelectTrigger className="h-7 text-xs bg-gray-50 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E]"><SelectValue placeholder="-- Choose --" /></SelectTrigger>
+                <Select value={form.watch("ringsBeforePickup")} onValueChange={(val) => form.setValue("ringsBeforePickup", val)}>
+                  <SelectTrigger className={inputClasses}>
+                    <SelectValue placeholder="-- Choose --" />
+                  </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="1 Ring">1 Ring</SelectItem>
                     <SelectItem value="2 Rings">2 Rings</SelectItem>
@@ -408,10 +476,12 @@ const Index = () => {
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-0.5">
+              <div className="space-y-1">
                 <TooltipLabel>BUSINESS MODEL</TooltipLabel>
-                <Select onValueChange={(val) => form.setValue("businessModel", val)} value={form.watch("businessModel")}>
-                  <SelectTrigger className="h-7 text-xs bg-gray-50 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E]"><SelectValue placeholder="-- Choose --" /></SelectTrigger>
+                <Select value={form.watch("businessModel")} onValueChange={(val) => form.setValue("businessModel", val)}>
+                  <SelectTrigger className={inputClasses}>
+                    <SelectValue placeholder="-- Choose --" />
+                  </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="Customers come to us">Customers come to us</SelectItem>
                     <SelectItem value="Virtual / Online Business">Virtual / Online Business</SelectItem>
@@ -423,68 +493,192 @@ const Index = () => {
 
           {/* Section 3 */}
           <section>
-            <div className="mb-3 flex items-center gap-2 bg-[#333333] px-3 py-1.5 text-white">
-              <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold">3</span>
+            <div className="mb-2 flex items-center gap-2 bg-[#333333] px-3 py-1.5 text-white rounded-sm">
+              <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold rounded-[2px]">3</span>
               <h3 className="text-sm font-bold tracking-widest uppercase">Select Your Ansera™ Plan</h3>
             </div>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-              {['assist', 'elite', 'advanced'].map(plan => (
-                <div key={plan} className={`flex flex-col rounded-md border-2 overflow-hidden transition-all ${form.watch("selectedPlan") === plan ? 'border-[#C8102E] bg-[#fff5f7]' : 'border-[#e0ded8] bg-white'}`}>
-                  <div className={`px-3.5 py-2.5 text-white flex justify-between items-center ${plan === 'assist' ? 'bg-gradient-to-br from-[#6B6B6B] to-[#3A3A3A]' : plan === 'elite' ? 'bg-gradient-to-br from-[#C8102E] to-[#8A0E1F]' : 'bg-gradient-to-br from-[#CFA911] to-[#8A6E00]'}`}>
-                    <span className="text-lg font-bold uppercase">{plan === 'assist' ? 'Assist+' : plan}</span>
-                    <span className="text-[8px] bg-white/20 px-2 py-0.5 rounded-full uppercase font-bold">{plan === 'assist' ? 'Standard' : plan === 'elite' ? 'Most Popular' : 'Your Build'}</span>
+            
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3 items-start">
+              
+              {/* Assist+ Card */}
+              <div className={`border-[2px] rounded-[6px] overflow-hidden transition-all ${form.watch("selectedPlan") === "assist" ? "border-[#C8102E] shadow-md" : "border-[#e0ded8]"}`}>
+                <div className="bg-gradient-to-br from-[#6B6B6B] to-[#3A3A3A] px-3 py-2 flex items-center justify-between">
+                  <div className="text-[16px] font-bold text-white tracking-[0.03em]">ASSIST+</div>
+                  <div className="text-[8px] font-bold tracking-[0.07em] px-2 py-0.5 rounded-[20px] bg-white/20 text-white">STANDARD</div>
+                </div>
+                <div className="p-3 bg-white">
+                  <div className="text-[10px] text-[#888] mb-2 italic leading-[1.4]">Included with your Assist+ plan:</div>
+                  <div className="space-y-1 mb-3">
+                    {["Available to answer inbound calls 24/7", "Personalized greeting using your business name", "Takes messages", "Collects caller name & phone number", "Confirms information back to caller", "Answers basic FAQs", "Provides business hours & location", "Shares current promotions & offers", "Message delivery via email and/or text"].map((f, i) => (
+                      <div key={i} className="flex items-start gap-1.5 py-1 text-[10px] text-[#555] border-b border-[#f5f3ef] leading-[1.4]">
+                        <span className="text-[#C8102E] text-[11px] shrink-0">✓</span>{f}
+                      </div>
+                    ))}
                   </div>
-                  <div className="p-3.5 flex flex-col flex-1">
-                    <div className="flex-1 space-y-1.5 mb-3 text-[10px] text-gray-600">
-                      {plan === 'advanced' ? (
-                        <div className="space-y-1">
-                          {["Rescheduling", "Multi-location Routing", "Service Area Qualification", "Multilingual Support"].map(f => (
-                            <label key={f} className="flex gap-2 items-start cursor-pointer">
-                              <input type="checkbox" className="accent-[#C8102E] mt-0.5" onChange={(e) => {
-                                const current = form.getValues("advancedOptions") || [];
-                                form.setValue("advancedOptions", e.target.checked ? [...current, f] : current.filter(v => v !== f));
-                                if (e.target.checked) form.setValue("selectedPlan", "advanced");
-                              }} />
-                              <span>{f}</span>
-                            </label>
-                          ))}
+                  <Button type="button" variant="outline" onClick={() => form.setValue("selectedPlan", "assist")} className={`w-full h-8 text-[10px] font-bold tracking-[0.06em] uppercase rounded-[3px] transition-colors border-[#C8102E] ${form.watch("selectedPlan") === "assist" ? "bg-[#C8102E] text-white hover:bg-[#a00d25] hover:text-white" : "bg-white text-[#C8102E] hover:bg-[#C8102E] hover:text-white"}`}>
+                    SELECT ASSIST+
+                  </Button>
+                </div>
+              </div>
+
+              {/* Elite Card */}
+              <div className={`border-[2px] rounded-[6px] overflow-hidden transition-all ${form.watch("selectedPlan") === "elite" ? "border-[#C8102E] shadow-md" : "border-[#e0ded8]"}`}>
+                <div className="bg-gradient-to-br from-[#C8102E] to-[#8A0E1F] px-3 py-2 flex items-center justify-between">
+                  <div className="text-[16px] font-bold text-white tracking-[0.03em]">ELITE</div>
+                  <div className="text-[8px] font-bold tracking-[0.07em] px-2 py-0.5 rounded-[20px] bg-white text-[#C8102E]">MOST POPULAR</div>
+                </div>
+                <div className="p-3 bg-white">
+                  <div className="text-[10px] text-[#888] mb-2 italic leading-[1.4]">Ansera™ Elite includes all Assist+ features, and adds:</div>
+                  <div className="space-y-1 mb-3">
+                    {["Advanced FAQs", "Set an appointment", "Schedule estimate appointments", "Schedule & callback scheduling", "Booking confirmation texts to caller", "Appointment reminder texts to caller", "Directions, location details & helpful links via text/email", "Can provide current business promotions and offers", "Message delivery via email AND text", "Urgent call forwarding — one person, immediately at end of call", "Post-call SMS notifications", "Language detection — responds in caller's language", "Payment or purchase links via text and/or email"].map((f, i) => (
+                      <div key={i} className="flex items-start gap-1.5 py-1 text-[10px] text-[#555] border-b border-[#f5f3ef] leading-[1.4]">
+                        <span className="text-[#C8102E] text-[11px] shrink-0">✓</span>{f}
+                      </div>
+                    ))}
+                  </div>
+                  <Button type="button" variant="outline" onClick={() => { form.setValue("selectedPlan", "elite"); form.setValue("advancedOptions", []); }} className={`w-full h-8 text-[10px] font-bold tracking-[0.06em] uppercase rounded-[3px] transition-colors border-[#C8102E] ${form.watch("selectedPlan") === "elite" ? "bg-[#C8102E] text-white hover:bg-[#a00d25] hover:text-white" : "bg-white text-[#C8102E] hover:bg-[#C8102E] hover:text-white"}`}>
+                    SELECT ELITE
+                  </Button>
+                </div>
+              </div>
+
+              {/* Advanced Card */}
+              <div className={`border-[2px] rounded-[6px] overflow-hidden transition-all ${form.watch("selectedPlan") === "advanced" ? "border-[#CFA911] shadow-md" : "border-[#e0ded8]"}`}>
+                <div className="bg-gradient-to-br from-[#CFA911] to-[#8A6E00] px-3 py-2 flex items-center justify-between">
+                  <div className="text-[16px] font-bold text-white tracking-[0.03em]">ADVANCED</div>
+                  <div className="text-[8px] font-bold tracking-[0.07em] px-2 py-0.5 rounded-[20px] bg-white/25 text-white">YOUR BUILD</div>
+                </div>
+                <div className="p-3 bg-white">
+                  <div className="text-[10px] text-[#888] mb-1.5 italic leading-[1.4]">Everything in Elite, plus what you choose below:</div>
+                  <div className="text-[9px] text-[#C8102E] font-bold uppercase tracking-[0.05em] mb-2">Check all you'd like to explore:</div>
+                  
+                  <div className="space-y-0 mb-2">
+                    {[
+                      { id: "Appointment rescheduling", desc: "" },
+                      { id: "Multi-location call routing", desc: "Direct callers to the right office or location" },
+                      { id: "Service area qualification", desc: "Confirm if caller is within your service area" },
+                      { id: "New vs. existing caller sorting", desc: "Each welcomed in the way that best serves them" },
+                      { id: "Forms or documents via text and/or email", desc: "New client forms, waivers, info packets" },
+                      { id: "Multilingual support", desc: "Additional language configuration and routing" }
+                    ].map((opt, i) => (
+                      <label key={i} className="flex items-start gap-2 py-1.5 border-b border-[#f8f6f2] cursor-pointer hover:bg-gray-50">
+                        <Checkbox 
+                          className="mt-0.5 border-gray-300 text-[#C8102E] focus:ring-[#C8102E]"
+                          checked={form.watch("advancedOptions")?.includes(opt.id)}
+                          onCheckedChange={(checked) => {
+                            const current = form.getValues("advancedOptions") || [];
+                            form.setValue("advancedOptions", checked ? [...current, opt.id] : current.filter(v => v !== opt.id));
+                            if (checked) form.setValue("selectedPlan", "advanced");
+                          }}
+                        />
+                        <div className="leading-[1.2]">
+                          <div className="text-[10px] text-[#555]">{opt.id}</div>
+                          {opt.desc && <div className="text-[8px] text-[#aaa] mt-0.5">{opt.desc}</div>}
                         </div>
-                      ) : (
-                        <>
-                          <div className="flex gap-1.5"><span className="text-[#C8102E]">✓</span> 24/7 Call Handling</div>
-                          <div className="flex gap-1.5"><span className="text-[#C8102E]">✓</span> Personalized Greeting</div>
-                          <div className="flex gap-1.5"><span className="text-[#C8102E]">✓</span> Instant Notifications</div>
-                          {plan === 'elite' && <div className="flex gap-1.5"><span className="text-[#C8102E]">✓</span> Language Detection</div>}
-                        </>
-                      )}
-                    </div>
-                    <Button type="button" onClick={() => form.setValue("selectedPlan", plan)} className={`w-full text-[11px] font-bold uppercase py-2 h-auto ${form.watch("selectedPlan") === plan ? 'bg-[#C8102E] text-white' : 'bg-white text-[#C8102E] border-2 border-[#C8102E] hover:bg-[#C8102E] hover:text-white'}`}>
-                      Select {plan === 'assist' ? 'Assist+' : plan}
-                    </Button>
+                      </label>
+                    ))}
+                  </div>
+                  
+                  <div className="mt-2 p-1.5 bg-[#fff5f7] border border-red-100 rounded-[3px] text-[8px] text-[#666] leading-[1.4] mb-2">
+                    Some selections require additional details. We'll send a follow-up form for those.
+                  </div>
+
+                  <Button type="button" variant="outline" onClick={() => form.setValue("selectedPlan", "advanced")} className={`w-full h-8 text-[10px] font-bold tracking-[0.06em] uppercase rounded-[3px] transition-colors border-[#C8102E] ${form.watch("selectedPlan") === "advanced" ? "bg-[#C8102E] text-white hover:bg-[#a00d25] hover:text-white" : "bg-white text-[#C8102E] hover:bg-[#C8102E] hover:text-white"}`}>
+                    SELECT ADVANCED
+                  </Button>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          {/* Section 4 & 5 Combined Layout */}
+          <section>
+            <div className="mb-2 flex items-center gap-2 bg-[#333333] px-3 py-1.5 text-white rounded-sm">
+              <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold rounded-[2px]">4</span>
+              <h3 className="text-sm font-bold tracking-widest uppercase">Voice Persona & Preferences</h3>
+            </div>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div className="space-y-3">
+                <div className="space-y-1">
+                  <TooltipLabel>VOICE GENDER</TooltipLabel>
+                  <Select value={form.watch("voiceGender")} onValueChange={(val) => form.setValue("voiceGender", val)}>
+                    <SelectTrigger className={inputClasses}>
+                      <SelectValue placeholder="-- Choose --" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Female">Female</SelectItem>
+                      <SelectItem value="Male">Male</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="space-y-1">
+                  <TooltipLabel tooltip="Give your AI agent a name.">VOICE PERSONA NAME (OPTIONAL)</TooltipLabel>
+                  <Input {...form.register("voicePersonaName")} placeholder="e.g. Sarah, Alex" className={inputClasses} />
+                </div>
+                <div className="space-y-1">
+                  <TooltipLabel>LANGUAGES NEEDED</TooltipLabel>
+                  <Input {...form.register("languagesNeeded")} placeholder="e.g. English, Spanish" className={inputClasses} />
+                  <label className="flex items-center gap-2 mt-1.5 text-[10px] text-[#555] cursor-pointer">
+                    <Checkbox {...form.register("autoDetectLanguage")} className="border-gray-300 text-[#C8102E]" />
+                    Auto-detect caller language
+                  </label>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <div className="space-y-1">
+                  <TooltipLabel>WHEN A CALLER NEEDS ASSISTANCE</TooltipLabel>
+                  <div className="space-y-2 mt-1 border border-[#e0ded8] p-2.5 rounded-[3px] bg-[#fafafa]">
+                    <RadioGroup value={form.watch("callerNeedsAssistance")} onValueChange={(val) => form.setValue("callerNeedsAssistance", val)}>
+                      {["Send to voicemail", "Forward to another number", "Tell them to call back later"].map(opt => (
+                        <div key={opt} className="flex items-center space-x-2">
+                          <RadioGroupItem value={opt} id={`assist-${opt}`} className="w-3.5 h-3.5 text-[#C8102E] border-gray-300" />
+                          <Label htmlFor={`assist-${opt}`} className="text-[11px] text-[#444] cursor-pointer font-normal">{opt}</Label>
+                        </div>
+                      ))}
+                    </RadioGroup>
                   </div>
                 </div>
-              ))}
+                <div className="space-y-1">
+                  <TooltipLabel>MESSAGE DELIVERY PREFERENCE</TooltipLabel>
+                  <div className="space-y-2 mt-1">
+                    <label className="flex items-center gap-2 text-[11px] text-[#555] cursor-pointer">
+                      <Checkbox {...form.register("deliveryEmailEnabled")} className="border-gray-300 text-[#C8102E]" /> Email
+                    </label>
+                    {form.watch("deliveryEmailEnabled") && (
+                      <Input type="email" {...form.register("deliveryEmail")} placeholder="Email address for messages" className={`${inputClasses} ml-5 w-[calc(100%-20px)]`} />
+                    )}
+                    
+                    <label className="flex items-center gap-2 text-[11px] text-[#555] cursor-pointer">
+                      <Checkbox {...form.register("deliveryTextEnabled")} className="border-gray-300 text-[#C8102E]" /> Text Message (SMS)
+                    </label>
+                    {form.watch("deliveryTextEnabled") && (
+                      <Input type="text" {...form.register("deliveryText")} placeholder="Phone number for texts" className={`${inputClasses} ml-5 w-[calc(100%-20px)]`} />
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </section>
 
           {/* Section 6 */}
           <section>
-            <div className="mb-2 flex items-center gap-2 bg-[#333333] px-3 py-1.5 text-white">
-              <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold">6</span>
+            <div className="mb-2 flex items-center gap-2 bg-[#333333] px-3 py-1.5 text-white rounded-sm">
+              <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold rounded-[2px]">5</span>
               <h3 className="text-sm font-bold tracking-widest uppercase">Reference Materials</h3>
             </div>
             
-            <p className="text-[10px] color-[#888] italic mb-2 px-1">
+            <p className="text-[10px] text-[#888] italic mb-2 px-1">
               All items in this section are optional. Share what you have today — more can always be added later.
             </p>
 
-            <div className="bg-[#fffbea] border-l-4 border-[#CFA911] p-3 text-[11px] text-[#555] leading-relaxed mb-4 flex items-start gap-2">
-              <div className="flex-1">
-                <strong>The more you share, the smarter Ansera™ becomes.</strong> Upload whatever applies. Can't upload? Paste a link, upload a ZIP file, or just check the box and we'll reach out. We'll even take a thumb drive or a good old floppy disk 💾 — however it gets to us, we'll make it work.
-              </div>
+            <div className="bg-[#fffbea] border-l-[4px] border-[#CFA911] p-2.5 text-[11px] text-[#555] leading-[1.5] mb-3">
+              <strong>The more you share, the smarter Ansera™ becomes.</strong> Upload whatever applies. Can't upload? Paste a link, upload a ZIP file, or just check the box and we'll reach out. We'll even take a thumb drive or a good old floppy disk 💾 — however it gets to us, we'll make it work.
             </div>
 
-            <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
               {[
                 { id: "refGoogleBusiness", label: "Google Business Profile URL", type: "url", placeholder: "https://g.co/kgs/yourprofile" },
                 { id: "refSop", label: "Standard Operating Procedures", sub: "Policies affecting how calls are handled", type: "file" },
@@ -493,35 +687,34 @@ const Index = () => {
                 { id: "refStaff", label: "Staff Directory — Key Personnel", sub: "Names of staff who may receive messages", type: "text" },
                 { id: "refOther", label: "Other", sub: "Anything else that helps Ansera™ serve your callers", type: "file_text_desc" }
               ].map(ref => (
-                <div key={ref.id} className={`flex flex-col gap-2 rounded border p-3 transition-all ${form.watch(ref.id as any) ? 'border-[#CFA911] bg-[#fffbea]' : 'border-[#e0ded8] bg-[#fafafa]'}`}>
+                <div key={ref.id} className={`flex flex-col gap-2 rounded-[4px] border p-2.5 transition-all ${form.watch(ref.id as any) ? 'border-[#CFA911] bg-[#fffbea]' : 'border-[#e0ded8] bg-[#fafafa]'}`}>
                   <div className="flex items-start gap-2">
                     <Checkbox 
                       id={ref.id} 
-                      onCheckedChange={(c) => form.setValue(ref.id as any, c === true)} 
-                      checked={form.watch(ref.id as any)}
-                      className="mt-0.5 data-[state=checked]:bg-[#C8102E] data-[state=checked]:border-[#C8102E]" 
+                      checked={form.watch(ref.id as any) || false}
+                      onCheckedChange={(checked) => form.setValue(ref.id as any, checked === true)}
+                      className="mt-0.5 border-gray-300 text-[#C8102E] focus:ring-[#C8102E] shrink-0" 
                     />
                     <div className="flex-1">
-                      <Label htmlFor={ref.id} className="text-[12px] font-bold text-[#333] cursor-pointer block leading-tight">{ref.label}</Label>
-                      {ref.sub && <p className="text-[10px] text-gray-400 mt-0.5">{ref.sub}</p>}
+                      <Label htmlFor={ref.id} className="text-[11px] font-bold text-[#333] cursor-pointer block leading-tight">{ref.label}</Label>
+                      {ref.sub && <p className="text-[9px] text-[#888] mt-0.5 leading-tight">{ref.sub}</p>}
                     </div>
                   </div>
 
                   {form.watch(ref.id as any) && (
                     <div className="mt-2 space-y-2">
                       {ref.type === "url" && (
-                        <Input {...form.register(`${ref.id}Url` as any)} placeholder={ref.placeholder} className="h-7 text-xs bg-white" />
+                        <Input type="url" {...form.register(`${ref.id}Url` as any)} placeholder={ref.placeholder} className={inputClasses} />
                       )}
 
                       {(ref.type === "file" || ref.type === "file_text" || ref.type === "file_text_desc") && (
-                        <div className="space-y-1.5">
+                        <div className="space-y-2">
                           {ref.type === "file_text_desc" && (
-                            <Input {...form.register("refOtherDesc")} placeholder="Describe what you're providing:" className="h-7 text-xs bg-white mb-1" />
+                            <Input type="text" {...form.register("refOtherDesc")} placeholder="Describe what you're providing:" className={inputClasses} />
                           )}
                           
                           <label 
-                            htmlFor={`${ref.id}-file-input`}
-                            className="block cursor-pointer rounded border-2 border-dashed border-gray-300 bg-white p-3 text-center text-[10px] text-gray-400 hover:bg-gray-50 transition-colors"
+                            className="block cursor-pointer rounded-[3px] border-[1.5px] border-dashed border-[#ddd] bg-white p-2 text-center text-[10px] text-[#aaa] hover:bg-gray-50 transition-colors"
                             onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
                             onDrop={(e) => {
                               e.preventDefault(); e.stopPropagation();
@@ -532,9 +725,8 @@ const Index = () => {
                               }
                             }}
                           >
-                            ⇧ Upload or drag & drop
+                            <span className="text-[12px]">⇧</span> Upload or drag & drop
                             <input 
-                              id={`${ref.id}-file-input`}
                               type="file" 
                               className="hidden" 
                               onChange={(e) => {
@@ -547,17 +739,17 @@ const Index = () => {
                             />
                           </label>
                           {form.watch(`${ref.id}File` as any) && (
-                            <div className="text-[10px] text-green-600 font-bold flex items-center gap-1.5 bg-green-50 p-1.5 rounded border border-green-100">
-                              <span className="text-xs">📎</span> {form.watch(`${ref.id}File` as any)}
+                            <div className="text-[10px] text-green-700 font-bold flex items-center gap-1.5 bg-green-50 p-1.5 rounded border border-green-200">
+                              <span className="text-[12px]">📎</span> {form.watch(`${ref.id}File` as any)}
                             </div>
                           )}
-                          <Input {...form.register(`${ref.id}Url` as any)} placeholder="Or paste a link" className="h-7 text-xs bg-white" />
+                          <Input type="url" {...form.register(`${ref.id}Url` as any)} placeholder="Or paste a link" className={inputClasses} />
                           
                           {(ref.type === "file_text" || ref.type === "file_text_desc") && (
                             <Textarea 
                               {...form.register(`${ref.id}Text` as any)} 
                               placeholder={ref.id === 'refScripts' ? "Or paste scripts here..." : "Or paste content here..."} 
-                              className="min-h-[60px] text-xs bg-white py-2" 
+                              className={`${inputClasses} min-h-[50px] resize-y`} 
                             />
                           )}
                         </div>
@@ -567,7 +759,7 @@ const Index = () => {
                         <Textarea 
                           {...form.register(`${ref.id}Text` as any)} 
                           placeholder="List key staff names, one per line" 
-                          className="min-h-[60px] text-xs bg-white py-2" 
+                          className={`${inputClasses} min-h-[60px] resize-y`} 
                         />
                       )}
                     </div>
@@ -576,43 +768,57 @@ const Index = () => {
               ))}
             </div>
 
-            <div className="mt-4 bg-[#fffbea] border-l-4 border-[#CFA911] p-2.5 text-[10px] text-[#666] leading-relaxed flex items-center gap-2">
-              <span className="text-sm">📋</span>
+            <div className="mt-3 bg-[#fffbea] border-l-[3px] border-[#CFA911] p-2 text-[9px] text-[#666] leading-[1.6] flex items-start gap-1.5">
+              <span className="text-[12px]">📋</span>
               <div>
                 <strong>Upload limits:</strong> Max 50MB per file. ZIP files up to 100MB. For anything larger, paste a link or email us. Accepted: PDF, Word, Excel, PowerPoint, PNG, JPG, GIF, MP3, WAV, MP4, MOV, ZIP and more.
               </div>
             </div>
 
-            <div className="mt-4">
+            <div className="mt-4 space-y-1">
               <TooltipLabel tooltip="Just the name for now — we'll follow up if we need access details.">Booking or Scheduling Calendar System</TooltipLabel>
-              <Input {...form.register("bookingSystem")} placeholder="e.g. Google Calendar, GHL, Calendly, Jane App, Acuity, SimplyBook, Vagaro, Mindbody..." className="h-8 text-xs bg-white mt-1" />
+              <Input type="text" {...form.register("bookingSystem")} placeholder="e.g. Google Calendar, GHL, Calendly, Jane App, Acuity, SimplyBook, Vagaro, Mindbody..." className={inputClasses} />
+            </div>
+            
+            <div className="mt-4 space-y-1">
+              <TooltipLabel>ANYTHING ELSE WE SHOULD KNOW?</TooltipLabel>
+              <Textarea {...form.register("anythingElse")} className={`${inputClasses} min-h-[60px] resize-y`} />
             </div>
           </section>
 
           {/* Submit Section */}
           {!isReadOnly && (
-            <section className="bg-[#333333] p-6 text-white rounded-md space-y-6">
-              <div className="flex gap-3 items-start">
-                <Checkbox id="auth" className="mt-1 border-white data-[state=checked]:bg-white data-[state=checked]:text-black" onCheckedChange={(c) => form.setValue("authorization", c === true)} />
-                <Label htmlFor="auth" className="text-[10px] leading-relaxed text-gray-300">By submitting this form, I expressing interest in Ansera™ services offered by Otto Growth Labs. This is not a binding agreement.</Label>
-              </div>
-              <Button type="submit" className="w-full h-14 bg-[#C8102E] hover:bg-[#a00d25] font-bold text-lg tracking-wider">SUBMIT INTAKE FORM</Button>
-              <div className="text-center text-[10px] text-gray-400">
-                Call us: <span className="text-[#FFC72C] font-bold">559.801.1235</span><br/>
-                <span className="text-[#FFC72C] font-bold uppercase tracking-wider">Dedicated Ansera™ Number: 775.429.7900</span>
+            <section className="bg-[#333333] p-5 text-white rounded-[4px] space-y-5 mt-6 shadow-md">
+              <label className="flex gap-3 items-start cursor-pointer group">
+                <Checkbox 
+                  checked={form.watch("authorization") || false}
+                  onCheckedChange={(checked) => form.setValue("authorization", checked === true)}
+                  className="mt-0.5 border-gray-400 text-[#C8102E] focus:ring-[#C8102E] data-[state=checked]:bg-[#C8102E] data-[state=checked]:border-[#C8102E]" 
+                />
+                <span className="text-[11px] leading-[1.5] text-gray-300 group-hover:text-white transition-colors">By submitting this form, I am expressing interest in Ansera™ services offered by Otto Growth Labs. This is not a binding agreement.</span>
+              </label>
+              {form.formState.errors.authorization && <p className="text-red-400 text-[10px] font-bold mt-1">{form.formState.errors.authorization.message}</p>}
+              
+              <Button type="submit" className="w-full h-12 bg-[#C8102E] hover:bg-[#a00d25] font-bold text-[14px] tracking-[0.1em] text-white rounded-[4px] transition-colors shadow-lg">
+                SUBMIT INTAKE FORM
+              </Button>
+              
+              <div className="text-center text-[10px] text-gray-400 space-y-1">
+                <div>Call us: <span className="text-[#FFC72C] font-bold">559.801.1235</span></div>
+                <div className="text-[#FFC72C] font-bold uppercase tracking-wider">Dedicated Ansera™ Number: 775.429.7900</div>
               </div>
             </section>
           )}
         </form>
 
-        <footer className="bg-[#222222] py-4 text-center text-[10px] text-gray-500 border-t border-gray-800">
-          <p>www.OttoGrowthLabs.com | Hello@OttoGrowthLabs.com | 559.801.1235</p>
-          <p className="mt-1 uppercase">© Otto Growth Labs. All Rights Reserved. | Ansera™ is a trademark of Otto Growth Labs.</p>
+        <footer className="bg-[#222222] py-4 text-center text-[10px] text-gray-500 border-t border-[#111]">
+          <p className="mb-1">www.OttoGrowthLabs.com | Hello@OttoGrowthLabs.com | 559.801.1235</p>
+          <p className="uppercase tracking-wide text-[8px]">© Otto Growth Labs. All Rights Reserved. | Ansera™ is a trademark of Otto Growth Labs.</p>
         </footer>
       </div>
 
       {showTopBtn && (
-        <button onClick={scrollToTop} className="fixed bottom-6 right-6 bg-[#C8102E] text-white p-3 rounded-full shadow-lg hover:scale-110 transition-all">
+        <button onClick={scrollToTop} className="fixed bottom-6 right-6 bg-[#C8102E] text-white p-3 rounded-full shadow-lg hover:scale-110 transition-all z-50 print:hidden">
           <ArrowUp className="h-5 w-5" />
         </button>
       )}
