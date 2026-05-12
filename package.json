@@ -11,6 +11,7 @@
     "clsx": "latest",
 "tailwind-merge": "latest",
     "lucide-react": "latest",
+    "next-themes": "latest",
     "react": "latest",
     "react-dom": "latest",
     "react-hook-form": "latest",
