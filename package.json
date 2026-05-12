@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "latest",
+    "@radix-ui/react-select": "latest",
     "@radix-ui/react-toast": "latest",
     "@radix-ui/react-tooltip": "latest",
     "@tanstack/react-query": "latest",
