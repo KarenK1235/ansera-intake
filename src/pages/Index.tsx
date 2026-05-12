@@ -444,20 +444,20 @@ const Index = () => {
             </div>
             <div className="grid grid-cols-1 gap-x-4 gap-y-3 md:grid-cols-2">
               {[
-                { id: "topReasons", label: "1. TOP REASONS PEOPLE CALL" },
-                { id: "questionsAskedMost", label: "2. QUESTIONS CALLERS ASK MOST" },
-                { id: "callsCannotMiss", label: "3. CALLS THAT CANNOT BE MISSED" },
-                { id: "situationsStress", label: "4. SITUATIONS THAT STRESS STAFF" },
-                { id: "callsNeverAlone", label: "5. CALLS NEVER TO HANDLE ALONE" },
-                { id: "commonFrustrations", label: "6. COMMON CALLER FRUSTRATIONS" }
+               { id: "topReasons", label: "1. TOP REASONS PEOPLE CALL", placeholder: "e.g. Scheduling, pricing, service area..." },
+{ id: "questionsAskedMost", label: "2. QUESTIONS CALLERS ASK MOST", placeholder: "e.g. ‘Do you service my area?’ ‘What are your hours?’" },
+{ id: "callsCannotMiss", label: "3. CALLS THAT CANNOT BE MISSED", placeholder: "e.g. Emergency calls, new client inquiries..." },
+{ id: "situationsStress", label: "4. SITUATIONS THAT STRESS STAFF", placeholder: "e.g. Upset callers, not knowing answers..." },
+{ id: "callsNeverAlone", label: "5. CALLS NEVER TO HANDLE ALONE", placeholder: "e.g. Complaints, legal matters, emergencies..." },
+{ id: "commonFrustrations", label: "6. COMMON CALLER FRUSTRATIONS", placeholder: "e.g. Response times, pricing concerns..." },
               ].map((q) => (
                 <div key={q.id} className="space-y-1">
                   <TooltipLabel>{q.label}</TooltipLabel>
-                  <Textarea {...form.register(q.id as any)} className="min-h-[50px] resize-y text-xs bg-gray-50 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E] transition-colors rounded-[3px]" />
+                  <Textarea placeholder={q.placeholder} {...form.register(q.id as any)} className="min-h-[50px] resize-y text-xs bg-gray-50 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E] transition-colors rounded-[3px]" />
                 </div>
               ))}
             </div>
-            <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+           <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-3">
               <div className="space-y-1">
                 <TooltipLabel>RINGS BEFORE PICKUP</TooltipLabel>
                 <Select value={form.watch("ringsBeforePickup")} onValueChange={(val) => form.setValue("ringsBeforePickup", val)}>
@@ -486,6 +486,29 @@ const Index = () => {
                   </SelectContent>
                 </Select>
               </div>
+          <div className="space-y-1">
+  <TooltipLabel>URGENT CALLS ALWAYS SAME PERSON?</TooltipLabel>
+  <div className="flex items-center gap-4 pt-2">
+    <label className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide">
+      <Checkbox
+        checked={form.watch("urgentCallsSamePerson") === "yes"}
+        onCheckedChange={(checked) => {
+          if (checked) form.setValue("urgentCallsSamePerson", "yes");
+        }}
+      />
+      YES
+    </label>
+    <label className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide">
+      <Checkbox
+        checked={form.watch("urgentCallsSamePerson") === "no"}
+        onCheckedChange={(checked) => {
+          if (checked) form.setValue("urgentCallsSamePerson", "no");
+        }}
+      />
+      NO
+    </label>
+  </div>
+</div>
             </div>
           </section>
 
