@@ -828,34 +828,70 @@ const Index = () => {
               <Input type="text" {...form.register("bookingSystem")} placeholder="e.g. Google Calendar, GHL, Calendly, Jane App, Acuity, SimplyBook, Vagaro, Mindbody..." className={inputClasses} />
             </div>
             
-            <div className="mt-4 space-y-1">
-              <TooltipLabel>ANYTHING ELSE WE SHOULD KNOW?</TooltipLabel>
-              <Textarea {...form.register("anythingElse")} className={`${inputClasses} min-h-[60px] resize-y`} />
-            </div>
-          </section>
+           </section>
 
-          {/* Submit Section */}
-          {!isReadOnly && (
-            <section className="bg-[#333333] p-5 text-white rounded-[4px] space-y-5 mt-6 shadow-md">
-              <label className="flex gap-3 items-start cursor-pointer group">
-                <Checkbox 
-                  checked={form.watch("authorization") || false}
-                  onCheckedChange={(checked) => form.setValue("authorization", checked === true)}
-                  className="mt-0.5 border-gray-400 text-[#C8102E] focus:ring-[#C8102E] data-[state=checked]:bg-[#C8102E] data-[state=checked]:border-[#C8102E]" 
-                />
-                <span className="text-[11px] leading-[1.5] text-gray-300 group-hover:text-white transition-colors">By submitting this form, I am expressing interest in Ansera™ services offered by Otto Growth Labs. This is not a binding agreement.</span>
-              </label>
-              {form.formState.errors.authorization && <p className="text-red-400 text-[10px] font-bold mt-1">{form.formState.errors.authorization.message}</p>}
-              
-              <Button type="submit" className="w-full h-12 bg-[#C8102E] hover:bg-[#a00d25] font-bold text-[14px] tracking-[0.1em] text-white rounded-[4px] transition-colors shadow-lg">
-                SUBMIT INTAKE FORM
-              </Button>
-              
-              <div className="text-center text-[10px] text-gray-400 space-y-1">
-                <div>Call us: <span className="text-[#FFC72C] font-bold">559.801.1235</span></div>
-                <div className="text-[#FFC72C] font-bold uppercase tracking-wider">Dedicated Ansera™ Number: 775.429.7900</div>
-              </div>
-            </section>
+{/* Section 7 */}
+<section>
+  <div className="mb-2 flex items-center gap-2 bg-[#333333] px-3 py-1.5 text-white rounded-sm">
+    <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold rounded-[2px]">7</span>
+    <h3 className="text-sm font-bold tracking-widest uppercase">Anything Else?</h3>
+  </div>
+
+  <div className="border border-dashed border-gray-300 bg-white p-3">
+    <TooltipLabel>IS THERE ANYTHING UNIQUE ABOUT YOUR BUSINESS WE HAVEN'T ASKED ABOUT?</TooltipLabel>
+    <Textarea
+      {...form.register("anythingElse")}
+      placeholder="Tell us anything — unique situations, special instructions, industry quirks..."
+      className={`${inputClasses} min-h-[80px] resize-y`}
+    />
+  </div>
+</section>
+
+         {/* Authorization & Inquiry */}
+<section>
+  <div className="bg-[#2b2b2b] border-t-4 border-[#CFA911] p-5 shadow-md">
+    <h3 className="text-sm font-bold tracking-widest uppercase text-gray-200 mb-3">
+      Authorization & Inquiry
+    </h3>
+
+    <p className="text-[#FFC72C] italic text-[12px] mb-4">
+      The more information you provide, the better we can evaluate your needs and build the right solution for your business.
+    </p>
+
+    <label className="flex gap-3 border border-gray-600 bg-[#333333] p-4 text-white cursor-pointer group">
+      <Checkbox
+        checked={form.watch("authorization") || false}
+        onCheckedChange={(checked) => form.setValue("authorization", checked === true)}
+        className="mt-0.5 border-gray-300 text-[#C8102E] focus:ring-[#C8102E] data-[state=checked]:bg-[#C8102E] data-[state=checked]:border-[#C8102E]"
+      />
+      <span className="text-[12px] leading-[1.6] text-gray-100 group-hover:text-white transition-colors">
+        By submitting this form, I am expressing interest in Ansera™ services offered by Otto Growth Labs. The information I provide will be used to evaluate my business needs and prepare a customized service recommendation and formal pricing proposal. Submitting this form does not constitute a purchase, commitment, or binding agreement of any kind. A member of the Otto Growth Labs team will be in touch to review my selections, answer my questions, and present my options. I confirm that the information provided is accurate and that I have the right to submit it on behalf of my business.
+      </span>
+    </label>
+
+    {form.formState.errors.authorization && (
+      <p className="text-red-400 text-[10px] font-bold mt-2">
+        {form.formState.errors.authorization.message}
+      </p>
+    )}
+  </div>
+
+  <div className="text-center py-5">
+    <Button type="submit" className="w-full max-w-md h-12 bg-[#C8102E] hover:bg-[#aa0d25] font-bold text-[14px] tracking-[0.1em] text-white rounded-[4px] transition-colors shadow-lg">
+      SUBMIT MY ANSERA™ INTAKE FORM
+    </Button>
+
+    <div className="mt-4 text-[12px] text-gray-600 space-y-1">
+      <div>
+        A member of the Otto Growth Labs team will be in touch to confirm your selections and next steps.
+        <span className="ml-2">Call us: <span className="text-[#CFA911] font-bold">1.775.429.7900</span></span>
+      </div>
+      <div className="text-[#CFA911] font-bold">
+        Ansera™ Direct Line: 1.775.429.7900
+      </div>
+    </div>
+  </div>
+</section>
           )}
         </form>
 
