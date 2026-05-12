@@ -442,6 +442,9 @@ const Index = () => {
               <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold rounded-[2px]">2</span>
               <h3 className="text-sm font-bold tracking-widest uppercase">Call Flow & Priority Situations</h3>
             </div>
+            <div className="mb-3 border-l-4 border-[#CFA911] bg-[#fff8df] px-3 py-2 text-xs text-gray-700">
+  Your answers train Ansera™ to handle your business. Go ahead and type as much as you’d like — it will hold it. The more detail, the better.
+</div>
             <div className="grid grid-cols-1 gap-x-4 gap-y-3 md:grid-cols-2">
               {[
                { id: "topReasons", label: "1. TOP REASONS PEOPLE CALL", placeholder: "e.g. Scheduling, pricing, service area..." },
