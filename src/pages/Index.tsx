@@ -624,7 +624,7 @@ const Index = () => {
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div className="space-y-3">
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
                 <div className="space-y-1">
                   <TooltipLabel>VOICE GENDER</TooltipLabel>
                   <Select value={form.watch("voiceGender")} onValueChange={(val) => form.setValue("voiceGender", val)}>
@@ -644,10 +644,15 @@ const Index = () => {
                 <div className="space-y-1">
                   <TooltipLabel>LANGUAGES NEEDED</TooltipLabel>
                   <Input {...form.register("languagesNeeded")} placeholder="e.g. English, Spanish" className={inputClasses} />
-                  <label className="flex items-center gap-2 mt-1.5 text-[10px] text-[#555] cursor-pointer">
-                    <Checkbox {...form.register("autoDetectLanguage")} className="border-gray-300 text-[#C8102E]" />
-                    Auto-detect caller language
-                  </label>
+                </div>
+
+<div className="space-y-1 md:col-span-3">
+  <TooltipLabel>LANGUAGE OPTIONS</TooltipLabel>
+  <label className="flex items-center gap-2 rounded-[3px] border border-gray-200 bg-white px-3 py-2 text-[13px] text-[#333] cursor-pointer">
+    <Checkbox {...form.register("autoDetectLanguage")} className="border-gray-300 text-[#C8102E]" />
+    <span>Auto-detect caller language & respond accordingly</span>
+    <span className="font-semibold text-[#CFA911]">(Elite)</span>
+  </label>
                 </div>
               </div>
   </div>
