@@ -24,6 +24,7 @@
     "autoprefixer": "latest",
     "postcss": "latest",
     "tailwindcss": "3.4.17",
+    "tailwindcss-animate": "latest",
     "typescript": "latest",
     "vite": "latest"
   }
