@@ -623,9 +623,9 @@ const Index = () => {
              <h3 className="text-sm font-bold tracking-widest uppercase">Voice Preferences</h3>
             </div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                <div className="space-y-1">
+            <div className="w-full">
+             <div className="grid w-full grid-cols-1 gap-3 md:grid-cols-3">
+                <div className="space-y-1 w-full min-w-0">
                   <TooltipLabel>VOICE GENDER</TooltipLabel>
                   <Select value={form.watch("voiceGender")} onValueChange={(val) => form.setValue("voiceGender", val)}>
                    <SelectTrigger className={`${inputClasses} w-full`}>
@@ -637,11 +637,11 @@ const Index = () => {
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-1 w-full min-w-0">
                   <TooltipLabel tooltip="Give your AI agent a name.">VOICE PERSONA NAME (OPTIONAL)</TooltipLabel>
                   <Input {...form.register("voicePersonaName")} placeholder="e.g. Alex, Jordan, Sarah..." className={`${inputClasses} w-full`} />
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-1 w-full min-w-0">
                   <TooltipLabel>LANGUAGES NEEDED</TooltipLabel>
                  <Input {...form.register("languagesNeeded")} placeholder="e.g. English, Spanish, Armenian..." className={`${inputClasses} w-full`} />
                 </div>
