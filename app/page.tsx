@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useLocation } from "react-router-dom";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { Button } from "@/components/ui/button";
@@ -94,8 +94,8 @@ const TooltipLabel = ({ children, tooltip, className = "" }: { children: React.R
 );
 
 const Index = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+
+
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [isReadOnly, setIsReadOnly] = useState(false);
   const [hasLatest, setHasLatest] = useState(false);
@@ -209,14 +209,14 @@ const Index = () => {
     }).catch(() => {});
 
     toast.success("Form submitted successfully!");
-    navigate("/thank-you", { state: { snapshotUrl: submissionUrl, snapshotData: data } });
+
   };
 
   useEffect(() => {
     try {
       const params = new URLSearchParams(window.location.search);
       const snapshotId = params.get("snapshot");
-      const stateSnapshot = location.state?.snapshotData;
+const stateSnapshot = null;
       
       if (stateSnapshot) {
         form.reset(stateSnapshot);
@@ -237,7 +237,7 @@ const Index = () => {
       // Auto-fill removed to ensure the form starts completely blank
       // Users can still use the "Quick-Fill" button if they want to restore their data
     } catch (e) {}
-  }, [form, location.search, location.state]);
+}, [form]);
 
   useEffect(() => {
     const subscription = form.watch((value) => {
