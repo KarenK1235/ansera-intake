@@ -650,11 +650,12 @@ const Index = () => {
                   </label>
                 </div>
               </div>
-
-             </section>
+  </div>
+</section>
 
 {/* Section 5 */}
 <section>
+
   <div className="mb-2 flex items-center gap-2 bg-[#333333] px-3 py-1.5 text-white rounded-sm">
     <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold rounded-[2px]">5</span>
     <h3 className="text-sm font-bold tracking-widest uppercase">Message Delivery Preferences</h3>
@@ -694,10 +695,9 @@ const Index = () => {
                 </div>
               </div>
             </div>
-         </div>
-</section>
+   </section>
 
-          {/* Section 6 */}
+{/* Section 6 */}
           <section>
             <div className="mb-2 flex items-center gap-2 bg-[#333333] px-3 py-1.5 text-white rounded-sm">
               <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold rounded-[2px]">5</span>
