@@ -687,20 +687,20 @@ const Index = () => {
                       <Checkbox {...form.register("deliveryEmailEnabled")} className="border-gray-300 text-[#C8102E]" /> Email
                     </label>
                     {form.watch("deliveryEmailEnabled") && (
-                      <Input type="email" {...form.register("deliveryEmail")} placeholder="Email address for messages" className={`${inputClasses} ml-5 w-[calc(100%-20px)]`} />
+                      <Input type="email" {...form.register("deliveryEmail")} placeholder="Email address for messages" <Input type="email" {...form.register("deliveryEmail")} placeholder="Email address" className={`${inputClasses} ml-2 inline-block w-[220px]`} />className={`${inputClasses} ml-5 w-[calc(100%-20px)]`} />
                     )}
                     
                     <label className="flex items-center gap-2 text-[11px] text-[#555] cursor-pointer">
                       <Checkbox {...form.register("deliveryTextEnabled")} className="border-gray-300 text-[#C8102E]" /> Text Message (SMS)
                     </label>
                     {form.watch("deliveryTextEnabled") && (
-                      <Input type="text" {...form.register("deliveryText")} placeholder="Phone number for texts" className={`${inputClasses} ml-5 w-[calc(100%-20px)]`} />
+                     <Input type="text" {...form.register("deliveryText")} placeholder="Phone number" className={`${inputClasses} ml-2 inline-block w-[220px]`} />
                     )}
                     <label className="flex items-center gap-2 text-[11px] text-[#555] cursor-pointer">
   <Checkbox {...form.register("deliveryOtherEnabled")} className="border-gray-300 text-[#C8102E]" /> Other
 </label>
 {form.watch("deliveryOtherEnabled") && (
-  <Input type="text" {...form.register("deliveryOther")} placeholder="Describe setup..." className={`${inputClasses} ml-5 w-[calc(100%-20px)]`} />
+  <Input type="text" {...form.register("deliveryOther")} placeholder="Describe setup..." className={`${inputClasses} ml-2 inline-block w-[220px]`} />
 )}
                 
                   </div>
