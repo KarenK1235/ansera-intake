@@ -628,7 +628,7 @@ const Index = () => {
                 <div className="space-y-1">
                   <TooltipLabel>VOICE GENDER</TooltipLabel>
                   <Select value={form.watch("voiceGender")} onValueChange={(val) => form.setValue("voiceGender", val)}>
-                    <SelectTrigger className={inputClasses}>
+                   <SelectTrigger className={`${inputClasses} w-full`}>
                       <SelectValue placeholder="-- Choose --" />
                     </SelectTrigger>
                     <SelectContent>
@@ -639,16 +639,16 @@ const Index = () => {
                 </div>
                 <div className="space-y-1">
                   <TooltipLabel tooltip="Give your AI agent a name.">VOICE PERSONA NAME (OPTIONAL)</TooltipLabel>
-                  <Input {...form.register("voicePersonaName")} placeholder="e.g. Sarah, Alex" className={inputClasses} />
+                  <Input {...form.register("voicePersonaName")} placeholder="e.g. Alex, Jordan, Sarah..." className={`${inputClasses} w-full`} />
                 </div>
                 <div className="space-y-1">
                   <TooltipLabel>LANGUAGES NEEDED</TooltipLabel>
-                  <Input {...form.register("languagesNeeded")} placeholder="e.g. English, Spanish" className={inputClasses} />
+                 <Input {...form.register("languagesNeeded")} placeholder="e.g. English, Spanish, Armenian..." className={`${inputClasses} w-full`} />
                 </div>
 
 <div className="space-y-1 md:col-span-3">
   <TooltipLabel>LANGUAGE OPTIONS</TooltipLabel>
-  <label className="flex items-center gap-2 rounded-[3px] border border-gray-200 bg-white px-3 py-2 text-[13px] text-[#333] cursor-pointer">
+  <label className="flex w-full items-center gap-2 rounded-[3px] border border-gray-200 bg-white px-3 py-2 text-[13px] text-[#333] cursor-pointer">
     <Checkbox {...form.register("autoDetectLanguage")} className="border-gray-300 text-[#C8102E]" />
     <span>Auto-detect caller language & respond accordingly</span>
     <span className="font-semibold text-[#CFA911]">(Elite)</span>
