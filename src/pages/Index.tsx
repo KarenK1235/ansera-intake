@@ -892,7 +892,6 @@ const Index = () => {
     </div>
   </div>
 </section>
-          )}
         </form>
 
         <footer className="bg-[#222222] py-4 text-center text-[10px] text-gray-500 border-t border-[#111]">
