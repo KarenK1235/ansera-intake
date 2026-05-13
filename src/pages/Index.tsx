@@ -255,7 +255,7 @@ const Index = () => {
   const inputClasses = "flex h-8 w-full border border-[#ccc] bg-white px-2.5 py-2 text-[11px] text-[#333] outline-none focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E] transition-colors rounded-[3px]";
 
   return (
-    <div className="min-h-screen bg-[#B8B8B2] py-6 px-3 font-sans text-sm">
+    <div className="min-h-screen bg-[#D9D9D9] py-6 px-3 font-sans text-sm">
       <div className="mx-auto max-w-5xl overflow-hidden rounded-[6px] border border-[#d2ccc0] bg-[#F7F5EF] shadow-2xl">
         {/* Header */}
         <header className="flex items-center justify-between border-b-4 border-[#C8102E] px-8 py-3 bg-white">
@@ -442,7 +442,7 @@ const Index = () => {
               <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold rounded-[2px]">2</span>
               <h3 className="text-sm font-bold tracking-widest uppercase">Call Flow & Priority Situations</h3>
             </div>
-            <div className="mb-3 border-l-4 border-[#CFA911] bg-[#fff8df] px-3 py-2 text-xs text-gray-700">
+            <div className="mb-3 border-l-4 border-[#CFA911] bg-[#F1F0EC] px-3 py-2 text-xs text-gray-700">
   Your answers train Ansera™ to handle your business. Go ahead and type as much as you’d like — it will hold it. The more detail, the better.
 </div>
             <div className="grid grid-cols-1 gap-x-4 gap-y-3 md:grid-cols-2">
@@ -522,7 +522,7 @@ const Index = () => {
               <h3 className="text-sm font-bold tracking-widest uppercase">Select Your Ansera™ Plan</h3>
             </div>
             
-            <div className="mb-3 border-l-4 border-[#CFA911] bg-[#fff8df] px-3 py-2 text-xs text-gray-700">
+            <div className="mb-3 border-l-4 border-[#CFA911] bg-[#F1F0EC] px-3 py-2 text-xs text-gray-700">
   Review what each plan includes. Many clients upgrade right here — and that’s perfectly fine. Your selections will be reflected in your formal pricing proposal.
 </div>
             
@@ -726,7 +726,7 @@ const Index = () => {
               All items in this section are optional. Share what you have today — more can always be added later.
             </p>
 
-            <div className="bg-[#fffbea] border-l-[4px] border-[#CFA911] p-2.5 text-[11px] text-[#555] leading-[1.5] mb-3">
+            <div className="bg-[#F1F0EC] border-l-[4px] border-[#CFA911] p-2.5 text-[11px] text-[#555] leading-[1.5] mb-3">
               <strong>The more you share, the smarter Ansera™ becomes.</strong> Upload whatever applies. Can't upload? Paste a link, upload a ZIP file, or just check the box and we'll reach out. We'll even take a thumb drive or a good old floppy disk 💾 — however it gets to us, we'll make it work.
             </div>
 
