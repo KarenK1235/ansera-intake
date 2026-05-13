@@ -325,9 +325,9 @@ try {
           
           {hasLatest && !isReadOnly && (
             <div className="bg-[#f8f9fa] border border-[#e9ecef] p-3 flex items-center justify-between rounded">
-              <span className="text-[11px] text-[#6c757d] font-bold uppercase tracking-wider">Returning client?</span>
+              <span className="text-[11px] text-[#6c757d] font-bold uppercase tracking-wider">SAVED PROGRESS FOUND</span>
               <button type="button" onClick={quickFill} className="text-[#C8102E] text-[11px] font-bold uppercase tracking-wider hover:underline">
-                Load Last Submission (Quick-Fill)
+                RESTORE SAVED PROGRESS
               </button>
             </div>
           )}
