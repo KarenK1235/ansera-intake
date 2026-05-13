@@ -255,8 +255,8 @@ const Index = () => {
   const inputClasses = "flex h-8 w-full border border-[#ccc] bg-white px-2.5 py-2 text-[11px] text-[#333] outline-none focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E] transition-colors rounded-[3px]";
 
   return (
-    <div className="min-h-screen bg-[#d8d5ce] py-6 px-3 font-sans text-sm">
-      <div className="mx-auto max-w-5xl overflow-hidden rounded-[6px] border border-[#d2ccc0] bg-[#f7f5ef] shadow-2xl">
+    <div className="min-h-screen bg-[#E7E5E0] py-6 px-3 font-sans text-sm">
+      <div className="mx-auto max-w-5xl overflow-hidden rounded-[6px] border border-[#d2ccc0] bg-[#FAFAF7] shadow-2xl">
         {/* Header */}
         <header className="flex items-center justify-between border-b-4 border-[#C8102E] px-8 py-3 bg-white">
           <div className="flex items-center gap-4">
@@ -299,7 +299,7 @@ const Index = () => {
           </div>
         )}
 
-       <form onSubmit={form.handleSubmit(onSubmit)} className={`px-8 py-5 space-y-5 bg-[#f7f5ef] ${isReadOnly ? '[&_input]:pointer-events-none [&_textarea]:pointer-events-none [&_select]:pointer-events-none [&_button]:pointer-events-none [&_label]:pointer-events-none opacity-95' : ''}`}>
+       <form onSubmit={form.handleSubmit(onSubmit)} className={`px-8 py-5 space-y-5 bg-[#FAFAF7] ${isReadOnly ? '[&_input]:pointer-events-none [&_textarea]:pointer-events-none [&_select]:pointer-events-none [&_button]:pointer-events-none [&_label]:pointer-events-none opacity-95' : ''}`}>
           
           {hasLatest && !isReadOnly && (
             <div className="bg-[#f8f9fa] border border-[#e9ecef] p-3 flex items-center justify-between rounded">
