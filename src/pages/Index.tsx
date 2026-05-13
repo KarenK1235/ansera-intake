@@ -200,24 +200,30 @@ const Index = () => {
       sessionId: crypto.randomUUID(),
     };
 
- await fetch("https://services.leadconnectorhq.com/hooks/9RW3P6cHGlzd2iZjDFxu/webhook-trigger/b684296b-685e-40ef-9e01-753c4b975d71", {
-  method: "POST",
-  mode: "no-cors",
-  headers: {
-    "Content-Type": "text/plain;charset=UTF-8",
-  },
-  body: JSON.stringify({
-    source: "Ansera Intake Form",
-    submittedAt: new Date().toISOString(),
-    submissionUrl,
-    ...data,
-  }),
-}).catch((error) => {
-  console.error("Webhook submission failed:", error);
-});
+try {
+  await fetch("https://services.leadconnectorhq.com/hooks/9RW3P6cHGlzd2iZjDFxu/webhook-trigger/b684296b-685e-40ef-9e01-753c4b975d71", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      companyName: data.companyName,
+      contactName: data.contactName,
+      email: data.email,
+      primaryPhone: data.primaryPhone,
+      source: "Ansera Intake Form",
+      submittedAt: new Date().toISOString(),
+      submissionUrl,
+      ...data,
+    }),
+  });
 
-toast.success("Form submitted successfully!");
-navigate("/thank-you", { state: { snapshotUrl: submissionUrl, snapshotData: data } });
+  toast.success("Form submitted successfully!");
+  navigate("/thank-you", { state: { snapshotUrl: submissionUrl, snapshotData: data } });
+} catch (error) {
+  console.error("Webhook submission failed:", error);
+  toast.error("Submission failed. Please try again or contact Otto Growth Labs.");
+}
   };
 
   useEffect(() => {
