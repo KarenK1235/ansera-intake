@@ -200,14 +200,14 @@ const Index = () => {
       sessionId: crypto.randomUUID(),
     };
 
-    fetch("https://backend.leadconnectorhq.com/external-tracking/events", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", version: "2021-07-28" },
-      body: JSON.stringify(trackingPayload),
-    }).catch(() => {});
+  toast.success("Form submitted successfully!");
+navigate("/thank-you", { state: { snapshotUrl: submissionUrl, snapshotData: data } });
 
-    toast.success("Form submitted successfully!");
-    navigate("/thank-you", { state: { snapshotUrl: submissionUrl, snapshotData: data } });
+fetch("https://backend.leadconnectorhq.com/external-tracking/events", {
+  method: "POST",
+  headers: { "Content-Type": "application/json", version: "2021-07-28" },
+  body: JSON.stringify(trackingPayload),
+}).catch(() => {});
   };
 
   useEffect(() => {
