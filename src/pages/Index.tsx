@@ -681,19 +681,19 @@ fetch("https://backend.leadconnectorhq.com/external-tracking/events", {
 
       <div className="space-y-2">
         <div className="flex items-center gap-2 rounded-[3px] border border-gray-200 bg-[#fafafa] px-3 py-2">
-          <Checkbox {...form.register("deliveryEmailEnabled")} className="border-gray-300 text-[#C8102E]" />
+          <Checkbox {...form.register("deliveryEmailEnabled")} className="border-gray-300 data-[state=checked]:bg-[#C8102E] data-[state=checked]:border-[#C8102E] data-[state=checked]:text-white" />
           <span className="w-[70px] text-[12px] text-[#333]">Email</span>
           <Input type="email" {...form.register("deliveryEmail")} placeholder="Email address" className={`${inputClasses} flex-1`} />
         </div>
 
         <div className="flex items-center gap-2 rounded-[3px] border border-gray-200 bg-[#fafafa] px-3 py-2">
-          <Checkbox {...form.register("deliveryTextEnabled")} className="border-gray-300 data-[state=checked]:bg-[#C8102E] data-[state=checked]:border-[#C8102E] data-[state=checked]:text-white"
+          <Checkbox {...form.register("deliveryTextEnabled")} className="border-gray-300 data-[state=checked]:bg-[#C8102E] data-[state=checked]:border-[#C8102E] data-[state=checked]:text-white" />
           <span className="w-[70px] text-[12px] text-[#333]">Text / SMS</span>
           <Input type="text" {...form.register("deliveryText")} placeholder="Phone number" className={`${inputClasses} flex-1`} />
         </div>
 
         <div className="flex items-center gap-2 rounded-[3px] border border-gray-200 bg-[#fafafa] px-3 py-2">
-          <Checkbox {...form.register("deliveryOtherEnabled")} className="border-gray-300 data-[state=checked]:bg-[#C8102E] data-[state=checked]:border-[#C8102E] data-[state=checked]:text-white"
+          <Checkbox {...form.register("deliveryOtherEnabled")} className="border-gray-300 data-[state=checked]:bg-[#C8102E] data-[state=checked]:border-[#C8102E] data-[state=checked]:text-white" />
           <span className="w-[70px] text-[12px] text-[#333]">Other</span>
           <Input type="text" {...form.register("deliveryOther")} placeholder="Describe setup..." className={`${inputClasses} flex-1`} />
         </div>
