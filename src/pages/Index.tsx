@@ -45,12 +45,12 @@ const formSchema = z.object({
   voiceGender: z.string().optional(),
   voicePersonaName: z.string().optional(),
   languagesNeeded: z.string().optional(),
-  autoDetectLanguage: z.boolean().optional(),
-  deliveryEmailEnabled: z.boolean().optional(),
+ autoDetectLanguage: z.any().optional(),
+deliveryEmailEnabled: z.any().optional(),,
   deliveryEmail: z.string().optional(),
-  deliveryTextEnabled: z.boolean().optional(),
+  deliveryTextEnabled: z.any().optional(),
   deliveryText: z.string().optional(),
-  deliveryOtherEnabled: z.boolean().optional(),
+  deliveryOtherEnabled: z.any().optional(),
   deliveryOther: z.string().optional(),
   callerNeedsAssistance: z.string().optional(),
   refGoogleBusiness: z.boolean().optional(),
@@ -659,7 +659,7 @@ fetch("https://backend.leadconnectorhq.com/external-tracking/events", {
 <div className="space-y-1 md:col-span-3">
   <TooltipLabel>LANGUAGE OPTIONS</TooltipLabel>
   <label className="flex w-full items-center gap-2 rounded-[3px] border border-gray-200 bg-white px-3 py-2 text-[13px] text-[#333] cursor-pointer">
-    <Checkbox {...form.register("autoDetectLanguage")} className="border-gray-300 text-[#C8102E]" />
+    <Checkbox {...form.register("autoDetectLanguage")} className="border-gray-300 data-[state=checked]:bg-[#C8102E] data-[state=checked]:border-[#C8102E] data-[state=checked]:text-white"
     <span>Auto-detect caller language & respond accordingly</span>
     <span className="font-semibold text-[#CFA911]">(Elite)</span>
   </label>
@@ -687,13 +687,13 @@ fetch("https://backend.leadconnectorhq.com/external-tracking/events", {
         </div>
 
         <div className="flex items-center gap-2 rounded-[3px] border border-gray-200 bg-[#fafafa] px-3 py-2">
-          <Checkbox {...form.register("deliveryTextEnabled")} className="border-gray-300 text-[#C8102E]" />
+          <Checkbox {...form.register("deliveryTextEnabled")} className="border-gray-300 data-[state=checked]:bg-[#C8102E] data-[state=checked]:border-[#C8102E] data-[state=checked]:text-white"
           <span className="w-[70px] text-[12px] text-[#333]">Text / SMS</span>
           <Input type="text" {...form.register("deliveryText")} placeholder="Phone number" className={`${inputClasses} flex-1`} />
         </div>
 
         <div className="flex items-center gap-2 rounded-[3px] border border-gray-200 bg-[#fafafa] px-3 py-2">
-          <Checkbox {...form.register("deliveryOtherEnabled")} className="border-gray-300 text-[#C8102E]" />
+          <Checkbox {...form.register("deliveryOtherEnabled")} className="border-gray-300 data-[state=checked]:bg-[#C8102E] data-[state=checked]:border-[#C8102E] data-[state=checked]:text-white"
           <span className="w-[70px] text-[12px] text-[#333]">Other</span>
           <Input type="text" {...form.register("deliveryOther")} placeholder="Describe setup..." className={`${inputClasses} flex-1`} />
         </div>
