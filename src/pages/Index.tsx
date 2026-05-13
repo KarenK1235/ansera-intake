@@ -299,7 +299,13 @@ fetch("https://backend.leadconnectorhq.com/external-tracking/events", {
           </div>
         )}
 
-       <form onSubmit={form.handleSubmit(onSubmit)} className={`px-8 py-5 space-y-5 bg-[#D9D9D9] ${isReadOnly ? '[&_input]:pointer-events-none [&_textarea]:pointer-events-none [&_select]:pointer-events-none [&_button]:pointer-events-none [&_label]:pointer-events-none opacity-95' : ''}`}>
+       <form onSubmit={form.handleSubmit(
+  onSubmit,
+  (errors) => {
+    console.log("FORM ERRORS", errors);
+    toast.error(`Please check: ${Object.keys(errors).join(", ")}`);
+  }
+)} className={`px-8 py-5 space-y-5 bg-[#D9D9D9] ${isReadOnly ? '[&_input]:pointer-events-none [&_textarea]:pointer-events-none [&_select]:pointer-events-none [&_button]:pointer-events-none [&_label]:pointer-events-none opacity-95' : ''}`}>
           
           {hasLatest && !isReadOnly && (
             <div className="bg-[#f8f9fa] border border-[#e9ecef] p-3 flex items-center justify-between rounded">
