@@ -46,7 +46,7 @@ const formSchema = z.object({
   voicePersonaName: z.string().optional(),
   languagesNeeded: z.string().optional(),
  autoDetectLanguage: z.any().optional(),
-deliveryEmailEnabled: z.any().optional(),,
+deliveryEmailEnabled: z.any().optional(),
   deliveryEmail: z.string().optional(),
   deliveryTextEnabled: z.any().optional(),
   deliveryText: z.string().optional(),
