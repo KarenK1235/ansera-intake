@@ -329,13 +329,15 @@ const Index = () => {
                 {form.formState.errors.contactName && <p className="text-red-500 text-[10px]">{form.formState.errors.contactName.message}</p>}
               </div>
               <div className="space-y-1">
-                <TooltipLabel tooltip="Where we should send your proposal.">* EMAIL ADDRESS</TooltipLabel>
+               <TooltipLabel tooltip="Where we should send your proposal and important updates.">* EMAIL ADDRESS</TooltipLabel>
                 <Input {...form.register("email")} type="email" autoComplete="email" placeholder="your@email.com" className={inputClasses} />
                 {form.formState.errors.email && <p className="text-red-500 text-[10px]">{form.formState.errors.email.message}</p>}
               </div>
               <div className="space-y-1">
                 <TooltipLabel tooltip="Used strictly for order updates.">SECONDARY EMAIL ADDRESS</TooltipLabel>
-                <Input {...form.register("secondaryEmail")} type="email" autoComplete="off" placeholder="updates@yourbusiness.com" className={inputClasses} />
+                type="text" + inputMode="email" keeps the email keyboard/behavior
+autoComplete="new-password" discourages Chrome from copying the main email
+name="secondary-contact-email-field" makes it look different from the primary email field
               </div>
               <div className="space-y-1">
                 <TooltipLabel tooltip="Main business number.">* PRIMARY PHONE</TooltipLabel>
