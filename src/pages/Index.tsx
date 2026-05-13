@@ -442,7 +442,7 @@ const Index = () => {
               <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold rounded-[2px]">2</span>
               <h3 className="text-sm font-bold tracking-widest uppercase">Call Flow & Priority Situations</h3>
             </div>
-            <div className="mb-3 border-l-4 border-[#CFA911] bg-[#F1F0EC] px-3 py-2 text-xs text-gray-700">
+            <div className="mb-3 border-l-4 border-[#CFA911] bg-[#FAFAF7] px-3 py-2 text-xs text-gray-700">
   Your answers train Ansera™ to handle your business. Go ahead and type as much as you’d like — it will hold it. The more detail, the better.
 </div>
             <div className="grid grid-cols-1 gap-x-4 gap-y-3 md:grid-cols-2">
@@ -722,7 +722,7 @@ const Index = () => {
               <h3 className="text-sm font-bold tracking-widest uppercase">Reference Materials</h3>
             </div>
             
-            <p className="text-[10px] text-[#888] italic mb-2 px-1">
+            <p className="text-[12px] text-[#222] font-medium italic mb-2 px-1">
               All items in this section are optional. Share what you have today — more can always be added later.
             </p>
 
@@ -739,7 +739,7 @@ const Index = () => {
                 { id: "refStaff", label: "Staff Directory — Key Personnel", sub: "Names of staff who may receive messages", type: "text" },
                 { id: "refOther", label: "Other", sub: "Anything else that helps Ansera™ serve your callers", type: "file_text_desc" }
               ].map(ref => (
-                <div key={ref.id} className={`flex flex-col gap-2 rounded-[4px] border p-2.5 transition-all ${form.watch(ref.id as any) ? 'border-[#CFA911] bg-[#fffbea]' : 'border-[#e0ded8] bg-[#fafafa]'}`}>
+                <div key={ref.id} className={`flex flex-col gap-2 rounded-[4px] border p-2.5 transition-all ${form.watch(ref.id as any) ? 'border-[#CFA911] bg-[#FAFAF7]' : 'border-[#e0ded8] bg-[#fafafa]'}`}>
                   <div className="flex items-start gap-2">
                     <Checkbox 
                       id={ref.id} 
@@ -820,7 +820,7 @@ const Index = () => {
               ))}
             </div>
 
-            <div className="mt-3 bg-[#fffbea] border-l-[3px] border-[#CFA911] p-2 text-[9px] text-[#666] leading-[1.6] flex items-start gap-1.5">
+            <div className="mt-3 bg-[#FAFAF7] border-l-[3px] border-[#CFA911] p-2 text-[9px] text-[#666] leading-[1.6] flex items-start gap-1.5">
               <span className="text-[12px]">📋</span>
               <div>
                 <strong>Upload limits:</strong> Max 50MB per file. ZIP files up to 100MB. For anything larger, paste a link or email us. Accepted: PDF, Word, Excel, PowerPoint, PNG, JPG, GIF, MP3, WAV, MP4, MOV, ZIP and more.
