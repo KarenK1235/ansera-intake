@@ -361,7 +361,7 @@ const Index = () => {
                 <div className="mb-1 text-[10px] font-bold uppercase tracking-[0.07em] text-[#555]">
                   Social Media Profiles <span className="text-[9px] text-[#aaa] normal-case tracking-normal font-normal">(fill in what applies)</span>
                 </div>
-                <div className="space-y-1.5">
+                <div className="space-y-1">
                   {[
              { id: "socialFacebook", icon: "/facebook.svg", placeholder: "Facebook URL" },
 { id: "socialInstagram", icon: "/instagram.svg", placeholder: "Instagram URL" },
@@ -370,7 +370,7 @@ const Index = () => {
 { id: "socialOther1", icon: "/link.svg", placeholder: "Other URL" },
 { id: "socialOther2", icon: "/link.svg", placeholder: "Other URL" }
                   ].map(s => (
-                   <div key={s.id} className="flex min-h-[40px] items-center gap-2 rounded-[3px] border border-[#ddd] bg-[#fafafa] px-3 py-2 focus-within:bg-[#fff5f7] focus-within:border-[#C8102E] transition-colors">
+                   <div key={s.id} className="flex min-h-[34px] items-center gap-2 rounded-[3px] border border-[#ddd] bg-[#fafafa] px-2.5 py-1.5 focus-within:bg-[#fff5f7] focus-within:border-[#C8102E] transition-colors">
                       <img src={s.icon} className="h-3.5 w-3.5 shrink-0" alt="" />
                      <input type="url" {...form.register(s.id as any)} placeholder={s.placeholder} className="w-full bg-transparent text-[12px] outline-none text-[#333]" />
                     </div>
