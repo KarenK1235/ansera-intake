@@ -203,11 +203,21 @@ const Index = () => {
   toast.success("Form submitted successfully!");
 navigate("/thank-you", { state: { snapshotUrl: submissionUrl, snapshotData: data } });
 
-fetch("https://backend.leadconnectorhq.com/external-tracking/events", {
+fetch("https://services.leadconnectorhq.com/hooks/9RW3P6cHGlzd2iZjDFxu/webhook-trigger/b684296b-685e-40ef-9e01-753c4b975d71", {
   method: "POST",
-  headers: { "Content-Type": "application/json", version: "2021-07-28" },
-  body: JSON.stringify(trackingPayload),
-}).catch(() => {});
+  mode: "no-cors",
+  headers: {
+    "Content-Type": "text/plain;charset=UTF-8",
+  },
+  body: JSON.stringify({
+    source: "Ansera Intake Form",
+    submittedAt: new Date().toISOString(),
+    submissionUrl,
+    ...data,
+  }),
+}).catch((error) => {
+  console.error("Webhook submission failed:", error);
+});
   };
 
   useEffect(() => {
