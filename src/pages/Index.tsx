@@ -335,9 +335,7 @@ const Index = () => {
               </div>
               <div className="space-y-1">
                 <TooltipLabel tooltip="Used strictly for order updates.">SECONDARY EMAIL ADDRESS</TooltipLabel>
-                type="text" + inputMode="email" keeps the email keyboard/behavior
-autoComplete="new-password" discourages Chrome from copying the main email
-name="secondary-contact-email-field" makes it look different from the primary email field
+               <Input {...form.register("secondaryEmail")} type="text" inputMode="email" autoComplete="new-password" placeholder="updates@yourbusiness.com" className={inputClasses} />
               </div>
               <div className="space-y-1">
                 <TooltipLabel tooltip="Main business number.">* PRIMARY PHONE</TooltipLabel>
