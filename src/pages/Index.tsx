@@ -330,12 +330,12 @@ const Index = () => {
               </div>
               <div className="space-y-1">
                 <TooltipLabel tooltip="Where we should send your proposal.">* EMAIL ADDRESS</TooltipLabel>
-                <Input {...form.register("email")} type="email" placeholder="your@email.com" className={inputClasses} />
+                <Input {...form.register("email")} type="email" autoComplete="email" placeholder="your@email.com" className={inputClasses} />
                 {form.formState.errors.email && <p className="text-red-500 text-[10px]">{form.formState.errors.email.message}</p>}
               </div>
               <div className="space-y-1">
                 <TooltipLabel tooltip="Used strictly for order updates.">SECONDARY EMAIL ADDRESS</TooltipLabel>
-                <Input {...form.register("secondaryEmail")} type="email" placeholder="updates@yourbusiness.com" className={inputClasses} />
+                <Input {...form.register("secondaryEmail")} type="email" autoComplete="off" placeholder="updates@yourbusiness.com" className={inputClasses} />
               </div>
               <div className="space-y-1">
                 <TooltipLabel tooltip="Main business number.">* PRIMARY PHONE</TooltipLabel>
