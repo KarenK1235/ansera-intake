@@ -445,7 +445,7 @@ const Index = () => {
             <div className="mb-3 border-l-4 border-[#CFA911] bg-[#EDEDED] px-3 py-2 text-xs text-gray-700">
   Your answers train Ansera™ to handle your business. Go ahead and type as much as you’d like — it will hold it. The more detail, the better.
 </div>
-            <div className="grid grid-cols-1 gap-x-4 gap-y-3 md:grid-cols-2">
+            <div className="grid grid-cols-1 gap-x-4 gap-y-2.5 md:grid-cols-2">
               {[
                { id: "topReasons", label: "1. TOP REASONS PEOPLE CALL", placeholder: "e.g. Scheduling, pricing, service area..." },
 { id: "questionsAskedMost", label: "2. QUESTIONS CALLERS ASK MOST", placeholder: "e.g. ‘Do you service my area?’ ‘What are your hours?’" },
@@ -456,7 +456,7 @@ const Index = () => {
               ].map((q) => (
                 <div key={q.id} className="space-y-1">
                   <TooltipLabel>{q.label}</TooltipLabel>
-                  <Textarea placeholder={q.placeholder} {...form.register(q.id as any)} className="min-h-[50px] resize-y text-xs bg-gray-50 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E] transition-colors rounded-[3px]" />
+                  <Textarea placeholder={q.placeholder} {...form.register(q.id as any)} className="min-h-[44px] resize-y text-xs bg-gray-50 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E] transition-colors rounded-[3px]" />
                 </div>
               ))}
             </div>
