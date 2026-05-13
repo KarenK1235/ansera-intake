@@ -206,16 +206,46 @@ try {
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      companyName: data.companyName,
-      contactName: data.contactName,
-      email: data.email,
-      primaryPhone: data.primaryPhone,
-      source: "Ansera Intake Form",
-      submittedAt: new Date().toISOString(),
-      submissionUrl,
-      ...data,
-    }),
+   body: JSON.stringify({
+  companyName: data.companyName,
+  contactName: data.contactName,
+  email: data.email,
+  primaryPhone: data.primaryPhone,
+  source: "Ansera Intake Form",
+  submittedAt: new Date().toISOString(),
+  submissionUrl,
+  submissionText: `
+ANSERA™ INTAKE SUBMISSION
+
+Submitted At: ${new Date().toISOString()}
+Company: ${data.companyName || ""}
+Contact: ${data.contactName || ""}
+Email: ${data.email || ""}
+Secondary Email: ${data.secondaryEmail || ""}
+Primary Phone: ${data.primaryPhone || ""}
+Secondary Phone: ${data.secondaryPhone || ""}
+Website: ${data.websiteUrl || ""}
+
+Selected Plan: ${data.selectedPlan || ""}
+Advanced Options: ${Array.isArray(data.advancedOptions) ? data.advancedOptions.join(", ") : ""}
+
+Voice Gender: ${data.voiceGender || ""}
+Voice Persona Name: ${data.voicePersonaName || ""}
+Languages Needed: ${data.languagesNeeded || ""}
+Auto-Detect Language: ${data.autoDetectLanguage ? "Yes" : "No"}
+
+Message Delivery Email: ${data.deliveryEmailEnabled ? data.deliveryEmail : "No"}
+Message Delivery Text: ${data.deliveryTextEnabled ? data.deliveryText : "No"}
+Message Delivery Other: ${data.deliveryOtherEnabled ? data.deliveryOther : "No"}
+Caller Assistance: ${data.callerNeedsAssistance || ""}
+
+Booking System: ${data.bookingSystem || ""}
+Anything Else: ${data.anythingElse || ""}
+
+Authorization Accepted: ${data.authorization ? "Yes" : "No"}
+`,
+  ...data,
+}),
   });
 
   toast.success("Form submitted successfully!");
