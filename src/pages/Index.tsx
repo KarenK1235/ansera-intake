@@ -200,10 +200,7 @@ const Index = () => {
       sessionId: crypto.randomUUID(),
     };
 
-  toast.success("Form submitted successfully!");
-navigate("/thank-you", { state: { snapshotUrl: submissionUrl, snapshotData: data } });
-
-fetch("https://services.leadconnectorhq.com/hooks/9RW3P6cHGlzd2iZjDFxu/webhook-trigger/b684296b-685e-40ef-9e01-753c4b975d71", {
+ await fetch("https://services.leadconnectorhq.com/hooks/9RW3P6cHGlzd2iZjDFxu/webhook-trigger/b684296b-685e-40ef-9e01-753c4b975d71", {
   method: "POST",
   mode: "no-cors",
   headers: {
@@ -218,6 +215,9 @@ fetch("https://services.leadconnectorhq.com/hooks/9RW3P6cHGlzd2iZjDFxu/webhook-t
 }).catch((error) => {
   console.error("Webhook submission failed:", error);
 });
+
+toast.success("Form submitted successfully!");
+navigate("/thank-you", { state: { snapshotUrl: submissionUrl, snapshotData: data } });
   };
 
   useEffect(() => {
