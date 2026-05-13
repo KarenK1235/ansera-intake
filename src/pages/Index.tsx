@@ -288,7 +288,7 @@ const Index = () => {
         </div>
 
         {isReadOnly && (
-          <div className="bg-[#fffbea] border-y-4 border-[#CFA911] px-8 py-4 flex items-center justify-between print:hidden">
+          <div className="bg-[#FAFAF7] border-y-4 border-[#CFA911] px-8 py-4 flex items-center justify-between print:hidden">
             <div>
               <h2 className="text-[#C8102E] font-bold text-lg tracking-wider">READ-ONLY SNAPSHOT</h2>
               <p className="text-gray-700 text-xs mt-1">You are viewing a saved copy of a submitted form. Editing is disabled.</p>
@@ -522,7 +522,7 @@ const Index = () => {
               <h3 className="text-sm font-bold tracking-widest uppercase">Select Your Ansera™ Plan</h3>
             </div>
             
-            <div className="mb-3 border-l-4 border-[#CFA911] bg-[#F1F0EC] px-3 py-2 text-xs text-gray-700">
+            <div className="mb-3 border-l-4 border-[#CFA911] bg-[#FAFAF7] px-3 py-2 text-xs text-gray-700">
   Review what each plan includes. Many clients upgrade right here — and that’s perfectly fine. Your selections will be reflected in your formal pricing proposal.
 </div>
             
@@ -726,7 +726,7 @@ const Index = () => {
               All items in this section are optional. Share what you have today — more can always be added later.
             </p>
 
-            <div className="bg-[#F1F0EC] border-l-[4px] border-[#CFA911] p-2.5 text-[11px] text-[#555] leading-[1.5] mb-3">
+            <div className="bg-[#FAFAF7] border-l-[4px] border-[#CFA911] p-2.5 text-[11px] text-[#555] leading-[1.5] mb-3">
               <strong>The more you share, the smarter Ansera™ becomes.</strong> Upload whatever applies. Can't upload? Paste a link, upload a ZIP file, or just check the box and we'll reach out. We'll even take a thumb drive or a good old floppy disk 💾 — however it gets to us, we'll make it work.
             </div>
 
