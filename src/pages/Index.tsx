@@ -669,7 +669,7 @@ const Index = () => {
     <h3 className="text-sm font-bold tracking-widest uppercase">Message Delivery Preferences</h3>
   </div>
 
-  <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+  <div className="grid grid-cols-1 gap-5 md:grid-cols-2 rounded-[4px] border border-[#cfcfcf] bg-[#F8F8F6] p-4 shadow-sm">
     <div className="space-y-2">
       <TooltipLabel>MESSAGE DELIVERY PREFERENCE</TooltipLabel>
 
