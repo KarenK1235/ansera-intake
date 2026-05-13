@@ -456,7 +456,7 @@ const Index = () => {
               ].map((q) => (
                 <div key={q.id} className="space-y-1">
                   <TooltipLabel>{q.label}</TooltipLabel>
-                 <Textarea placeholder={q.placeholder} {...form.register(q.id as any)} className="h-[54px] min-h-[54px] resize-none text-xs bg-gray-50 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E] transition-colors rounded-[3px]" />
+                <Textarea placeholder={q.placeholder} {...form.register(q.id as any)} className="min-h-[50px] resize-y text-xs bg-gray-50 focus:bg-[#fff5f7] focus:border-[#C8102E] focus:ring-1 focus:ring-[#C8102E] transition-colors rounded-[3px]" />
                 </div>
               ))}
             </div>
