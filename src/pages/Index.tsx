@@ -288,7 +288,7 @@ const Index = () => {
         </div>
 
         {isReadOnly && (
-          <div className="bg-[#FAFAF7] border-y-4 border-[#CFA911] px-8 py-4 flex items-center justify-between print:hidden">
+          <div className="bg-[#EDEDED] border-y-4 border-[#CFA911] px-8 py-4 flex items-center justify-between print:hidden">
             <div>
               <h2 className="text-[#C8102E] font-bold text-lg tracking-wider">READ-ONLY SNAPSHOT</h2>
               <p className="text-gray-700 text-xs mt-1">You are viewing a saved copy of a submitted form. Editing is disabled.</p>
@@ -361,7 +361,7 @@ const Index = () => {
                 <div className="mb-1 text-[10px] font-bold uppercase tracking-[0.07em] text-[#555]">
                   Social Media Profiles <span className="text-[9px] text-[#aaa] normal-case tracking-normal font-normal">(fill in what applies)</span>
                 </div>
-                <div className="space-y-1">
+                <div className="space-y-1.5">
                   {[
              { id: "socialFacebook", icon: "/facebook.svg", placeholder: "Facebook URL" },
 { id: "socialInstagram", icon: "/instagram.svg", placeholder: "Instagram URL" },
@@ -370,9 +370,9 @@ const Index = () => {
 { id: "socialOther1", icon: "/link.svg", placeholder: "Other URL" },
 { id: "socialOther2", icon: "/link.svg", placeholder: "Other URL" }
                   ].map(s => (
-                    <div key={s.id} className="flex items-center gap-2 rounded-[3px] border border-[#ddd] bg-[#fafafa] px-2 py-1 focus-within:bg-[#fff5f7] focus-within:border-[#C8102E] transition-colors">
+                   <div key={s.id} className="flex min-h-[40px] items-center gap-2 rounded-[3px] border border-[#ddd] bg-[#fafafa] px-3 py-2 focus-within:bg-[#fff5f7] focus-within:border-[#C8102E] transition-colors">
                       <img src={s.icon} className="h-3.5 w-3.5 shrink-0" alt="" />
-                      <input type="url" {...form.register(s.id as any)} placeholder={s.placeholder} className="w-full bg-transparent text-[11px] outline-none text-[#333]" />
+                     <input type="url" {...form.register(s.id as any)} placeholder={s.placeholder} className="w-full bg-transparent text-[12px] outline-none text-[#333]" />
                     </div>
                   ))}
                 </div>
@@ -442,7 +442,7 @@ const Index = () => {
               <span className="flex h-5 w-5 items-center justify-center bg-[#C8102E] text-xs font-bold rounded-[2px]">2</span>
               <h3 className="text-sm font-bold tracking-widest uppercase">Call Flow & Priority Situations</h3>
             </div>
-            <div className="mb-3 border-l-4 border-[#CFA911] bg-[#FAFAF7] px-3 py-2 text-xs text-gray-700">
+            <div className="mb-3 border-l-4 border-[#CFA911] bg-[#EDEDED] px-3 py-2 text-xs text-gray-700">
   Your answers train Ansera™ to handle your business. Go ahead and type as much as you’d like — it will hold it. The more detail, the better.
 </div>
             <div className="grid grid-cols-1 gap-x-4 gap-y-3 md:grid-cols-2">
@@ -522,7 +522,7 @@ const Index = () => {
               <h3 className="text-sm font-bold tracking-widest uppercase">Select Your Ansera™ Plan</h3>
             </div>
             
-            <div className="mb-3 border-l-4 border-[#CFA911] bg-[#FAFAF7] px-3 py-2 text-xs text-gray-700">
+            <div className="mb-3 border-l-4 border-[#CFA911] bg-[#EDEDED] px-3 py-2 text-xs text-gray-700">
   Review what each plan includes. Many clients upgrade right here — and that’s perfectly fine. Your selections will be reflected in your formal pricing proposal.
 </div>
             
@@ -726,7 +726,7 @@ const Index = () => {
               All items in this section are optional. Share what you have today — more can always be added later.
             </p>
 
-            <div className="bg-[#FAFAF7] border-l-[4px] border-[#CFA911] p-2.5 text-[11px] text-[#555] leading-[1.5] mb-3">
+            <div className="bg-[#EDEDED] border-l-[4px] border-[#CFA911] p-2.5 text-[11px] text-[#555] leading-[1.5] mb-3">
               <strong>The more you share, the smarter Ansera™ becomes.</strong> Upload whatever applies. Can't upload? Paste a link, upload a ZIP file, or just check the box and we'll reach out. We'll even take a thumb drive or a good old floppy disk 💾 — however it gets to us, we'll make it work.
             </div>
 
@@ -739,7 +739,7 @@ const Index = () => {
                 { id: "refStaff", label: "Staff Directory — Key Personnel", sub: "Names of staff who may receive messages", type: "text" },
                 { id: "refOther", label: "Other", sub: "Anything else that helps Ansera™ serve your callers", type: "file_text_desc" }
               ].map(ref => (
-                <div key={ref.id} className={`flex flex-col gap-2 rounded-[4px] border p-2.5 transition-all ${form.watch(ref.id as any) ? 'border-[#CFA911] bg-[#FAFAF7]' : 'border-[#e0ded8] bg-[#fafafa]'}`}>
+                <div key={ref.id} className={`flex flex-col gap-2 rounded-[4px] border p-2.5 transition-all ${form.watch(ref.id as any) ? 'border-[#CFA911] bg-[#EDEDED]' : 'border-[#e0ded8] bg-[#fafafa]'}`}>
                   <div className="flex items-start gap-2">
                     <Checkbox 
                       id={ref.id} 
@@ -820,7 +820,7 @@ const Index = () => {
               ))}
             </div>
 
-            <div className="mt-3 bg-[#FAFAF7] border-l-[3px] border-[#CFA911] p-2 text-[9px] text-[#666] leading-[1.6] flex items-start gap-1.5">
+            <div className="mt-3 bg-[#EDEDED] border-l-[3px] border-[#CFA911] p-2 text-[9px] text-[#666] leading-[1.6] flex items-start gap-1.5">
               <span className="text-[12px]">📋</span>
               <div>
                 <strong>Upload limits:</strong> Max 50MB per file. ZIP files up to 100MB. For anything larger, paste a link or email us. Accepted: PDF, Word, Excel, PowerPoint, PNG, JPG, GIF, MP3, WAV, MP4, MOV, ZIP and more.
