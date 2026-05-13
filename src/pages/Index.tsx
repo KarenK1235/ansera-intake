@@ -659,8 +659,8 @@ fetch("https://backend.leadconnectorhq.com/external-tracking/events", {
 <div className="space-y-1 md:col-span-3">
   <TooltipLabel>LANGUAGE OPTIONS</TooltipLabel>
   <label className="flex w-full items-center gap-2 rounded-[3px] border border-gray-200 bg-white px-3 py-2 text-[13px] text-[#333] cursor-pointer">
-    <Checkbox {...form.register("autoDetectLanguage")} className="border-gray-300 data-[state=checked]:bg-[#C8102E] data-[state=checked]:border-[#C8102E] data-[state=checked]:text-white"
-    <span>Auto-detect caller language & respond accordingly</span>
+   <Checkbox {...form.register("autoDetectLanguage")} className="border-gray-300 data-[state=checked]:bg-[#C8102E] data-[state=checked]:border-[#C8102E] data-[state=checked]:text-white" />
+<span>Auto-detect caller language & respond accordingly</span>
     <span className="font-semibold text-[#CFA911]">(Elite)</span>
   </label>
                 </div>
