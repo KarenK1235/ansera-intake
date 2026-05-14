@@ -923,6 +923,7 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
               <div>
                 <strong>Additional File Types:</strong> For Google Drive, OneDrive, Canva, YouTube, Vimeo, or similar tools, set sharing to “Anyone with the link can view.” View-only access is perfect — please do not give edit access. If you have ZIP files, PDFs, logos, brand assets, or documents saved on your computer, we can request them by email after reviewing your intake.
             </div>
+              </div>
 
             <div className="mt-4 space-y-1">
               <TooltipLabel tooltip="Just the name for now — we'll follow up if we need access details.">Booking or Scheduling Calendar System</TooltipLabel>
