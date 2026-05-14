@@ -106,13 +106,17 @@ const Index = () => {
     mode: "onTouched",
     defaultValues: {
       advancedOptions: [],
-      hipaaRegulated: "",
-      discloseAi: "",
-      minorsMayCall: "",
-      callerNeedsAssistance: "",
-      voiceGender: "",
-      ringsBeforePickup: "",
-      businessModel: "",
+hipaaRegulated: "",
+discloseAi: "",
+minorsMayCall: "",
+callerNeedsAssistance: "",
+voiceGender: "",
+ringsBeforePickup: "",
+urgentCallsSamePerson: "",
+businessModel: "",
+businessModelOther: "",
+autoDetectLanguage: false,
+hours: {},
     }
   });
 
