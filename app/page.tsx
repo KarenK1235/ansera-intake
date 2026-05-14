@@ -680,12 +680,12 @@ const stateSnapshot = null;
 
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
               {[
-                { id: "refGoogleBusiness", label: "Google Business Profile URL", type: "url", placeholder: "https://g.co/kgs/yourprofile" },
-                { id: "refSop", label: "Standard Operating Procedures", sub: "Policies affecting how calls are handled", type: "file" },
-                { id: "refScripts", label: "Existing Phone Scripts or Greetings", sub: "How your business phone is currently answered", type: "file_text" },
-                { id: "refServices", label: "List of Services / Brochures", sub: "What you offer and how you describe it", type: "file" },
-                { id: "refStaff", label: "Staff Directory — Key Personnel", sub: "Names of staff who may receive messages", type: "text" },
-                { id: "refOther", label: "Other", sub: "Anything else that helps Ansera™ serve your callers", type: "file_text_desc" }
+                { id: "refGoogleBusiness", label: "🌐 Google Business Profile URL", type: "url", placeholder: "https://g.co/kgs/yourprofile" },
+                { id: "refSop", label: "💾 Standard Operating Procedures", sub: "Policies affecting how calls are handled", type: "file" },
+                { id: "refScripts", label: "☎️ Existing Phone Scripts or Greetings", sub: "How your business phone is currently answered", type: "file_text" },
+                { id: "refServices", label: "🗂️ List of Services / Brochures", sub: "What you offer and how you describe it", type: "file" },
+                { id: "refStaff", label: "👥 Staff Directory — Key Personnel", sub: "Names of staff who may receive messages", type: "text" },
+                { id: "refOther", label: "📎 Other", sub: "Anything else that helps Ansera™ serve your callers", type: "file_text_desc" }
               ].map(ref => (
                 <div key={ref.id} className={`flex flex-col gap-2 rounded-[4px] border p-2.5 transition-all ${form.watch(ref.id as any) ? 'border-[#CFA911] bg-[#fffbea]' : 'border-[#e0ded8] bg-[#fafafa]'}`}>
                   <div className="flex items-start gap-2">
