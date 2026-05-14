@@ -482,21 +482,96 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
                   <div className="grid grid-cols-[64px_1fr_1fr_48px] gap-1 px-2 py-1 bg-[#f0efed] border-b border-[#E0DED8] text-[9px] font-bold text-[#777] uppercase tracking-wider">
                     <div>Day</div><div>Opens</div><div>Closes</div><div className="text-center">Closed</div>
                   </div>
-                  {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day, i) => (
-                    <div key={day} className={`grid grid-cols-[64px_1fr_1fr_48px] items-center gap-1 px-2 py-1 ${i !== 6 ? 'border-b border-[#f0efed]' : ''}`}>
-                      <div className="font-semibold text-[10px] text-[#444]">{day}</div>
-                      <select className="rounded-[2px] border border-[#ddd] bg-white px-1 py-0.5 text-[9px] text-[#333] outline-none focus:border-[#C8102E] w-full">
-                        <option>--</option><option>8:00 AM</option><option>9:00 AM</option>
-                      </select>
-                      <select className="rounded-[2px] border border-[#ddd] bg-white px-1 py-0.5 text-[9px] text-[#333] outline-none focus:border-[#C8102E] w-full">
-                        <option>--</option><option>5:00 PM</option><option>6:00 PM</option>
-                      </select>
-                      <label className="flex cursor-pointer items-center justify-center gap-1 text-[9px] text-[#999] hover:text-[#555]">
-                        <input type="checkbox" className="h-[10px] w-[10px] accent-[#C8102E] cursor-pointer" />
-                        Closed
-                      </label>
-                    </div>
-                  ))}
+                 {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map((day, i) => (
+  <div key={day} className={`grid grid-cols-[64px_1fr_1fr_48px] items-center gap-1 px-2 py-1 ${i !== 6 ? 'border-b border-[#efefed]' : ''}`}>
+    <div className="font-semibold text-[10px] text-[#444]">{day}</div>
+
+    <select
+      {...form.register(`hours.${day}.open` as any)}
+      className="rounded-[2px] border border-[#ddd] bg-white px-1 py-0.5 text-[9px] text-[#333] outline-none focus:border-[#C8102E] w-full"
+    >
+      <option value="">--</option>
+      <option value="6:00 AM">6:00 AM</option>
+      <option value="6:30 AM">6:30 AM</option>
+      <option value="7:00 AM">7:00 AM</option>
+      <option value="7:30 AM">7:30 AM</option>
+      <option value="8:00 AM">8:00 AM</option>
+      <option value="8:30 AM">8:30 AM</option>
+      <option value="9:00 AM">9:00 AM</option>
+      <option value="9:30 AM">9:30 AM</option>
+      <option value="10:00 AM">10:00 AM</option>
+      <option value="10:30 AM">10:30 AM</option>
+      <option value="11:00 AM">11:00 AM</option>
+      <option value="11:30 AM">11:30 AM</option>
+      <option value="12:00 PM">12:00 PM</option>
+      <option value="12:30 PM">12:30 PM</option>
+      <option value="1:00 PM">1:00 PM</option>
+      <option value="1:30 PM">1:30 PM</option>
+      <option value="2:00 PM">2:00 PM</option>
+      <option value="2:30 PM">2:30 PM</option>
+      <option value="3:00 PM">3:00 PM</option>
+      <option value="3:30 PM">3:30 PM</option>
+      <option value="4:00 PM">4:00 PM</option>
+      <option value="4:30 PM">4:30 PM</option>
+      <option value="5:00 PM">5:00 PM</option>
+      <option value="5:30 PM">5:30 PM</option>
+      <option value="6:00 PM">6:00 PM</option>
+      <option value="6:30 PM">6:30 PM</option>
+      <option value="7:00 PM">7:00 PM</option>
+      <option value="7:30 PM">7:30 PM</option>
+      <option value="8:00 PM">8:00 PM</option>
+      <option value="8:30 PM">8:30 PM</option>
+      <option value="9:00 PM">9:00 PM</option>
+    </select>
+
+    <select
+      {...form.register(`hours.${day}.close` as any)}
+      className="rounded-[2px] border border-[#ddd] bg-white px-1 py-0.5 text-[9px] text-[#333] outline-none focus:border-[#C8102E] w-full"
+    >
+      <option value="">--</option>
+      <option value="6:00 AM">6:00 AM</option>
+      <option value="6:30 AM">6:30 AM</option>
+      <option value="7:00 AM">7:00 AM</option>
+      <option value="7:30 AM">7:30 AM</option>
+      <option value="8:00 AM">8:00 AM</option>
+      <option value="8:30 AM">8:30 AM</option>
+      <option value="9:00 AM">9:00 AM</option>
+      <option value="9:30 AM">9:30 AM</option>
+      <option value="10:00 AM">10:00 AM</option>
+      <option value="10:30 AM">10:30 AM</option>
+      <option value="11:00 AM">11:00 AM</option>
+      <option value="11:30 AM">11:30 AM</option>
+      <option value="12:00 PM">12:00 PM</option>
+      <option value="12:30 PM">12:30 PM</option>
+      <option value="1:00 PM">1:00 PM</option>
+      <option value="1:30 PM">1:30 PM</option>
+      <option value="2:00 PM">2:00 PM</option>
+      <option value="2:30 PM">2:30 PM</option>
+      <option value="3:00 PM">3:00 PM</option>
+      <option value="3:30 PM">3:30 PM</option>
+      <option value="4:00 PM">4:00 PM</option>
+      <option value="4:30 PM">4:30 PM</option>
+      <option value="5:00 PM">5:00 PM</option>
+      <option value="5:30 PM">5:30 PM</option>
+      <option value="6:00 PM">6:00 PM</option>
+      <option value="6:30 PM">6:30 PM</option>
+      <option value="7:00 PM">7:00 PM</option>
+      <option value="7:30 PM">7:30 PM</option>
+      <option value="8:00 PM">8:00 PM</option>
+      <option value="8:30 PM">8:30 PM</option>
+      <option value="9:00 PM">9:00 PM</option>
+    </select>
+
+    <label className="flex cursor-pointer items-center justify-center gap-1 text-[9px] text-[#999] hover:text-[#555]">
+      <input
+        type="checkbox"
+        {...form.register(`hours.${day}.closed` as any)}
+        className="h-[10px] w-[10px] accent-[#C8102E] cursor-pointer"
+      />
+      Closed
+    </label>
+  </div>
+))}
                 </div>
               </div>
             </div>
@@ -582,29 +657,35 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
                     <SelectValue placeholder="-- Choose --" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Customers come to us">Customers come to us</SelectItem>
-                    <SelectItem value="Virtual / Online Business">Virtual / Online Business</SelectItem>
+              <SelectItem value="Appointment-based">Appointment-based</SelectItem>
+<SelectItem value="Service-based">Service-based</SelectItem>
+<SelectItem value="Walk-in / storefront">Walk-in / storefront</SelectItem>
+<SelectItem value="Mobile service">Mobile service</SelectItem>
+<SelectItem value="Virtual / online">Virtual / online</SelectItem>
+<SelectItem value="Emergency / urgent response">Emergency / urgent response</SelectItem>
+<SelectItem value="Mixed / other">Mixed / other</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
-          <div className="space-y-1">
+        <div className="space-y-1">
   <TooltipLabel>URGENT CALLS ALWAYS SAME PERSON?</TooltipLabel>
   <div className="flex items-center gap-4 pt-2">
     <label className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide">
-      <Checkbox
-        checked={form.watch("urgentCallsSamePerson") === "yes"}
-        onCheckedChange={(checked) => {
-          if (checked) form.setValue("urgentCallsSamePerson", "yes");
-        }}
+      <input
+        type="radio"
+        value="yes"
+        {...form.register("urgentCallsSamePerson")}
+        className="h-[16px] w-[16px] accent-[#C8102E]"
       />
       YES
     </label>
+
     <label className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide">
-      <Checkbox
-        checked={form.watch("urgentCallsSamePerson") === "no"}
-        onCheckedChange={(checked) => {
-          if (checked) form.setValue("urgentCallsSamePerson", "no");
-        }}
+      <input
+        type="radio"
+        value="no"
+        {...form.register("urgentCallsSamePerson")}
+        className="h-[16px] w-[16px] accent-[#C8102E]"
       />
       NO
     </label>
