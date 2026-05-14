@@ -214,34 +214,80 @@ try {
   source: "Ansera Intake Form",
   submittedAt: new Date().toISOString(),
   submissionUrl,
-  submissionText: `
+submissionText: `
 ANSERA™ INTAKE SUBMISSION
 
 Submitted At: ${new Date().toISOString()}
+
+CONTACT & BUSINESS INFORMATION
 Company: ${data.companyName || ""}
 Contact: ${data.contactName || ""}
 Email: ${data.email || ""}
 Secondary Email: ${data.secondaryEmail || ""}
 Primary Phone: ${data.primaryPhone || ""}
 Secondary Phone: ${data.secondaryPhone || ""}
+Primary Business Type: ${data.primaryBusinessType || ""}
 Website: ${data.websiteUrl || ""}
 
+SOCIAL MEDIA / LINKS
+Facebook: ${data.socialFacebook || ""}
+Instagram: ${data.socialInstagram || ""}
+YouTube: ${data.socialYoutube || ""}
+LinkedIn: ${data.socialLinkedin || ""}
+Other URL 1: ${data.socialOther1 || ""}
+Other URL 2: ${data.socialOther2 || ""}
+
+COMPLIANCE / CALLER SETTINGS
+HIPAA Regulated: ${data.hipaaRegulated || ""}
+Disclose AI to Callers: ${data.discloseAi || ""}
+Minors May Call: ${data.minorsMayCall || ""}
+
+CALL FLOW & PRIORITY SITUATIONS
+Top Reasons People Call: ${data.topReasons || ""}
+Questions Callers Ask Most: ${data.questionsAskedMost || ""}
+Calls That Cannot Be Missed: ${data.callsCannotMiss || ""}
+Situations That Stress Staff: ${data.situationsStress || ""}
+Calls Never to Handle Alone: ${data.callsNeverAlone || ""}
+Common Caller Frustrations: ${data.commonFrustrations || ""}
+Rings Before Pickup: ${data.ringsBeforePickup || ""}
+Business Model: ${data.businessModel || ""}
+Urgent Calls Always Same Person: ${data.urgentCallsSamePerson || ""}
+
+PLAN SELECTION
 Selected Plan: ${data.selectedPlan || ""}
 Advanced Options: ${Array.isArray(data.advancedOptions) ? data.advancedOptions.join(", ") : ""}
 
+VOICE PREFERENCES
 Voice Gender: ${data.voiceGender || ""}
 Voice Persona Name: ${data.voicePersonaName || ""}
 Languages Needed: ${data.languagesNeeded || ""}
 Auto-Detect Language: ${data.autoDetectLanguage ? "Yes" : "No"}
 
+MESSAGE DELIVERY
 Message Delivery Email: ${data.deliveryEmailEnabled ? data.deliveryEmail : "No"}
 Message Delivery Text: ${data.deliveryTextEnabled ? data.deliveryText : "No"}
 Message Delivery Other: ${data.deliveryOtherEnabled ? data.deliveryOther : "No"}
 Caller Assistance: ${data.callerNeedsAssistance || ""}
 
+REFERENCE MATERIALS
+Google Business Profile: ${data.refGoogleBusiness ? "Yes" : "No"}
+Google Business Profile URL: ${data.refGoogleBusinessUrl || ""}
+Standard Operating Procedures: ${data.refSop ? "Yes" : "No"}
+SOP URL/File/Text: ${data.refSopUrl || data.refSopFile || ""}
+Existing Scripts/Greetings: ${data.refScripts ? "Yes" : "No"}
+Scripts URL/File/Text: ${data.refScriptsUrl || data.refScriptsFile || data.refScriptsText || ""}
+Services/Brochures: ${data.refServices ? "Yes" : "No"}
+Services URL/File: ${data.refServicesUrl || data.refServicesFile || ""}
+Staff Directory: ${data.refStaff ? "Yes" : "No"}
+Staff Details: ${data.refStaffText || ""}
+Other Reference Materials: ${data.refOther ? "Yes" : "No"}
+Other Reference Details: ${data.refOtherDesc || data.refOtherUrl || data.refOtherFile || ""}
+
+BOOKING / FINAL NOTES
 Booking System: ${data.bookingSystem || ""}
 Anything Else: ${data.anythingElse || ""}
 
+AUTHORIZATION
 Authorization Accepted: ${data.authorization ? "Yes" : "No"}
 `,
   ...data,
