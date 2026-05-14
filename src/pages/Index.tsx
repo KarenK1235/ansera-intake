@@ -22,6 +22,7 @@ const formSchema = z.object({
   websiteUrl: z.string().optional(),
   primaryPhone: z.string().min(1, "Primary phone is required"),
   secondaryPhone: z.string().optional(),
+  hours: z.any().optional(),
   primaryBusinessType: z.string().optional(),
   socialFacebook: z.string().optional(),
   socialInstagram: z.string().optional(),
@@ -39,6 +40,7 @@ const formSchema = z.object({
   callsNeverAlone: z.string().optional(),
   commonFrustrations: z.string().optional(),
   ringsBeforePickup: z.string().optional(),
+  urgentCallsSamePerson: z.string().optional(),
   businessModel: z.string().optional(),
   businessModelOther: z.string().optional(),
   selectedPlan: z.string().optional(),
@@ -269,7 +271,7 @@ VOICE PREFERENCES
 Voice Gender: ${data.voiceGender || ""}
 Voice Persona Name: ${data.voicePersonaName || ""}
 Languages Needed: ${data.languagesNeeded || ""}
-Auto-Detect Language: ${data.autoDetectLanguage === true || data.autoDetectLanguage === "on" ? "Yes" : "No"}
+Auto-Detect LAuto-Detect Language: ${data.autoDetectLanguage === true ? "Yes" : "No"}
 
 MESSAGE DELIVERY
 Message Delivery Email: ${data.deliveryEmailEnabled ? data.deliveryEmail : "No"}
@@ -684,6 +686,7 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
 )}
               </div>
         <div className="space-y-1">
+  <div className="space-y-1">
   <TooltipLabel>URGENT CALLS ALWAYS SAME PERSON?</TooltipLabel>
   <div className="flex items-center gap-4 pt-2">
     <label className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide">
@@ -848,7 +851,13 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
 <div className="space-y-1 md:col-span-3">
   <TooltipLabel>LANGUAGE OPTIONS</TooltipLabel>
   <label className="flex w-full items-center gap-2 rounded-[3px] border border-gray-200 bg-white px-3 py-2 text-[13px] text-[#333] cursor-pointer">
-   <Checkbox {...form.register("autoDetectLanguage")} className="border-gray-300 data-[state=checked]:bg-[#C8102E] data-[state=checked]:border-[#C8102E] data-[state=checked]:text-white" />
+  <Checkbox
+  checked={form.watch("autoDetectLanguage") === true}
+  onCheckedChange={(checked) => {
+    form.setValue("autoDetectLanguage", checked === true);
+  }}
+  className="border-gray-300 data-[state=checked]:bg-[#C8102E] data-[state=checked]:border-[#C8102E] data-[state=checked]:text-white"
+/>
 <span>Auto-detect caller language & respond accordingly</span>
     <span className="font-semibold text-[#CFA911]">(Elite)</span>
   </label>
