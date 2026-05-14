@@ -688,7 +688,9 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
     className={inputClasses}
   />
 )}
-              <div className="space-y-1">
+</div>
+
+<div className="space-y-1">
   <TooltipLabel>URGENT CALLS ALWAYS SAME PERSON?</TooltipLabel>
   <div className="flex items-center gap-4 pt-2">
     <label className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide">
