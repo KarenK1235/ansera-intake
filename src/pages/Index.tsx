@@ -694,12 +694,13 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
   <TooltipLabel>URGENT CALLS ALWAYS SAME PERSON?</TooltipLabel>
   <div className="flex items-center gap-4 pt-2">
     <label className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wide">
-      <input
-        type="radio"
-        value="yes"
-        {...form.register("urgentCallsSamePerson")}
-        className="h-[16px] w-[16px] accent-[#C8102E]"
-      />
+     <input
+  type="radio"
+  name="urgentCallsSamePerson"
+  value="yes"
+  onChange={(e) => form.setValue("urgentCallsSamePerson", e.target.value)}
+  className="h-[16px] w-[16px] accent-[#C8102E]"
+/>
       YES
     </label>
 
