@@ -695,16 +695,10 @@ const stateSnapshot = null;
                       onCheckedChange={(checked) => form.setValue(ref.id as any, checked === true)}
                       className="mt-0.5 border-gray-300 text-[#C8102E] focus:ring-[#C8102E] shrink-0" 
                     />
-                    <div className="flex-1">
-                  <Label htmlFor={ref.id} className="text-[11px] font-bold text-[#333] cursor-pointer block leading-tight">
-  {ref.id === "refGoogleBusiness" && <span className="mr-1">🌐</span>}
-  {ref.id === "refSop" && <span className="mr-1">💾</span>}
-  {ref.id === "refScripts" && <span className="mr-1">☎️</span>}
-  {ref.id === "refServices" && <span className="mr-1">🗂️</span>}
-  {ref.id === "refStaff" && <span className="mr-1">👥</span>}
-  {ref.id === "refOther" && <span className="mr-1">📎</span>}
-  {ref.label}
-</Label>
+                  <div className="flex-1">
+  <Label htmlFor={ref.id} className="text-[11px] font-bold text-[#333] cursor-pointer block leading-tight">
+    ICONTEST {ref.label}
+  </Label>
                       {ref.sub && <p className="text-[9px] text-[#888] mt-0.5 leading-tight">{ref.sub}</p>}
                     </div>
                   </div>
