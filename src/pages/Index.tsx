@@ -228,7 +228,14 @@ Primary Phone: ${data.primaryPhone || ""}
 Secondary Phone: ${data.secondaryPhone || ""}
 Primary Business Type: ${data.primaryBusinessType || ""}
 Website: ${data.websiteUrl || ""}
-
+Hours of Operation:
+Sunday: ${data.hours?.Sunday?.closed ? "Closed" : `${data.hours?.Sunday?.open || ""} - ${data.hours?.Sunday?.close || ""}`}
+Monday: ${data.hours?.Monday?.closed ? "Closed" : `${data.hours?.Monday?.open || ""} - ${data.hours?.Monday?.close || ""}`}
+Tuesday: ${data.hours?.Tuesday?.closed ? "Closed" : `${data.hours?.Tuesday?.open || ""} - ${data.hours?.Tuesday?.close || ""}`}
+Wednesday: ${data.hours?.Wednesday?.closed ? "Closed" : `${data.hours?.Wednesday?.open || ""} - ${data.hours?.Wednesday?.close || ""}`}
+Thursday: ${data.hours?.Thursday?.closed ? "Closed" : `${data.hours?.Thursday?.open || ""} - ${data.hours?.Thursday?.close || ""}`}
+Friday: ${data.hours?.Friday?.closed ? "Closed" : `${data.hours?.Friday?.open || ""} - ${data.hours?.Friday?.close || ""}`}
+Saturday: ${data.hours?.Saturday?.closed ? "Closed" : `${data.hours?.Saturday?.open || ""} - ${data.hours?.Saturday?.close || ""}`}
 SOCIAL MEDIA / LINKS
 Facebook: ${data.socialFacebook || ""}
 Instagram: ${data.socialInstagram || ""}
@@ -250,7 +257,7 @@ Situations That Stress Staff: ${data.situationsStress || ""}
 Calls Never to Handle Alone: ${data.callsNeverAlone || ""}
 Common Caller Frustrations: ${data.commonFrustrations || ""}
 Rings Before Pickup: ${data.ringsBeforePickup || ""}
-Business Model: ${data.businessModel || ""}
+Business Model: ${data.businessModel || ""}${data.businessModelOther ? ` — ${data.businessModelOther}` : ""}
 Urgent Calls Always Same Person: ${data.urgentCallsSamePerson || ""}
 
 PLAN SELECTION
@@ -261,7 +268,7 @@ VOICE PREFERENCES
 Voice Gender: ${data.voiceGender || ""}
 Voice Persona Name: ${data.voicePersonaName || ""}
 Languages Needed: ${data.languagesNeeded || ""}
-Auto-Detect Language: ${data.autoDetectLanguage ? "Yes" : "No"}
+Auto-Detect Language: ${data.autoDetectLanguage === true || data.autoDetectLanguage === "on" ? "Yes" : "No"}
 
 MESSAGE DELIVERY
 Message Delivery Email: ${data.deliveryEmailEnabled ? data.deliveryEmail : "No"}
@@ -657,15 +664,23 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
                     <SelectValue placeholder="-- Choose --" />
                   </SelectTrigger>
                   <SelectContent>
-              <SelectItem value="Appointment-based">Appointment-based</SelectItem>
-<SelectItem value="Service-based">Service-based</SelectItem>
+           <SelectItem value="Customers come to us">Customers come to us</SelectItem>
+<SelectItem value="We go to customers">We go to customers</SelectItem>
+<SelectItem value="Both / hybrid">Both / hybrid</SelectItem>
+<SelectItem value="Appointment-based">Appointment-based</SelectItem>
 <SelectItem value="Walk-in / storefront">Walk-in / storefront</SelectItem>
-<SelectItem value="Mobile service">Mobile service</SelectItem>
 <SelectItem value="Virtual / online">Virtual / online</SelectItem>
 <SelectItem value="Emergency / urgent response">Emergency / urgent response</SelectItem>
-<SelectItem value="Mixed / other">Mixed / other</SelectItem>
+<SelectItem value="Other">Other</SelectItem>
                   </SelectContent>
                 </Select>
+                {form.watch("businessModel") === "Other" && (
+  <Input
+    {...form.register("businessModelOther")}
+    placeholder="Briefly describe your business model..."
+    className={inputClasses}
+  />
+)}
               </div>
         <div className="space-y-1">
   <TooltipLabel>URGENT CALLS ALWAYS SAME PERSON?</TooltipLabel>
