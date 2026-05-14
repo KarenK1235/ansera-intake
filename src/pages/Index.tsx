@@ -284,17 +284,17 @@ Message Delivery Other: ${data.deliveryOtherEnabled ? data.deliveryOther : "No"}
 Caller Assistance: ${data.callerNeedsAssistance || ""}
 
 REFERENCE MATERIALS
-Google Business Profile: ${data.refGoogleBusiness ? "Yes" : "No"}
+🌐 Google Business Profile: ${data.refGoogleBusiness ? "Yes" : "No"}
 Google Business Profile URL: ${data.refGoogleBusinessUrl || ""}
-Standard Operating Procedures: ${data.refSop ? "Yes" : "No"}
+💾 Standard Operating Procedures: ${data.refSop ? "Yes" : "No"}
 SOP URL/File/Text: ${data.refSopUrl || data.refSopFile || ""}
-Existing Scripts/Greetings: ${data.refScripts ? "Yes" : "No"}
+☎️ Existing Phone Scripts or Greetings: ${data.refScripts ? "Yes" : "No"}
 Scripts URL/File/Text: ${data.refScriptsUrl || data.refScriptsFile || data.refScriptsText || ""}
-Services/Brochures: ${data.refServices ? "Yes" : "No"}
+🗂️ List of Services / Brochures: ${data.refServices ? "Yes" : "No"}
 Services URL/File: ${data.refServicesUrl || data.refServicesFile || ""}
-Staff Directory: ${data.refStaff ? "Yes" : "No"}
+👥 Staff Directory — Key Personnel: ${data.refStaff ? "Yes" : "No"}
 Staff Details: ${data.refStaffText || ""}
-Other Reference Materials: ${data.refOther ? "Yes" : "No"}
+📎 Other Reference Materials: ${data.refOther ? "Yes" : "No"}
 Other Reference Details: ${data.refOtherDesc || data.refOtherUrl || data.refOtherFile || ""}
 
 BOOKING / FINAL NOTES
@@ -1030,7 +1030,7 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
               ))}
             </div>
 
-            <div className="mt-3 bg-[#EDEDED] border-l-[3px] border-[#CFA911] p-2 text-[9px] text-[#666] leading-[1.6] flex items-start gap-1.5">
+            <div className="mt-3 bg-[#EDEDED] border-l-[3px] border-[#CFA911] p-2 text-[11px] text-[#666] leading-[1.6] flex items-start gap-1.5">
               <span className="text-[12px]">📋</span>
               <div>
                 <strong>Additional File Types:</strong> For Google Drive, OneDrive, Canva, YouTube, Vimeo, or similar tools, set sharing to “Anyone with the link can view.” View-only access is perfect — please do not give edit access. If you have ZIP files, PDFs, logos, brand assets, or documents saved on your computer, we can request them by email after reviewing your intake.
