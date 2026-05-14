@@ -825,7 +825,7 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
             </p>
 
             <div className="bg-[#EDEDED] border-l-[4px] border-[#CFA911] p-2.5 text-[11px] text-[#555] leading-[1.5] mb-3">
-              <strong>The more you share, the smarter Ansera™ becomes.</strong> Upload whatever applies. Can't upload? Paste a link, upload a ZIP file, or just check the box and we'll reach out. We'll even take a thumb drive or a good old floppy disk 💾 — however it gets to us, we'll make it work.
+              <strong>The more you share, the smarter Ansera™ becomes.</strong> Links are preferred. Paste links to helpful materials such as your SOPs, scripts, brochures, videos, brand files, or informational documents. Please use view-only sharing access. Have other info? Just check the box and we'll reach out. We'll even take a thumb drive or a good old floppy disk 💾 — however it gets to us, we'll make it work.
             </div>
 
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -864,7 +864,7 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
                           )}
                           
                           <label 
-                            className="block cursor-pointer rounded-[3px] border-[1.5px] border-dashed border-[#ddd] bg-white p-2 text-center text-[10px] text-[#aaa] hover:bg-gray-50 transition-colors"
+                            className="hidden block cursor-pointer rounded-[3px] border-[1.5px] border-dashed border-[#ddd] bg-white p-2 text-center text-[10px] text-[#aaa] hover:bg-gray-50 transition-colors"
                             onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
                             onDrop={(e) => {
                               e.preventDefault(); e.stopPropagation();
@@ -893,7 +893,7 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
                               <span className="text-[12px]">📎</span> {form.watch(`${ref.id}File` as any)}
                             </div>
                           )}
-                          <Input type="url" {...form.register(`${ref.id}Url` as any)} placeholder="Or paste a link" className={inputClasses} />
+                          <Input type="url" {...form.register(`${ref.id}Url` as any)} placeholder="Paste link or briefly describe what you have..." className={inputClasses} />
                           
                           {(ref.type === "file_text" || ref.type === "file_text_desc") && (
                             <Textarea 
@@ -921,8 +921,7 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
             <div className="mt-3 bg-[#EDEDED] border-l-[3px] border-[#CFA911] p-2 text-[9px] text-[#666] leading-[1.6] flex items-start gap-1.5">
               <span className="text-[12px]">📋</span>
               <div>
-                <strong>Upload limits:</strong> Max 50MB per file. ZIP files up to 100MB. For anything larger, paste a link or email us. Accepted: PDF, Word, Excel, PowerPoint, PNG, JPG, GIF, MP3, WAV, MP4, MOV, ZIP and more.
-              </div>
+                <strong>Additional File Types:</strong> For Google Drive, OneDrive, Canva, YouTube, Vimeo, or similar tools, set sharing to “Anyone with the link can view.” View-only access is perfect — please do not give edit access. If you have ZIP files, PDFs, logos, brand assets, or documents saved on your computer, we can request them by email after reviewing your intake.
             </div>
 
             <div className="mt-4 space-y-1">
