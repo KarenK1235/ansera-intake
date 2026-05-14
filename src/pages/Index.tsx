@@ -40,6 +40,7 @@ const formSchema = z.object({
   commonFrustrations: z.string().optional(),
   ringsBeforePickup: z.string().optional(),
   businessModel: z.string().optional(),
+  businessModelOther: z.string().optional(),
   selectedPlan: z.string().optional(),
   advancedOptions: z.array(z.string()).optional(),
   voiceGender: z.string().optional(),
