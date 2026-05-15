@@ -100,7 +100,8 @@ const Index = () => {
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [isReadOnly, setIsReadOnly] = useState(false);
   const [hasLatest, setHasLatest] = useState(false);
-
+  const [showThankYou, setShowThankYou] = useState(false);
+  
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     mode: "onTouched",
@@ -311,7 +312,8 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
  toast.success("Form submitted successfully!");
 
 setTimeout(() => {
-  window.location.href = "/thank-you";
+  setShowThankYou(true);
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }, 600);
 } catch (error) {
   console.error("Webhook submission failed:", error);
@@ -395,7 +397,20 @@ setTimeout(() => {
           <h2 className="text-xl font-bold tracking-widest text-[#FFC72C] mb-0.5">ANSERA™ CLIENT INTAKE FORM</h2>
           <p className="text-xs text-gray-300 font-medium">Please complete all required fields. Your information helps us prepare the right solution for your business.</p>
         </div>
-
+        {showThankYou && (
+  <div className="mb-6 rounded-[6px] border-2 border-[#CFA911] bg-white p-6 text-center shadow-lg">
+    <h2 className="text-[#C8102E] text-xl font-bold tracking-wide uppercase mb-2">
+      Thank You — Your Ansera™ Intake Was Submitted
+    </h2>
+    <p className="text-[#333] text-sm leading-relaxed max-w-2xl mx-auto">
+      We received your intake form and will review your business details, selected options, and reference materials.
+      If we need additional files, ZIP files, PDFs, brand assets, scripts, SOPs, or clarification, we will follow up by email.
+    </p>
+    <p className="text-[#777] text-xs mt-4">
+      A confirmation email has been sent to the email address provided.
+    </p>
+  </div>
+)}
         {isReadOnly && (
           <div className="bg-[#EDEDED] border-y-4 border-[#CFA911] px-8 py-4 flex items-center justify-between print:hidden">
             <div>
