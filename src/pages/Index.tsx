@@ -937,7 +937,7 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
             </p>
 
             <div className="bg-[#EDEDED] border-l-[4px] border-[#CFA911] p-2.5 text-[11px] text-[#555] leading-[1.5] mb-3">
-              <strong>The more you share, the smarter Ansera™ becomes.</strong> Links are preferred. Paste links to helpful materials such as your SOPs, scripts, brochures, videos, brand files, or informational documents. Please use view-only sharing access. Have other info? Just check the box and we'll reach out. We'll even take a thumb drive or a good old floppy disk 💾 — however it gets to us, we'll make it work.
+              <strong>The more you share, the smarter Ansera™ becomes.</strong> Links are preferred. Paste links to helpful materials such as your SOPs, scripts, brochures, videos, brand files, or informational documents. Please use view-only sharing access. Have other info? Just check the box and we'll reach out. We'll even take a <img src="/thumb-drive-icon.png" alt="thumb drive" className="inline-block h-4 w-4 align-middle mx-1" /> thumb drive or a good old floppy disk 💾 — however it gets to us, we'll make it work.
             </div>
 
             <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
@@ -1041,7 +1041,7 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
             <div className="mt-3 bg-[#EDEDED] border-l-[3px] border-[#CFA911] p-2 text-[11px] text-[#666] leading-[1.6] flex items-start gap-1.5">
               <span className="text-[12px]">📋</span>
               <div>
-                <strong>Additional File Types:</strong> For Google Drive, OneDrive, Canva, YouTube, Vimeo, or similar tools, set sharing to “Anyone with the link can view.” View-only access is perfect — please do not give edit access. If you have ZIP files, PDFs, logos, brand assets, or documents saved on your computer, we can request them by email after reviewing your intake.
+                <strong>Additional File Types:</strong> For Google Drive, OneDrive, Canva, YouTube, Vimeo, or similar tools, set sharing to “Anyone with the link can view.” View-only access is perfect — please do not give edit access. If you have <img src="/zip-icon.png" alt="ZIP file" className="inline-block h-4 w-4 align-middle mx-1" /> ZIP files, PDFs, logos, brand assets, or documents saved on your computer, we can request them by email after reviewing your intake.
             </div>
               </div>
 
