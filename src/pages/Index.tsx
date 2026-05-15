@@ -311,9 +311,7 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
  toast.success("Form submitted successfully!");
 
 setTimeout(() => {
-  navigate("/thank-you", { 
-    state: { snapshotUrl: submissionUrl, snapshotData: data } 
-  });
+  window.location.href = "/thank-you";
 }, 600);
 } catch (error) {
   console.error("Webhook submission failed:", error);
