@@ -308,8 +308,13 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
 }),
   });
 
-  toast.success("Form submitted successfully!");
-  navigate("/thank-you", { state: { snapshotUrl: submissionUrl, snapshotData: data } });
+ toast.success("Form submitted successfully!");
+
+setTimeout(() => {
+  navigate("/thank-you", { 
+    state: { snapshotUrl: submissionUrl, snapshotData: data } 
+  });
+}, 600);
 } catch (error) {
   console.error("Webhook submission failed:", error);
   toast.error("Submission failed. Please try again or contact Otto Growth Labs.");
