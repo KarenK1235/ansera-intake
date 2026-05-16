@@ -294,7 +294,7 @@ try {
   console.error("Submission proof upload failed:", proofError);
 }
 try {
-  await fetch("https://services.leadconnectorhq.com/hooks/9RW3P6cHGlzd2iZjDFxu/webhook-trigger/b684296b-685e-40ef-9e01-753c4b975d71", {
+  const growthHubResponse = await fetch("https://services.leadconnectorhq.com/hooks/9RW3P6cHGlzd2iZjDFxu/webhook-trigger/b684296b-685e-40ef-9e01-753c4b975d71", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -398,7 +398,10 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
   ...data,
 }),
   });
-
+if (!growthHubResponse.ok) {
+  console.error("GrowthHub webhook failed:", growthHubResponse.status, await growthHubResponse.text());
+  throw new Error("GrowthHub webhook failed");
+}
  toast.success("Form submitted successfully!");
 
 setTimeout(() => {
