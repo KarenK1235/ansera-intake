@@ -93,7 +93,73 @@ const TooltipLabel = ({ children, tooltip, className = "" }: { children: React.R
     )}
   </Label>
 );
+function createSubmissionProofImage(submissionText: string) {
+  const canvas = document.createElement("canvas");
+  const ctx = canvas.getContext("2d");
 
+  if (!ctx) {
+    throw new Error("Could not create proof image");
+  }
+
+  const padding = 48;
+  const maxWidth = 1200;
+  const lineHeight = 26;
+  const fontSize = 18;
+
+  ctx.font = `${fontSize}px Arial`;
+
+  const lines: string[] = [];
+
+  submissionText.split("\n").forEach((paragraph) => {
+    if (!paragraph.trim()) {
+      lines.push("");
+      return;
+    }
+
+    const words = paragraph.split(" ");
+    let line = "";
+
+    words.forEach((word) => {
+      const testLine = line ? `${line} ${word}` : word;
+      const width = ctx.measureText(testLine).width;
+
+      if (width > maxWidth - padding * 2) {
+        lines.push(line);
+        line = word;
+      } else {
+        line = testLine;
+      }
+    });
+
+    if (line) lines.push(line);
+  });
+
+  canvas.width = maxWidth;
+  canvas.height = Math.max(900, padding * 2 + lines.length * lineHeight + 80);
+
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = "#C8102E";
+  ctx.font = "bold 28px Arial";
+  ctx.fillText("Ansera™ Intake Submission Proof Record", padding, padding);
+
+  ctx.fillStyle = "#333333";
+  ctx.font = `${fontSize}px Arial`;
+
+  let y = padding + 52;
+
+  lines.forEach((line) => {
+    ctx.fillText(line, padding, y);
+    y += lineHeight;
+  });
+
+  ctx.fillStyle = "#777777";
+  ctx.font = "14px Arial";
+  ctx.fillText("Generated automatically by Otto Growth Labs intake system.", padding, canvas.height - 32);
+
+  return canvas.toDataURL("image/png");
+}
 const Index = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -147,6 +213,40 @@ hours: {},
   const onSubmit = async (data: FormValues) => {
     const snapshotId = crypto.randomUUID();
     const submissionUrl = `${window.location.origin}${window.location.pathname}?snapshot=${snapshotId}`;
+    let submissionProofUrl = "";
+    const submittedAt = new Date().toISOString();
+
+try {
+  const proofImageDataUrl = createSubmissionProofImage(
+    `ANSERA™ INTAKE SUBMISSION PROOF RECORD
+
+Submitted At: ${submittedAt}
+Submission URL: ${submissionUrl}
+
+RAW SUBMISSION DATA:
+${JSON.stringify(data, null, 2)}
+
+Generated At: ${new Date().toISOString()}`
+  );
+
+  const proofUploadResponse = await fetch("/api/upload-submission-proof", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      imageDataUrl: proofImageDataUrl,
+      fileName: `ansera-intake-proof-${Date.now()}.png`,
+    }),
+  });
+
+  if (proofUploadResponse.ok) {
+    const proofUploadData = await proofUploadResponse.json();
+    submissionProofUrl = proofUploadData.webViewLink || "";
+  }
+} catch (proofError) {
+  console.error("Submission proof upload failed:", proofError);
+}
     try {
       localStorage.setItem(`ansera_snapshot_${snapshotId}`, JSON.stringify(data));
       localStorage.setItem(`ansera_snapshot_latest`, JSON.stringify(data));
@@ -220,12 +320,14 @@ try {
   email: data.email,
   primaryPhone: data.primaryPhone,
   source: "Ansera Intake Form",
-  submittedAt: new Date().toISOString(),
+  submittedAt,
   submissionUrl,
+submissionProofUrl,
 submissionText: `
 ANSERA™ INTAKE SUBMISSION
 
-Submitted At: ${new Date().toISOString()}
+Submitted At: ${submittedAt}
+Submission Proof Archive: ${submissionProofUrl || "Pending / not created"}
 
 CONTACT & BUSINESS INFORMATION
 Company: ${data.companyName || ""}
@@ -311,7 +413,33 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
   ...data,
 }),
   });
+try {
+  const proofImageDataUrl = createSubmissionProofImage(
+    `ANSERA™ INTAKE SUBMISSION PROOF RECORD
 
+${submissionText || "Submission proof text unavailable."}
+
+Archived At: ${new Date().toISOString()}`
+  );
+
+  const proofUploadResponse = await fetch("/api/upload-submission-proof", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      imageDataUrl: proofImageDataUrl,
+      fileName: `ansera-intake-proof-${Date.now()}.png`,
+    }),
+  });
+
+  if (proofUploadResponse.ok) {
+    const proofUploadData = await proofUploadResponse.json();
+    submissionProofUrl = proofUploadData.webViewLink || "";
+  }
+} catch (proofError) {
+  console.error("Submission proof upload failed:", proofError);
+}
  toast.success("Form submitted successfully!");
 
 setTimeout(() => {
