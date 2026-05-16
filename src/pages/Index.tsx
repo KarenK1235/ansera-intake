@@ -157,66 +157,6 @@ async function createSubmissionProofImage(submittedAt: string, snapshotId: strin
   return canvas.toDataURL("image/png");
 }
 
-  const padding = 48;
-  const maxWidth = 1200;
-  const lineHeight = 26;
-  const fontSize = 18;
-
-  ctx.font = `${fontSize}px Arial`;
-
-  const lines: string[] = [];
-
-  submissionText.split("\n").forEach((paragraph) => {
-    if (!paragraph.trim()) {
-      lines.push("");
-      return;
-    }
-
-    const words = paragraph.split(" ");
-    let line = "";
-
-    words.forEach((word) => {
-      const testLine = line ? `${line} ${word}` : word;
-      const width = ctx.measureText(testLine).width;
-
-      if (width > maxWidth - padding * 2) {
-        lines.push(line);
-        line = word;
-      } else {
-        line = testLine;
-      }
-    });
-
-    if (line) lines.push(line);
-  });
-
-  canvas.width = maxWidth;
-  canvas.height = Math.max(900, padding * 2 + lines.length * lineHeight + 80);
-
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-  ctx.fillStyle = "#C8102E";
-  ctx.font = "bold 28px Arial";
-  ctx.fillText("Ansera™ Intake Submission Proof Record", padding, padding);
-
-  ctx.fillStyle = "#333333";
-  ctx.font = `${fontSize}px Arial`;
-
-  let y = padding + 52;
-
-  lines.forEach((line) => {
-    ctx.fillText(line, padding, y);
-    y += lineHeight;
-  });
-
-  ctx.fillStyle = "#777777";
-  ctx.font = "14px Arial";
-  ctx.fillText("Generated automatically by Otto Growth Labs intake system.", padding, canvas.height - 32);
-
-  return canvas.toDataURL("image/png");
-}
-const Index = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [showTopBtn, setShowTopBtn] = useState(false);
