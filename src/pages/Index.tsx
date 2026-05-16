@@ -453,7 +453,7 @@ setTimeout(() => {
             <div className="grid grid-cols-1 gap-x-4 gap-y-2 md:grid-cols-2">
               <div className="space-y-1">
                 <TooltipLabel tooltip="The exact legal or DBA name callers
-                  know you by.">"><span className="text-[#C8102E] text-[15px] font-bold">*</span> COMPANY NAME</TooltipLabel>
+                  know you by."><span className="text-[#C8102E] text-[15px] font-bold">*</span> COMPANY NAME</TooltipLabel>
                 <Input {...form.register("companyName")} placeholder="As callers know it" className={inputClasses} />
                 {form.formState.errors.companyName && <p className="text-red-500 text-[10px]">{form.formState.errors.companyName.message}</p>}
               </div>
