@@ -30,9 +30,9 @@ const formSchema = z.object({
   socialLinkedin: z.string().optional(),
   socialOther1: z.string().optional(),
   socialOther2: z.string().optional(),
-  hipaaRegulated: z.string().optional(),
-  discloseAi: z.string().optional(),
-  minorsMayCall: z.string().optional(),
+  hipaaRegulated: z.string().min(1, "Required"),
+discloseAi: z.string().min(1, "Required"),
+minorsMayCall: z.string().min(1, "Required"),
   topReasons: z.string().optional(),
   questionsAskedMost: z.string().optional(),
   callsCannotMiss: z.string().optional(),
@@ -452,17 +452,18 @@ setTimeout(() => {
             
             <div className="grid grid-cols-1 gap-x-4 gap-y-2 md:grid-cols-2">
               <div className="space-y-1">
-                <TooltipLabel tooltip="The exact legal or DBA name callers know you by.">* COMPANY NAME</TooltipLabel>
+                <TooltipLabel tooltip="The exact legal or DBA name callers
+                  know you by.">"><span className="text-[#C8102E] text-[15px] font-bold">*</span> COMPANY NAME</TooltipLabel>
                 <Input {...form.register("companyName")} placeholder="As callers know it" className={inputClasses} />
                 {form.formState.errors.companyName && <p className="text-red-500 text-[10px]">{form.formState.errors.companyName.message}</p>}
               </div>
               <div className="space-y-1">
-                <TooltipLabel tooltip="The primary point of contact for this account.">* CONTACT NAME</TooltipLabel>
+                <TooltipLabel tooltip="The primary point of contact for this account."><span className="text-[#C8102E] text-[15px] font-bold">*</span> CONTACT NAME</TooltipLabel>
                 <Input {...form.register("contactName")} placeholder="Your full name" className={inputClasses} />
                 {form.formState.errors.contactName && <p className="text-red-500 text-[10px]">{form.formState.errors.contactName.message}</p>}
               </div>
               <div className="space-y-1">
-               <TooltipLabel tooltip="Where we should send your proposal and important updates.">* EMAIL ADDRESS</TooltipLabel>
+               <TooltipLabel tooltip="Where we should send your proposal and important updates."><TooltipLabel tooltip="Where we should send your proposal and important updates.">* EMAIL ADDRESS</TooltipLabel></TooltipLabel>
                 <Input {...form.register("email")} type="email" autoComplete="email" placeholder="your@email.com" className={inputClasses} />
                 {form.formState.errors.email && <p className="text-red-500 text-[10px]">{form.formState.errors.email.message}</p>}
               </div>
@@ -471,7 +472,7 @@ setTimeout(() => {
                <Input {...form.register("secondaryEmail")} type="text" inputMode="email" autoComplete="new-password" placeholder="updates@yourbusiness.com" className={inputClasses} />
               </div>
               <div className="space-y-1">
-                <TooltipLabel tooltip="Main business number.">* PRIMARY PHONE</TooltipLabel>
+                <TooltipLabel tooltip="Main business number."><span className="text-[#C8102E] text-[15px] font-bold">*</span> PRIMARY PHONE</TooltipLabel>
                 <Input {...form.register("primaryPhone")} placeholder="Primary phone number" className={inputClasses} />
                 {form.formState.errors.primaryPhone && <p className="text-red-500 text-[10px]">{form.formState.errors.primaryPhone.message}</p>}
               </div>
@@ -613,9 +614,9 @@ setTimeout(() => {
 
             <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-3">
               {[
-                { id: 'hipaaRegulated', label: 'HIPAA Regulated?' },
-                { id: 'discloseAi', label: 'Disclose AI to Callers?' },
-                { id: 'minorsMayCall', label: 'Minors May Call?' }
+          { id: 'hipaaRegulated', label: <><span className="text-[#C8102E] text-[15px] font-bold">*</span> HIPAA Regulated?</> },
+{ id: 'discloseAi', label: <><span className="text-[#C8102E] text-[15px] font-bold">*</span> Disclose AI to Callers?</> },
+{ id: 'minorsMayCall', label: <><span className="text-[#C8102E] text-[15px] font-bold">*</span> Minors May Call?</> }
               ].map((f) => (
                 <div key={f.id} className="rounded-[3px] border border-[#e8e6e0] bg-[#fafafa] p-2">
                   <div className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.06em] text-[#555]">{f.label}</div>
