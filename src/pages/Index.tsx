@@ -618,7 +618,14 @@ setTimeout(() => {
 { id: 'discloseAi', label: <><span className="text-[#C8102E] text-[15px] font-bold">*</span> Disclose AI to Callers?</> },
 { id: 'minorsMayCall', label: <><span className="text-[#C8102E] text-[15px] font-bold">*</span> Minors May Call?</> }
               ].map((f) => (
-                <div key={f.id} className="rounded-[3px] border border-[#e8e6e0] bg-[#fafafa] p-2">
+                <div
+  key={f.id}
+  className={`rounded-[3px] border p-2 ${
+    form.formState.errors[f.id as keyof FormValues]
+      ? "border-[#C8102E] bg-red-50 ring-2 ring-[#C8102E]"
+      : "border-[#e0e0e0] bg-[#fafafa]"
+  }`}
+>
                   <div className="mb-1.5 text-[10px] font-bold uppercase tracking-[0.06em] text-[#555]">{f.label}</div>
                   <RadioGroup 
                     value={form.watch(f.id as any)} 
@@ -637,6 +644,11 @@ setTimeout(() => {
                 </div>
               ))}
             </div>
+            {(form.formState.errors.hipaaRegulated || form.formState.errors.discloseAi || form.formState.errors.minorsMayCall) && (
+  <div className="mt-2 rounded-[3px] border border-[#C8102E] bg-red-50 px-3 py-2 text-[12px] font-semibold text-[#C8102E]">
+    Please answer all three compliance questions: HIPAA Regulated, Disclose AI to Callers, and Minors May Call.
+  </div>
+)}
             
             {form.watch("hipaaRegulated") === "Yes" && (
               <div className="mt-2 p-2 bg-[#fff5f7] border border-red-200 rounded-[3px] text-[10px] text-[#666] leading-relaxed">
