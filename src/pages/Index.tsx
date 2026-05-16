@@ -399,15 +399,6 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
 }),
   });
 
-  });
-
-  if (proofUploadResponse.ok) {
-    const proofUploadData = await proofUploadResponse.json();
-    submissionProofUrl = proofUploadData.webViewLink || "";
-  }
-} catch (proofError) {
-  console.error("Submission proof upload failed:", proofError);
-}
  toast.success("Form submitted successfully!");
 
 setTimeout(() => {
