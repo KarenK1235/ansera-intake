@@ -156,7 +156,7 @@ async function createSubmissionProofImage(submittedAt: string, snapshotId: strin
 
   return canvas.toDataURL("image/png");
 }
-
+const Index = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [showTopBtn, setShowTopBtn] = useState(false);
