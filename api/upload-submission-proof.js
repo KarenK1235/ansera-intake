@@ -35,7 +35,10 @@ export default async function handler(req, res) {
     }
 
     const clientEmail = process.env.GOOGLE_DRIVE_CLIENT_EMAIL;
-    const privateKey = process.env.GOOGLE_DRIVE_PRIVATE_KEY?.replace(/\\n/g, "\n");
+    const privateKey = (process.env.GOOGLE_DRIVE_PRIVATE_KEY || "")
+  .replace(/^"|"$/g, "")
+  .replace(/\\n/g, "\n")
+  .trim();
     const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
 
     if (!clientEmail || !privateKey || !folderId) {
