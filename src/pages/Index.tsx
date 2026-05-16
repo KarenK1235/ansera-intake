@@ -126,6 +126,7 @@ async function createSubmissionProofImage(submittedAt: string, snapshotId: strin
   document.body.prepend(banner);
   
   const proofOverlays: HTMLElement[] = [];
+  const proofStyleRestores: (() => void)[] = [];
   document.querySelectorAll("input").forEach((input) => {
     const inputEl = input as HTMLInputElement;
 
@@ -176,7 +177,16 @@ async function createSubmissionProofImage(submittedAt: string, snapshotId: strin
   }
 
   if (!value.trim()) return;
+const originalColor = fieldEl.style.color;
+const originalCaretColor = fieldEl.style.caretColor;
 
+fieldEl.style.color = "transparent";
+fieldEl.style.caretColor = "transparent";
+
+proofStyleRestores.push(() => {
+  fieldEl.style.color = originalColor;
+  fieldEl.style.caretColor = originalCaretColor;
+});
   const rect = fieldEl.getBoundingClientRect();
   const overlay = document.createElement("div");
 
@@ -226,8 +236,9 @@ async function createSubmissionProofImage(submittedAt: string, snapshotId: strin
     scrollY: 0,
   });
 
-  banner.remove();
+ banner.remove();
 proofOverlays.forEach((overlay) => overlay.remove());
+proofStyleRestores.forEach((restore) => restore());
   
   return canvas.toDataURL("image/png");
 }
