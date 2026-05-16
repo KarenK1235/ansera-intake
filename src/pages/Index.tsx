@@ -296,7 +296,10 @@ Services URL/File: ${data.refServicesUrl || data.refServicesFile || ""}
 👥 Staff Directory — Key Personnel: ${data.refStaff ? "Yes" : "No"}
 Staff Details: ${data.refStaffText || ""}
 📎 Other Reference Materials: ${data.refOther ? "Yes" : "No"}
-Other Reference Details: ${data.refOtherDesc || data.refOtherUrl || data.refOtherText || data.refOtherFile || ""}
+Other Reference Description: ${data.refOtherDesc || ""}
+Other Reference Link: ${data.refOtherUrl || ""}
+Other Reference Text: ${data.refOtherText || ""}
+Other Reference File Name: ${data.refOtherFile || ""}
 
 BOOKING / FINAL NOTES
 Booking System: ${data.bookingSystem || ""}
