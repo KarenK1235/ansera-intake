@@ -68,6 +68,7 @@ export default async function handler(req, res) {
         body: Readable.from(buffer),
       },
       fields: "id, name, webViewLink, webContentLink",
+      supportsAllDrives: true,
     });
 
     return res.status(200).json({
