@@ -1,3 +1,4 @@
+import html2canvas from "html2canvas";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -93,13 +94,68 @@ const TooltipLabel = ({ children, tooltip, className = "" }: { children: React.R
     )}
   </Label>
 );
-function createSubmissionProofImage(submissionText: string) {
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d");
+async function createSubmissionProofImage(submittedAt: string, snapshotId: string) {
+  const banner = document.createElement("div");
 
-  if (!ctx) {
-    throw new Error("Could not create proof image");
-  }
+  banner.id = "ansera-proof-banner";
+  banner.style.background = "#ffffff";
+  banner.style.border = "3px solid #CFA911";
+  banner.style.color = "#222222";
+  banner.style.padding = "18px 24px";
+  banner.style.margin = "0 0 18px 0";
+  banner.style.fontFamily = "Arial, sans-serif";
+  banner.style.fontSize = "14px";
+  banner.style.lineHeight = "1.5";
+  banner.style.boxSizing = "border-box";
+
+  banner.innerHTML = `
+    <div style="font-size: 20px; font-weight: 700; color: #C8102E; text-transform: uppercase; letter-spacing: 0.04em;">
+      Ansera™ Intake Submission Proof Record
+    </div>
+    <div style="margin-top: 6px;">
+      <strong>Submitted At:</strong> ${submittedAt}
+    </div>
+    <div>
+      <strong>Snapshot ID:</strong> ${snapshotId}
+    </div>
+    <div>
+      <strong>Proof Type:</strong> Full visual form capture
+    </div>
+  `;
+
+  document.body.prepend(banner);
+
+  await new Promise((resolve) => setTimeout(resolve, 300));
+
+  const fullWidth = Math.max(
+    document.body.scrollWidth,
+    document.documentElement.scrollWidth,
+    window.innerWidth
+  );
+
+  const fullHeight = Math.max(
+    document.body.scrollHeight,
+    document.documentElement.scrollHeight,
+    window.innerHeight
+  );
+
+  const canvas = await html2canvas(document.body, {
+    backgroundColor: "#EDEDED",
+    scale: 2,
+    useCORS: true,
+    logging: false,
+    width: fullWidth,
+    height: fullHeight,
+    windowWidth: fullWidth,
+    windowHeight: fullHeight,
+    scrollX: 0,
+    scrollY: 0,
+  });
+
+  banner.remove();
+
+  return canvas.toDataURL("image/png");
+}
 
   const padding = 48;
   const maxWidth = 1200;
@@ -477,14 +533,8 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
 }),
   });
 try {
-  const proofImageDataUrl = createSubmissionProofImage(
-    `ANSERA™ INTAKE SUBMISSION PROOF RECORD
-
-${submissionText || "Submission proof text unavailable."}
-
-Archived At: ${new Date().toISOString()}`
-  );
-
+const proofImageDataUrl = await createSubmissionProofImage(submittedAt, snapshotId);
+  
   const proofUploadResponse = await fetch("/api/upload-submission-proof", {
     method: "POST",
     headers: {
