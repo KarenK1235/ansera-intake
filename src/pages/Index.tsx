@@ -272,7 +272,27 @@ hours: {},
       locationId: "IN0lqUaJgKf0SviBbxHD",
       sessionId: crypto.randomUUID(),
     };
+try {
+  const proofImageDataUrl = await createSubmissionProofImage(submittedAt, snapshotId);
 
+  const proofUploadResponse = await fetch("/api/upload-submission-proof", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      imageDataUrl: proofImageDataUrl,
+      fileName: `ansera-intake-proof-${Date.now()}.png`,
+    }),
+  });
+
+  if (proofUploadResponse.ok) {
+    const proofUploadData = await proofUploadResponse.json();
+    submissionProofUrl = proofUploadData.webViewLink || "";
+  }
+} catch (proofError) {
+  console.error("Submission proof upload failed:", proofError);
+}
 try {
   await fetch("https://services.leadconnectorhq.com/hooks/9RW3P6cHGlzd2iZjDFxu/webhook-trigger/b684296b-685e-40ef-9e01-753c4b975d71", {
     method: "POST",
@@ -378,18 +398,7 @@ Authorization Accepted: ${data.authorization ? "Yes" : "No"}
   ...data,
 }),
   });
-try {
-const proofImageDataUrl = await createSubmissionProofImage(submittedAt, snapshotId);
-  
-  const proofUploadResponse = await fetch("/api/upload-submission-proof", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      imageDataUrl: proofImageDataUrl,
-      fileName: `ansera-intake-proof-${Date.now()}.png`,
-    }),
+
   });
 
   if (proofUploadResponse.ok) {
