@@ -5,6 +5,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "html2canvas": "^1.4.1",
     "googleapis": "^144.0.0",
     "@hookform/resolvers": "latest",
     "@radix-ui/react-checkbox": "latest",
