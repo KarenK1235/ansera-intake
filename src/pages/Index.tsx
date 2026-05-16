@@ -212,7 +212,6 @@ hours: {},
     let submissionProofUrl = "";
     const submittedAt = new Date().toISOString();
 
-}
     try {
       localStorage.setItem(`ansera_snapshot_${snapshotId}`, JSON.stringify(data));
       localStorage.setItem(`ansera_snapshot_latest`, JSON.stringify(data));
