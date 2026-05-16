@@ -28,11 +28,19 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { imageDataUrl, fileName } = req.body || {};
+   const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body || {};
+const imageDataUrl = body.imageDataUrl;
+const fileName = body.fileName;
+    if (typeof imageDataUrl !== "string" || !imageDataUrl.startsWith("data:image/png;base64,")) {
+  return res.status(400).json({
+    error: "Invalid imageDataUrl",
+    receivedType: typeof imageDataUrl,
+  });
+}
 
-    if (!imageDataUrl || !fileName) {
-      return res.status(400).json({ error: "Missing imageDataUrl or fileName" });
-    }
+if (!fileName) {
+  return res.status(400).json({ error: "Missing fileName" });
+}
 
     const clientEmail = process.env.GOOGLE_DRIVE_CLIENT_EMAIL;
     const privateKey = (process.env.GOOGLE_DRIVE_PRIVATE_KEY || "")
