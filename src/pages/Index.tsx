@@ -463,7 +463,7 @@ setTimeout(() => {
                 {form.formState.errors.contactName && <p className="text-red-500 text-[10px]">{form.formState.errors.contactName.message}</p>}
               </div>
               <div className="space-y-1">
-               <TooltipLabel tooltip="Where we should send your proposal and important updates."><TooltipLabel tooltip="Where we should send your proposal and important updates.">* EMAIL ADDRESS</TooltipLabel></TooltipLabel>
+               <TooltipLabel tooltip="Where we should send your proposal and important updates."><TooltipLabel tooltip="Where we should send your proposal and important updates."><span className="text-[#C8102E] text-[15px] font-bold">*</span> EMAIL ADDRESS</TooltipLabel></TooltipLabel>
                 <Input {...form.register("email")} type="email" autoComplete="email" placeholder="your@email.com" className={inputClasses} />
                 {form.formState.errors.email && <p className="text-red-500 text-[10px]">{form.formState.errors.email.message}</p>}
               </div>
