@@ -125,6 +125,7 @@ async function createSubmissionProofImage(submittedAt: string, snapshotId: strin
 
   document.body.prepend(banner);
   
+  const proofOverlays: HTMLElement[] = [];
   document.querySelectorAll("input").forEach((input) => {
     const inputEl = input as HTMLInputElement;
 
@@ -156,6 +157,48 @@ async function createSubmissionProofImage(submittedAt: string, snapshotId: strin
       }
     });
   });
+  document.querySelectorAll("input, textarea, select").forEach((field) => {
+  const fieldEl = field as HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement;
+
+  if (
+    fieldEl instanceof HTMLInputElement &&
+    (fieldEl.type === "checkbox" || fieldEl.type === "radio")
+  ) {
+    return;
+  }
+
+  let value = "";
+
+  if (fieldEl instanceof HTMLSelectElement) {
+    value = fieldEl.options[fieldEl.selectedIndex]?.text || "";
+  } else {
+    value = fieldEl.value || "";
+  }
+
+  if (!value.trim()) return;
+
+  const rect = fieldEl.getBoundingClientRect();
+  const overlay = document.createElement("div");
+
+  overlay.textContent = value;
+  overlay.style.position = "absolute";
+  overlay.style.left = `${rect.left + window.scrollX + 10}px`;
+  overlay.style.top = `${rect.top + window.scrollY + 7}px`;
+  overlay.style.width = `${Math.max(rect.width - 20, 40)}px`;
+  overlay.style.minHeight = `${Math.max(rect.height - 14, 18)}px`;
+  overlay.style.fontFamily = "Arial, sans-serif";
+  overlay.style.fontSize = "13px";
+  overlay.style.lineHeight = "1.35";
+  overlay.style.color = "#1f2937";
+  overlay.style.whiteSpace = "pre-wrap";
+  overlay.style.overflow = "hidden";
+  overlay.style.pointerEvents = "none";
+  overlay.style.zIndex = "99999";
+  overlay.style.background = "transparent";
+
+  document.body.appendChild(overlay);
+  proofOverlays.push(overlay);
+});
   await new Promise((resolve) => setTimeout(resolve, 300));
 
   const fullWidth = Math.max(
@@ -184,7 +227,8 @@ async function createSubmissionProofImage(submittedAt: string, snapshotId: strin
   });
 
   banner.remove();
-
+proofOverlays.forEach((overlay) => overlay.remove());
+  
   return canvas.toDataURL("image/png");
 }
 const Index = () => {
