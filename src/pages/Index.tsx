@@ -124,7 +124,38 @@ async function createSubmissionProofImage(submittedAt: string, snapshotId: strin
   `;
 
   document.body.prepend(banner);
+  
+  document.querySelectorAll("input").forEach((input) => {
+    const inputEl = input as HTMLInputElement;
 
+    if (inputEl.type === "checkbox" || inputEl.type === "radio") {
+      if (inputEl.checked) {
+        inputEl.setAttribute("checked", "checked");
+      } else {
+        inputEl.removeAttribute("checked");
+      }
+    } else {
+      inputEl.setAttribute("value", inputEl.value || "");
+    }
+  });
+
+  document.querySelectorAll("textarea").forEach((textarea) => {
+    const textareaEl = textarea as HTMLTextAreaElement;
+    textareaEl.innerHTML = textareaEl.value || "";
+    textareaEl.setAttribute("value", textareaEl.value || "");
+  });
+
+  document.querySelectorAll("select").forEach((select) => {
+    const selectEl = select as HTMLSelectElement;
+
+    Array.from(selectEl.options).forEach((option) => {
+      if (option.selected) {
+        option.setAttribute("selected", "selected");
+      } else {
+        option.removeAttribute("selected");
+      }
+    });
+  });
   await new Promise((resolve) => setTimeout(resolve, 300));
 
   const fullWidth = Math.max(
