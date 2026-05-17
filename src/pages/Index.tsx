@@ -177,6 +177,8 @@ async function createSubmissionProofImage(submittedAt: string, snapshotId: strin
   }
 
   if (!value.trim()) return;
+    const fieldName = fieldEl.getAttribute("name") || "";
+const isSocialOrHours = fieldName.startsWith("social") || fieldName.startsWith("hours.");
 const originalColor = fieldEl.style.color;
 const originalCaretColor = fieldEl.style.caretColor;
 
@@ -206,15 +208,23 @@ proofStyleRestores.push(() => {
   overlay.textContent = value;
   overlay.style.position = "absolute";
   overlay.style.left = `${rect.left - parentRect.left + 8}px`;
- overlay.style.top = `${rect.top - parentRect.top}px`;
+ overlay.style.top = isSocialOrHours
+  ? `${rect.top - parentRect.top - 2}px`
+  : `${rect.top - parentRect.top - 6}px`;
   overlay.style.width = `${Math.max(rect.width - 16, 40)}px`;
-  overlay.style.height = `${Math.max(rect.height, 22)}px`;
+  overlay.style.height = isSocialOrHours
+  ? `${Math.max(rect.height + 8, 24)}px`
+  : `${Math.max(rect.height - 2, 18)}px`;
   overlay.style.fontFamily = "Arial, sans-serif";
   overlay.style.fontSize = "12px";
- overlay.style.lineHeight = fieldEl instanceof HTMLTextAreaElement ? "1.25" : `${Math.max(rect.height, 22)}px`;
+ overlay.style.lineHeight = isSocialOrHours
+  ? "14px"
+  : fieldEl instanceof HTMLTextAreaElement
+    ? "1.25"
+    : "1.2";
     overlay.style.display = "flex";
-overlay.style.alignItems = fieldEl instanceof HTMLTextAreaElement ? "flex-start" : "center";
-overlay.style.paddingTop = fieldEl instanceof HTMLTextAreaElement ? "2px" : "0";
+overlay.style.alignItems = "flex-start";
+overlay.style.paddingTop = isSocialOrHours ? "1px" : "2px";
 overlay.style.boxSizing = "border-box";
   overlay.style.color = "#1f2937";
   overlay.style.whiteSpace = "pre-wrap";
