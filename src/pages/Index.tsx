@@ -187,15 +187,25 @@ proofStyleRestores.push(() => {
   fieldEl.style.color = originalColor;
   fieldEl.style.caretColor = originalCaretColor;
 });
-  const rect = fieldEl.getBoundingClientRect();
+  const parent = fieldEl.parentElement;
+if (!parent) return;
+
+const originalParentPosition = parent.style.position;
+if (!originalParentPosition) {
+  parent.style.position = "relative";
+}
+
+proofStyleRestores.push(() => {
+  parent.style.position = originalParentPosition;
+});
   const overlay = document.createElement("div");
 
   overlay.textContent = value;
   overlay.style.position = "absolute";
-  overlay.style.left = `${rect.left + window.scrollX + 10}px`;
- overlay.style.top = `${rect.top + window.scrollY - 3}px`;
-  overlay.style.width = `${Math.max(rect.width - 20, 40)}px`;
-  overlay.style.height = `${Math.max(rect.height - 4, 18)}px`;
+  overlay.style.left = `${fieldEl.offsetLeft + 8}px`;
+ overlay.style.top = `${fieldEl.offsetTop + 1}px`;
+  overlay.style.width = `${Math.max(fieldEl.offsetWidth - 16, 40)}px`;
+  overlay.style.height = `${Math.max(fieldEl.offsetHeight - 2, 18)}px`;
   overlay.style.fontFamily = "Arial, sans-serif";
   overlay.style.fontSize = "12px";
   overlay.style.lineHeight = "1.2";
@@ -210,7 +220,7 @@ overlay.style.boxSizing = "border-box";
   overlay.style.zIndex = "99999";
   overlay.style.background = "transparent";
 
-  document.body.appendChild(overlay);
+  parent.appendChild(overlay);
   proofOverlays.push(overlay);
 });
   await new Promise((resolve) => setTimeout(resolve, 300));
@@ -606,7 +616,7 @@ setTimeout(() => {
           </div>
         )}
 
-       <form onSubmit={form.handleSubmit(
+       <form noValidate onSubmit={form.handleSubmit(
   onSubmit,
   (errors) => {
     console.log("FORM ERRORS", errors);
