@@ -190,6 +190,9 @@ proofStyleRestores.push(() => {
   const parent = fieldEl.parentElement;
 if (!parent) return;
 
+const rect = fieldEl.getBoundingClientRect();
+const parentRect = parent.getBoundingClientRect();
+
 const originalParentPosition = parent.style.position;
 if (!originalParentPosition) {
   parent.style.position = "relative";
@@ -202,10 +205,10 @@ proofStyleRestores.push(() => {
 
   overlay.textContent = value;
   overlay.style.position = "absolute";
-  overlay.style.left = `${fieldEl.offsetLeft + 8}px`;
- overlay.style.top = `${fieldEl.offsetTop + 1}px`;
-  overlay.style.width = `${Math.max(fieldEl.offsetWidth - 16, 40)}px`;
-  overlay.style.height = `${Math.max(fieldEl.offsetHeight - 2, 18)}px`;
+  overlay.style.left = `${rect.left - parentRect.left + 8}px`;
+ overlay.style.top = `${rect.top - parentRect.top - 1}px`;
+  overlay.style.width = `${Math.max(rect.width - 16, 40)}px`;
+  overlay.style.height = `${Math.max(rect.height - 2, 18)}px`;
   overlay.style.fontFamily = "Arial, sans-serif";
   overlay.style.fontSize = "12px";
   overlay.style.lineHeight = "1.2";
