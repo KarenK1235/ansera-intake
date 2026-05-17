@@ -206,15 +206,15 @@ proofStyleRestores.push(() => {
   overlay.textContent = value;
   overlay.style.position = "absolute";
   overlay.style.left = `${rect.left - parentRect.left + 8}px`;
- overlay.style.top = `${rect.top - parentRect.top - 6}px`;
+ overlay.style.top = `${rect.top - parentRect.top}px`;
   overlay.style.width = `${Math.max(rect.width - 16, 40)}px`;
-  overlay.style.height = `${Math.max(rect.height - 2, 18)}px`;
+  overlay.style.height = `${Math.max(rect.height, 22)}px`;
   overlay.style.fontFamily = "Arial, sans-serif";
   overlay.style.fontSize = "12px";
-  overlay.style.lineHeight = "1.2";
+ overlay.style.lineHeight = fieldEl instanceof HTMLTextAreaElement ? "1.25" : `${Math.max(rect.height, 22)}px`;
     overlay.style.display = "flex";
-overlay.style.alignItems = "flex-start";
-overlay.style.paddingTop = "2px";
+overlay.style.alignItems = fieldEl instanceof HTMLTextAreaElement ? "flex-start" : "center";
+overlay.style.paddingTop = fieldEl instanceof HTMLTextAreaElement ? "2px" : "0";
 overlay.style.boxSizing = "border-box";
   overlay.style.color = "#1f2937";
   overlay.style.whiteSpace = "pre-wrap";
@@ -656,7 +656,7 @@ setTimeout(() => {
                 {form.formState.errors.contactName && <p className="text-red-500 text-[10px]">{form.formState.errors.contactName.message}</p>}
               </div>
               <div className="space-y-1">
-               <TooltipLabel tooltip="Where we should send your proposal and important updates."><TooltipLabel tooltip="Where we should send your proposal and important updates."><span className="text-[#C8102E] text-[15px] font-bold">*</span> EMAIL ADDRESS</TooltipLabel></TooltipLabel>
+               <TooltipLabel tooltip="Where we should send your proposal and important updates."><span className="text-[#C8102E] text-[15px] font-bold">*</span> EMAIL ADDRESS</TooltipLabel>
                 <Input {...form.register("email")} type="email" autoComplete="email" placeholder="your@email.com" className={inputClasses} />
                 {form.formState.errors.email && <p className="text-red-500 text-[10px]">{form.formState.errors.email.message}</p>}
               </div>
