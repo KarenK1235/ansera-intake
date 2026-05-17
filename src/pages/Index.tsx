@@ -141,22 +141,10 @@ async function createSubmissionProofImage(submittedAt: string, snapshotId: strin
     }
   });
 
-  document.querySelectorAll("textarea").forEach((textarea) => {
+ document.querySelectorAll("textarea").forEach((textarea) => {
   const textareaEl = textarea as HTMLTextAreaElement;
-
-  const originalHeight = textareaEl.style.height;
-  const originalOverflow = textareaEl.style.overflow;
-
   textareaEl.innerHTML = textareaEl.value || "";
   textareaEl.setAttribute("value", textareaEl.value || "");
-
-  textareaEl.style.height = `${textareaEl.scrollHeight + 8}px`;
-  textareaEl.style.overflow = "visible";
-
-  proofStyleRestores.push(() => {
-    textareaEl.style.height = originalHeight;
-    textareaEl.style.overflow = originalOverflow;
-  });
 });
 
   document.querySelectorAll("select").forEach((select) => {
@@ -227,7 +215,7 @@ overlay.style.paddingTop = fieldEl instanceof HTMLTextAreaElement ? "1px" : "0";
 overlay.style.boxSizing = "border-box";
   overlay.style.color = "#1f2937";
   overlay.style.whiteSpace = "pre-wrap";
-  overlay.style.overflow = fieldEl instanceof HTMLTextAreaElement ? "visible" : "hidden";
+  overlay.style.overflow = "hidden";
   overlay.style.pointerEvents = "none";
   overlay.style.zIndex = "99999";
   overlay.style.background = "transparent";
