@@ -193,15 +193,15 @@ proofStyleRestores.push(() => {
   overlay.textContent = value;
   overlay.style.position = "absolute";
   overlay.style.left = `${rect.left + window.scrollX + 10}px`;
-  overlay.style.top = `${rect.top + window.scrollY + 2}px`;
+ overlay.style.top = `${rect.top + window.scrollY - 3}px`;
   overlay.style.width = `${Math.max(rect.width - 20, 40)}px`;
   overlay.style.height = `${Math.max(rect.height - 4, 18)}px`;
   overlay.style.fontFamily = "Arial, sans-serif";
-  overlay.style.fontSize = "13px";
+  overlay.style.fontSize = "12px";
   overlay.style.lineHeight = "1.2";
     overlay.style.display = "flex";
 overlay.style.alignItems = fieldEl instanceof HTMLTextAreaElement ? "flex-start" : "center";
-overlay.style.paddingTop = fieldEl instanceof HTMLTextAreaElement ? "4px" : "0";
+overlay.style.paddingTop = fieldEl instanceof HTMLTextAreaElement ? "1px" : "0";
 overlay.style.boxSizing = "border-box";
   overlay.style.color = "#1f2937";
   overlay.style.whiteSpace = "pre-wrap";
@@ -1188,7 +1188,7 @@ setTimeout(() => {
                   {form.watch(ref.id as any) && (
                     <div className="mt-2 space-y-2">
                       {ref.type === "url" && (
-                        <Input type="url" {...form.register(`${ref.id}Url` as any)} placeholder={ref.placeholder} className={inputClasses} />
+                        <Input type="text" {...form.register(`${ref.id}Url` as any)} placeholder={ref.placeholder} className={inputClasses} />
                       )}
 
                       {(ref.type === "file" || ref.type === "file_text" || ref.type === "file_text_desc") && (
