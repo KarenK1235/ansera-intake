@@ -192,6 +192,7 @@ if (anythingElseTextarea) {
   if (!value.trim()) return;
     const fieldName = fieldEl.getAttribute("name") || "";
 const isSocialOrHours = fieldName.startsWith("social") || fieldName.startsWith("hours.");
+const isReferenceField = fieldName.startsWith("ref");
 const originalColor = fieldEl.style.color;
 const originalCaretColor = fieldEl.style.caretColor;
 
@@ -229,19 +230,21 @@ proofStyleRestores.push(() => {
   ? `${Math.max(rect.height + 8, 24)}px`
   : `${Math.max(rect.height - 2, 18)}px`;
   overlay.style.fontFamily = "Arial, sans-serif";
-  overlay.style.fontSize = "12px";
- overlay.style.lineHeight = isSocialOrHours
-  ? "14px"
-  : fieldEl instanceof HTMLTextAreaElement
-    ? "1.25"
-    : "1.2";
+  overlay.style.fontSize = isReferenceField ? "10px" : "12px";
+ overlay.style.lineHeight = isReferenceField
+  ? "1.15"
+  : isSocialOrHours
+    ? "14px"
+    : fieldEl instanceof HTMLTextAreaElement
+      ? "1.25"
+      : "1.2";
     overlay.style.display = "flex";
 overlay.style.alignItems = "flex-start";
 overlay.style.paddingTop = isSocialOrHours ? "1px" : "2px";
 overlay.style.boxSizing = "border-box";
   overlay.style.color = "#1f2937";
-  overlay.style.whiteSpace = "pre-wrap";
-  overlay.style.overflow = "hidden";
+  overlay.style.whiteSpace = isReferenceField ? "normal" : "pre-wrap";
+  overlay.style.overflow = isReferenceField ? "visible" : "hidden";
   overlay.style.pointerEvents = "none";
   overlay.style.zIndex = "99999";
   overlay.style.background = "transparent";
