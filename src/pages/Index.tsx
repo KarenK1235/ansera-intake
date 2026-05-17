@@ -146,7 +146,20 @@ async function createSubmissionProofImage(submittedAt: string, snapshotId: strin
   textareaEl.innerHTML = textareaEl.value || "";
   textareaEl.setAttribute("value", textareaEl.value || "");
 });
+const anythingElseTextarea = document.querySelector('textarea[name="anythingElse"]') as HTMLTextAreaElement | null;
 
+if (anythingElseTextarea) {
+  const originalAnythingElseHeight = anythingElseTextarea.style.height;
+  const originalAnythingElseOverflow = anythingElseTextarea.style.overflow;
+
+  anythingElseTextarea.style.height = `${anythingElseTextarea.scrollHeight + 16}px`;
+  anythingElseTextarea.style.overflow = "visible";
+
+  proofStyleRestores.push(() => {
+    anythingElseTextarea.style.height = originalAnythingElseHeight;
+    anythingElseTextarea.style.overflow = originalAnythingElseOverflow;
+  });
+}
   document.querySelectorAll("select").forEach((select) => {
     const selectEl = select as HTMLSelectElement;
 
