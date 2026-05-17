@@ -193,12 +193,16 @@ proofStyleRestores.push(() => {
   overlay.textContent = value;
   overlay.style.position = "absolute";
   overlay.style.left = `${rect.left + window.scrollX + 10}px`;
-  overlay.style.top = `${rect.top + window.scrollY + 7}px`;
+  overlay.style.top = `${rect.top + window.scrollY + 2}px`;
   overlay.style.width = `${Math.max(rect.width - 20, 40)}px`;
-  overlay.style.minHeight = `${Math.max(rect.height - 14, 18)}px`;
+  overlay.style.height = `${Math.max(rect.height - 4, 18)}px`;
   overlay.style.fontFamily = "Arial, sans-serif";
   overlay.style.fontSize = "13px";
-  overlay.style.lineHeight = "1.35";
+  overlay.style.lineHeight = "1.2";
+    overlay.style.display = "flex";
+overlay.style.alignItems = fieldEl instanceof HTMLTextAreaElement ? "flex-start" : "center";
+overlay.style.paddingTop = fieldEl instanceof HTMLTextAreaElement ? "4px" : "0";
+overlay.style.boxSizing = "border-box";
   overlay.style.color = "#1f2937";
   overlay.style.whiteSpace = "pre-wrap";
   overlay.style.overflow = "hidden";
@@ -340,7 +344,7 @@ hours: {},
         "contact.booking_system": data.bookingSystem,
         "contact.ref_google_business": data.refGoogleBusinessUrl,
         "contact.ref_sop": data.refSopFile || data.refSopUrl,
-        "contact.ref_scripts": data.refScriptsFile || data.refScriptsUrl || data.refScriptsText,
+        "contact.ref_scripts": [data.refScriptsUrl, data.refScriptsText, data.refScriptsFile].filter(Boolean).join(" | "),
         "contact.ref_services": data.refServicesFile || data.refServicesUrl,
         "contact.ref_staff": data.refStaffText,
         "contact.ref_other": data.refOtherFile || data.refOtherUrl || data.refOtherText,
