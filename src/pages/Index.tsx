@@ -77,10 +77,10 @@ deliveryEmailEnabled: z.any().optional(),
   refOtherFile: z.string().optional(),
   refOtherText: z.string().optional(),
   bookingSystem: z.string().optional(),
-  anythingElse: z.string().optional(),
-  authorization: z.boolean().refine(val => val === true, "You must agree to the terms"),
+anythingElse: z.string().optional(),
+authorization: z.boolean().refine(val => val === true, "You must agree to the terms"),
+smsConsent: z.boolean().refine(val => val === true, "SMS consent is required"),
 });
-
 type FormValues = z.infer<typeof formSchema>;
 
 const TooltipLabel = ({ children, tooltip, className = "" }: { children: React.ReactNode, tooltip?: string, className?: string }) => (
@@ -308,6 +308,7 @@ urgentCallsSamePerson: "",
 businessModel: "",
 businessModelOther: "",
 autoDetectLanguage: false,
+smsConsent: false,
 hours: {},
     }
   });
@@ -523,6 +524,7 @@ Anything Else: ${data.anythingElse || ""}
 
 AUTHORIZATION
 Authorization Accepted: ${data.authorization ? "Yes" : "No"}
+SMS Consent Accepted: ${data.smsConsent ? "Yes" : "No"}
 `,
   ...data,
 }),
@@ -1350,7 +1352,26 @@ setTimeout(() => {
       </p>
     )}
   </div>
+  </div>
+<div className="mt-3 rounded-[3px] border border-gray-600 bg-[#333333] p-4 text-white">
+  <label className="flex gap-3 cursor-pointer group">
+    <Checkbox
+      checked={form.watch("smsConsent") || false}
+      onCheckedChange={(checked) => form.setValue("smsConsent", checked === true)}
+      className="mt-0.5 border-gray-300 data-[state=checked]:bg-[#C8102E] data-[state=checked]:border-[#C8102E]"
+    />
+    <span className="text-[12px] leading-[1.6] text-gray-100 group-hover:text-white transition-colors">
+      <span className="text-[#C8102E] text-[15px] font-bold">*</span>{" "}
+      By providing your phone number, you agree to receive text messages from Otto Growth Labs regarding your Ansera™ intake, order updates, scheduling, and related service communications. Message and data rates may apply. Reply STOP to opt out.
+    </span>
+  </label>
 
+  {form.formState.errors.smsConsent && (
+    <p className="text-red-400 text-[10px] font-bold mt-2">
+      {form.formState.errors.smsConsent.message}
+    </p>
+  )}
+</div>
   <div className="text-center py-5">
     <Button type="submit" className="w-full max-w-md h-12 bg-[#C8102E] hover:bg-[#aa0d25] font-bold text-[14px] tracking-[0.1em] text-white rounded-[4px] transition-colors shadow-lg">
       SUBMIT MY ANSERA™ INTAKE FORM
@@ -1372,6 +1393,14 @@ setTimeout(() => {
         <footer className="bg-[#222222] py-4 text-center text-[10px] text-gray-500 border-t border-[#111]">
           <p className="mb-1">www.OttoGrowthLabs.com | Hello@OttoGrowthLabs.com | 559.801.1235</p>
           <p className="uppercase tracking-wide text-[8px]">© Otto Growth Labs. All Rights Reserved. | Ansera™ is a trademark of Otto Growth Labs.</p>
+          <div className="mt-2 flex justify-center gap-4 text-[9px]">
+  <a href="#" className="text-gray-400 underline hover:text-white">
+    Privacy Policy
+  </a>
+  <a href="#" className="text-gray-400 underline hover:text-white">
+    Terms of Service
+  </a>
+</div>
         </footer>
       </div>
 
