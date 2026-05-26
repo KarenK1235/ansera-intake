@@ -1352,7 +1352,7 @@ setTimeout(() => {
       </p>
     )}
   </div>
-  </div>
+  
 <div className="mt-3 rounded-[3px] border border-gray-600 bg-[#333333] p-4 text-white">
   <label className="flex gap-3 cursor-pointer group">
     <Checkbox
