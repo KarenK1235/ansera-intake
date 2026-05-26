@@ -412,7 +412,7 @@ try {
     },
     body: JSON.stringify({
       imageDataUrl: proofImageDataUrl,
-      fileName: `ansera-intake-proof-${Date.now()}.png`,
+      fileName: `ansera-intake-proof-${(data.companyName || data.contactName || "unknown").replace(/[^a-z0-9]/gi, "-").toLowerCase()}-${new Date().toISOString().slice(0, 10)}-${Date.now()}.png`,
     }),
   });
 
@@ -1394,12 +1394,12 @@ setTimeout(() => {
           <p className="mb-1">www.OttoGrowthLabs.com | Hello@OttoGrowthLabs.com | 559.801.1235</p>
           <p className="uppercase tracking-wide text-[8px]">© Otto Growth Labs. All Rights Reserved. | Ansera™ is a trademark of Otto Growth Labs.</p>
           <div className="mt-2 flex justify-center gap-4 text-[9px]">
-  <a href="#" className="text-gray-400 underline hover:text-white">
-    Privacy Policy
-  </a>
-  <a href="#" className="text-gray-400 underline hover:text-white">
-    Terms of Service
-  </a>
+  <a href="https://forms.ottogrowthlabs.com/privacy" target="_blank" rel="noopener noreferrer" className="text-gray-400 underline hover:text-white">
+  Privacy Policy
+</a>
+<a href="https://forms.ottogrowthlabs.com/terms" target="_blank" rel="noopener noreferrer" className="text-gray-400 underline hover:text-white">
+  Terms of Service
+</a>
 </div>
         </footer>
       </div>
