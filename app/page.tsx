@@ -202,7 +202,7 @@ const Index = () => {
       sessionId: crypto.randomUUID(),
     };
 
-    fetch("https://backend.leadconnectorhq.com/external-tracking/events", {
+    https://services.leadconnectorhq.com/hooks/gbb1qql2DdfeqqV6LC4r/webhook-trigger/yRoteexmvUbQ2NzYrsFg
       method: "POST",
       headers: { "Content-Type": "application/json", version: "2021-07-28" },
       body: JSON.stringify(trackingPayload),
