@@ -424,7 +424,7 @@ try {
   console.error("Submission proof upload failed:", proofError);
 }
 try {
-  const growthHubResponse = await fetch("https://services.leadconnectorhq.com/hooks/9RW3P6cHGlzd2iZjDFxu/webhook-trigger/b684296b-685e-40ef-9e01-753c4b975d71", {
+  const growthHubResponse = await fetch("https://services.leadconnectorhq.com/hooks/gbb1qql2DdfeqqV6LC4r/webhook-trigger/yRoteexmvUbQ2NzYrsFg", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
